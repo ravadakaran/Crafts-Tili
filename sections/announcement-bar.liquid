@@ -1,0 +1,145 @@
+{% if section.settings.show_announcement %}
+<div class="titli-announcement-bar" id="titliAnnouncementBar">
+  <div class="announcement-content-wrap">
+    <div class="announcement-marquee-track">
+      <div class="announcement-item">
+        <span class="announcement-icon">✨</span>
+        <span class="announcement-text">{{ section.settings.text_1 | default: "FREE SHIPPING ACROSS INDIA ON ORDERS OVER ₹499" }}</span>
+      </div>
+      <span class="announcement-bullet">•</span>
+      <div class="announcement-item">
+        <span class="announcement-icon">🦋</span>
+        <span class="announcement-text">{{ section.settings.text_2 | default: "HANDCRAFTED IN OUR ATELIER WITH GENUINE CRYSTALS" }}</span>
+      </div>
+      <span class="announcement-bullet">•</span>
+      <div class="announcement-item">
+        <span class="announcement-icon">🪄</span>
+        <span class="announcement-text">{{ section.settings.text_3 | default: "CUSTOM PHONE CHARMS DISPATCHED IN 3-5 DAYS" }}</span>
+      </div>
+      <span class="announcement-bullet">•</span>
+      <div class="announcement-item">
+        <span class="announcement-icon">✨</span>
+        <span class="announcement-text">{{ section.settings.text_1 | default: "FREE SHIPPING ACROSS INDIA ON ORDERS OVER ₹499" }}</span>
+      </div>
+      <span class="announcement-bullet">•</span>
+      <div class="announcement-item">
+        <span class="announcement-icon">🦋</span>
+        <span class="announcement-text">{{ section.settings.text_2 | default: "HANDCRAFTED IN OUR ATELIER WITH GENUINE CRYSTALS" }}</span>
+      </div>
+      <span class="announcement-bullet">•</span>
+      <div class="announcement-item">
+        <span class="announcement-icon">🪄</span>
+        <span class="announcement-text">{{ section.settings.text_3 | default: "CUSTOM PHONE CHARMS DISPATCHED IN 3-5 DAYS" }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.titli-announcement-bar {
+  background: linear-gradient(90deg, #712423 0%, #8D302F 50%, #712423 100%);
+  color: #FAF5EE;
+  font-family: var(--font-body, 'Quicksand', sans-serif);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  overflow: hidden;
+  position: relative;
+  z-index: 210;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(231, 219, 202, 0.2);
+}
+
+.announcement-content-wrap {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+}
+
+.announcement-marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  white-space: nowrap;
+  animation: titli-ticker 24s linear infinite;
+  will-change: transform;
+}
+
+.titli-announcement-bar:hover .announcement-marquee-track {
+  animation-play-state: paused;
+}
+
+.announcement-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #FAF5EE;
+}
+
+.announcement-icon {
+  font-size: 13px;
+  display: inline-block;
+  transform: translateY(-1px);
+}
+
+.announcement-bullet {
+  color: #E7DBCA;
+  opacity: 0.6;
+  font-size: 10px;
+}
+
+@keyframes titli-ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (max-width: 768px) {
+  .titli-announcement-bar {
+    font-size: 10.5px;
+    padding: 6.5px 0;
+  }
+  .announcement-marquee-track {
+    gap: 20px;
+    animation-duration: 18s;
+  }
+}
+</style>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show Announcement Bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text_1",
+      "label": "Announcement 1",
+      "default": "FREE SHIPPING ACROSS INDIA ON ORDERS OVER ₹499"
+    },
+    {
+      "type": "text",
+      "id": "text_2",
+      "label": "Announcement 2",
+      "default": "HANDCRAFTED IN OUR ATELIER WITH GENUINE CRYSTALS"
+    },
+    {
+      "type": "text",
+      "id": "text_3",
+      "label": "Announcement 3",
+      "default": "CUSTOM PHONE CHARMS DISPATCHED IN 3-5 DAYS"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement Bar"
+    }
+  ]
+}
+{% endschema %}

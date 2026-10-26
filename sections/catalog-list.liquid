@@ -1,0 +1,126 @@
+<section class="titli-catalog-list-section">
+  <div class="catalog-list-container">
+    <div class="catalog-header">
+      <span class="catalog-eyebrow">BROWSE BY CATEGORY</span>
+      <h2 class="catalog-title">Shop Our Catalogs</h2>
+    </div>
+
+    <div class="catalog-list-grid">
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          {% assign collection = collections[block.settings.collection] %}
+          {% assign link_url = collection.url %}
+          {% if link_url == blank %}
+            {% assign handleized_title = block.settings.title | handleize %}
+            {% assign link_url = '/collections/' | append: handleized_title %}
+          {% endif %}
+          <a href="{{ link_url }}" class="catalog-list-item" style="text-decoration: none; color: inherit; display: block; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease;">
+            <div class="catalog-list-content" style="padding: 1.5rem; text-align: center;">
+              <h3 class="catalog-list-name" style="margin: 0 0 0.5rem 0; font-family: 'Quicksand', sans-serif; font-size: 1.25rem;">{{ block.settings.title | default: collection.title }}</h3>
+              <span class="catalog-list-link-text" style="font-size: 0.9rem; font-weight: 600; color: #607353;">Explore →</span>
+            </div>
+            <div class="catalog-list-media" style="aspect-ratio: 1; background: #fafafa; display: flex; align-items: center; justify-content: center;">
+              {% if block.settings.image %}
+                <img src="{{ block.settings.image | image_url: width: 400, height: 400 }}" alt="{{ block.settings.title | escape }}" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+              {% elsif collection.image %}
+                <img src="{{ collection.image | image_url: width: 400, height: 400 }}" alt="{{ collection.title | escape }}" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+              {% else %}
+                <div class="catalog-list-fallback" style="font-size: 3rem;">{{ block.settings.emoji | default: '✨' }}</div>
+              {% endif %}
+            </div>
+          </a>
+        {% endfor %}
+      {% else %}
+        <!-- Default Placeholders exactly as requested -->
+        <a href="/collections/bag-charms" class="catalog-list-item" style="text-decoration: none; color: inherit; display: block; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+          <div class="catalog-list-content" style="padding: 1.5rem; text-align: center;"><h3 class="catalog-list-name" style="margin: 0 0 0.5rem 0; font-family: 'Quicksand', sans-serif; font-size: 1.25rem;">Bag Charms</h3><span class="catalog-list-link-text" style="font-size: 0.9rem; font-weight: 600; color: #607353;">Explore →</span></div>
+          <div class="catalog-list-media" style="aspect-ratio: 1; background: #fafafa; display: flex; align-items: center; justify-content: center;"><div class="catalog-list-fallback" style="font-size: 3rem;">🎒</div></div>
+        </a>
+        <a href="/collections/phone-charms" class="catalog-list-item" style="text-decoration: none; color: inherit; display: block; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+          <div class="catalog-list-content" style="padding: 1.5rem; text-align: center;"><h3 class="catalog-list-name" style="margin: 0 0 0.5rem 0; font-family: 'Quicksand', sans-serif; font-size: 1.25rem;">Phone Charms</h3><span class="catalog-list-link-text" style="font-size: 0.9rem; font-weight: 600; color: #607353;">Explore →</span></div>
+          <div class="catalog-list-media" style="aspect-ratio: 1; background: #fafafa; display: flex; align-items: center; justify-content: center;"><div class="catalog-list-fallback" style="font-size: 3rem;">🔑</div></div>
+        </a>
+        <a href="/collections/sun-catcher" class="catalog-list-item" style="text-decoration: none; color: inherit; display: block; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+          <div class="catalog-list-content" style="padding: 1.5rem; text-align: center;"><h3 class="catalog-list-name" style="margin: 0 0 0.5rem 0; font-family: 'Quicksand', sans-serif; font-size: 1.25rem;">Suncatchers</h3><span class="catalog-list-link-text" style="font-size: 0.9rem; font-weight: 600; color: #607353;">Explore →</span></div>
+          <div class="catalog-list-media" style="aspect-ratio: 1; background: #fafafa; display: flex; align-items: center; justify-content: center;"><div class="catalog-list-fallback" style="font-size: 3rem;">☀️</div></div>
+        </a>
+        <a href="/collections/bookmarks" class="catalog-list-item" style="text-decoration: none; color: inherit; display: block; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+          <div class="catalog-list-content" style="padding: 1.5rem; text-align: center;"><h3 class="catalog-list-name" style="margin: 0 0 0.5rem 0; font-family: 'Quicksand', sans-serif; font-size: 1.25rem;">Bookmarks</h3><span class="catalog-list-link-text" style="font-size: 0.9rem; font-weight: 600; color: #607353;">Explore →</span></div>
+          <div class="catalog-list-media" style="aspect-ratio: 1; background: #fafafa; display: flex; align-items: center; justify-content: center;"><div class="catalog-list-fallback" style="font-size: 3rem;">📱</div></div>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Catalog List",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Override Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Override Image"
+        },
+        {
+          "type": "text",
+          "id": "emoji",
+          "label": "Fallback Emoji",
+          "default": "✨"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Catalog List",
+      "category": "Collection",
+      "blocks": [
+        {
+          "type": "collection",
+          "settings": {
+            "title": "Bag Charm",
+            "emoji": "🎒"
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "title": "Key Chain",
+            "emoji": "🔑"
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "title": "Sun Charms",
+            "emoji": "☀️"
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "title": "Phone Charms",
+            "emoji": "📱"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

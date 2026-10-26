@@ -1,0 +1,76 @@
+<footer class="titli-footer">
+  <div class="titli-footer-container">
+    
+    <!-- 4-Column Main Footer Grid -->
+    <div class="titli-footer-grid">
+      
+      <!-- Col 1: Brand Info -->
+      <div class="footer-col footer-col-brand">
+        <div class="footer-brand-header">
+          <img src="{{ 'titli-logo.jpg' | asset_url }}" alt="Crafts Titli" class="footer-logo" width="60" height="60">
+          <span class="footer-brand-title">Crafts_Titli</span>
+        </div>
+        <p class="footer-bio">
+          Handcrafted phone charms, bag dangles, sun catchers, and personalized accessories made to bring color, sparkle, and warmth to your everyday items.
+        </p>
+        <div class="footer-social-links">
+          <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Col 2: Quick Links -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Explore</h4>
+        <ul class="footer-nav-list">
+          <li><a href="{{ routes.root_url }}">Home</a></li>
+          <li><a href="{{ routes.all_products_collection_url }}">Shop All Products</a></li>
+          <li><a href="/pages/design-custom-piece">Custom Charm Studio</a></li>
+          <li><a href="/pages/our-story">Our Story</a></li>
+          <li><a href="/pages/contact">Contact &amp; FAQs</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Studio Support (WhatsApp & Email) -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Studio Support</h4>
+        <div class="footer-contact-items">
+          
+          <p>
+            <span class="contact-icon">✉️</span>
+            <a href="mailto:support@craftstitli.co.in">support@craftstitli.co.in</a>
+          </p>
+          <p class="contact-note">
+            Have questions about customized bead orders or dispatch times? Feel free to reach out directly.
+          </p>
+        </div>
+      </div>
+
+      <!-- Col 4: Transparent Policies -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Transparent Policies</h4>
+        <ul class="footer-nav-list">
+          <li><a href="/policies/shipping-policy">Shipping Policy (7–10 Days)</a></li>
+          <li><a href="/policies/refund-policy">No-Return &amp; Replacement Policy</a></li>
+          <li><a href="/policies/terms-of-service">Terms of Service</a></li>
+          <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Bottom Copyright & Security Bar -->
+    <div class="footer-bottom-bar">
+      <p class="footer-copyright">
+        &copy; {{ 'now' | date: '%Y' }} Crafts_Titli. All rights reserved. Handcrafted with love.
+      </p>
+      <div class="footer-trust-strip">
+        <span>🔒 Encrypted Checkout</span>
+        <span>•</span>
+        <span>⚡ UPI &amp; Cards Accepted</span>
+      </div>
+    </div>
+
+  </div>
+</footer>

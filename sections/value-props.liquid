@@ -1,0 +1,270 @@
+<section class="titli-value-props-section">
+  <div class="props-container">
+    
+    <div class="props-grid">
+      <!-- Pillar 1 -->
+      <div class="prop-card">
+        <div class="prop-icon-wrapper">
+          <span class="prop-emoji">🦋</span>
+          <div class="prop-icon-halo"></div>
+        </div>
+        <div class="prop-text-wrap">
+          <h3 class="prop-title">{{ section.settings.prop_1_title | default: "Artisan Handcrafted" }}</h3>
+          <p class="prop-desc">{{ section.settings.prop_1_desc | default: "Lovingly assembled in small atelier batches with reinforced, high-tensile cords built for everyday wear." }}</p>
+        </div>
+      </div>
+
+      <!-- Pillar 2 -->
+      <div class="prop-card">
+        <div class="prop-icon-wrapper">
+          <span class="prop-emoji">💎</span>
+          <div class="prop-icon-halo"></div>
+        </div>
+        <div class="prop-text-wrap">
+          <h3 class="prop-title">{{ section.settings.prop_2_title | default: "Gleaming Crystals & Jewels" }}</h3>
+          <p class="prop-desc">{{ section.settings.prop_2_desc | default: "Handpicked radiant suncatcher prisms, lustrous faux pearls, and anti-tarnish alloy charm accents." }}</p>
+        </div>
+      </div>
+
+      <!-- Pillar 3 -->
+      <div class="prop-card">
+        <div class="prop-icon-wrapper">
+          <span class="prop-emoji">🎁</span>
+          <div class="prop-icon-halo"></div>
+        </div>
+        <div class="prop-text-wrap">
+          <h3 class="prop-title">{{ section.settings.prop_3_title | default: "Gift-Ready Keepsake Box" }}</h3>
+          <p class="prop-desc">{{ section.settings.prop_3_desc | default: "Delivered in signature aesthetic packaging with keepsake cards—ready to delight yourself or a bestie." }}</p>
+        </div>
+      </div>
+
+      <!-- Pillar 4 -->
+      <div class="prop-card">
+        <div class="prop-icon-wrapper">
+          <span class="prop-emoji">📦</span>
+          <div class="prop-icon-halo"></div>
+        </div>
+        <div class="prop-text-wrap">
+          <h3 class="prop-title">{{ section.settings.prop_4_title | default: "Tracked All-India Dispatch" }}</h3>
+          <p class="prop-desc">{{ section.settings.prop_4_desc | default: "Carefully wrapped and securely dispatched with live tracking and attentive WhatsApp support." }}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+.titli-value-props-section {
+  padding: 36px 20px;
+  background: transparent;
+  position: relative;
+  z-index: 10;
+}
+
+.props-container {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.props-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.prop-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(231, 219, 202, 0.8);
+  border-radius: 18px;
+  padding: 24px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 4px 16px rgba(113, 36, 35, 0.04);
+  position: relative;
+  overflow: hidden;
+}
+
+.prop-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #712423 0%, #B7684C 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.prop-card:hover {
+  transform: translateY(-4px);
+  background: #ffffff;
+  border-color: #B7684C;
+  box-shadow: 0 12px 28px rgba(113, 36, 35, 0.09);
+}
+
+.prop-card:hover::after {
+  opacity: 1;
+}
+
+.prop-icon-wrapper {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #FAF5EE;
+  border: 1px solid #ECE5DC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.prop-card:hover .prop-icon-wrapper {
+  transform: scale(1.08) rotate(4deg);
+  background: #F5EAE0;
+}
+
+.prop-emoji {
+  font-size: 24px;
+  z-index: 2;
+}
+
+.prop-text-wrap {
+  flex: 1;
+}
+
+.prop-title {
+  margin: 0 0 6px 0;
+  font-family: var(--font-heading, 'Quicksand', sans-serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: #712423;
+  letter-spacing: -0.2px;
+}
+
+.prop-desc {
+  margin: 0;
+  font-family: var(--font-body, 'Quicksand', sans-serif);
+  font-size: 13px;
+  line-height: 1.55;
+  color: #554D48;
+}
+
+@media (max-width: 1024px) {
+  .props-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .titli-value-props-section {
+    padding: 16px 12px 24px;
+    overflow: hidden;
+  }
+  .props-grid {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 12px !important;
+    padding: 4px 6px 12px 6px;
+    scrollbar-width: none;
+  }
+  .props-grid::-webkit-scrollbar {
+    display: none;
+  }
+  .prop-card {
+    flex: 0 0 82% !important;
+    min-width: 250px !important;
+    max-width: 300px !important;
+    scroll-snap-align: start;
+    padding: 16px 14px;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(113, 36, 35, 0.06);
+  }
+  .prop-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+  }
+  .prop-emoji {
+    font-size: 20px;
+  }
+  .prop-title {
+    font-size: 15px;
+  }
+  .prop-desc {
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Artisan Value Props",
+  "settings": [
+    {
+      "type": "text",
+      "id": "prop_1_title",
+      "label": "Prop 1 Title",
+      "default": "Artisan Handcrafted"
+    },
+    {
+      "type": "text",
+      "id": "prop_1_desc",
+      "label": "Prop 1 Description",
+      "default": "Lovingly assembled in small atelier batches with reinforced, high-tensile cords built for everyday wear."
+    },
+    {
+      "type": "text",
+      "id": "prop_2_title",
+      "label": "Prop 2 Title",
+      "default": "Gleaming Crystals & Jewels"
+    },
+    {
+      "type": "text",
+      "id": "prop_2_desc",
+      "label": "Prop 2 Description",
+      "default": "Handpicked radiant suncatcher prisms, lustrous faux pearls, and anti-tarnish alloy charm accents."
+    },
+    {
+      "type": "text",
+      "id": "prop_3_title",
+      "label": "Prop 3 Title",
+      "default": "Gift-Ready Keepsake Box"
+    },
+    {
+      "type": "text",
+      "id": "prop_3_desc",
+      "label": "Prop 3 Description",
+      "default": "Delivered in signature aesthetic packaging with keepsake cards—ready to delight yourself or a bestie."
+    },
+    {
+      "type": "text",
+      "id": "prop_4_title",
+      "label": "Prop 4 Title",
+      "default": "Tracked All-India Dispatch"
+    },
+    {
+      "type": "text",
+      "id": "prop_4_desc",
+      "label": "Prop 4 Description",
+      "default": "Carefully wrapped and securely dispatched with live tracking and attentive WhatsApp support."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Artisan Value Props"
+    }
+  ]
+}
+{% endschema %}

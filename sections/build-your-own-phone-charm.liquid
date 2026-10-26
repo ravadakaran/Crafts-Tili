@@ -1,0 +1,4430 @@
+{% assign charms_col = collections['customizer-charms'] | default: collections['charms'] %}
+
+<!-- NOTE: UPDATE YOUR VARIANT IDS BELOW -->
+<div class="titli-customizer-section" id="titliCustomizerApp" 
+     data-phone-variant="50663420952773" 
+     data-bag-variant="50663426982085"
+     data-bag-single-variant="50666935517381">
+
+  <!-- Floating Mini-Preview Pill (Mobile Picture-in-Picture) -->
+  <div id="mobileFloatingPreviewPill" class="mobile-floating-preview-pill" role="button" aria-label="Jump to Live Strap Preview">
+    <div class="pip-icon-box">
+      <span class="pip-icon">✨</span>
+      <span class="pip-pulse-dot"></span>
+    </div>
+    <div class="pip-content">
+      <span class="pip-title" id="pipCharmCount">0 Charms</span>
+      <div class="pip-charms-row" id="pipCharmsThumbs">
+        <span class="pip-empty-hint">Tap to preview strap 🔍</span>
+      </div>
+    </div>
+    <div class="pip-arrow">↑ View</div>
+  </div>
+
+  <!-- Instant Toast Notification -->
+  <div id="customizerToast" class="customizer-toast-notice" aria-live="polite">
+    <span class="toast-icon">✨</span>
+    <span class="toast-message" id="toastMessageText">Charm Attached!</span>
+  </div>
+
+  <!-- High-Res Charm Zoom Inspection Modal -->
+  <div id="charmZoomModal" class="charm-zoom-modal-backdrop" aria-hidden="true">
+    <div class="charm-zoom-card">
+      <button type="button" class="zoom-close-btn" id="closeZoomModalBtn">✕</button>
+      <div class="zoom-media-box" id="zoomMediaContainer"></div>
+      <div class="zoom-info-box">
+        <h4 class="zoom-title" id="zoomCharmTitle">Charm Name</h4>
+        <div class="zoom-meta-row">
+          <span class="zoom-price" id="zoomCharmPrice">+₹25.00</span>
+          <span class="zoom-badge">Atelier Edition</span>
+        </div>
+        <p class="zoom-desc" id="zoomCharmDesc">Handcrafted enamel with radiant crystals and tarnish-resistant hardware.</p>
+        <button type="button" class="zoom-action-btn" id="zoomAttachActionBtn">
+          <span>Attach Charm to Design</span>
+        </button>
+      </div>
+    </div>
+  </div>
+     
+  <div class="customizer-container">
+    
+    <!-- Left Column: Unified Stage Cards -->
+    <div class="customizer-stage-card" id="stageMainCard">
+      
+      <!-- ==========================================
+           VIEW 1: Phone Strap Charm
+           ========================================== -->
+      <div id="stagePhoneCharmWrapper" style="width: 100%;">
+        <div class="stage-header">
+          <span class="stage-pill">LIVE PREVIEW</span>
+          <h2 class="stage-title">Phone Strap</h2>
+        </div>
+
+        <div class="unified-preview-box">
+          <span class="phone-palette-tag" id="phonePaletteLabel">PASTEL DREAM PALETTE</span>
+
+          <div class="phone-graphic-container">
+            <div class="phone-tether-svg-wrap" id="renderPhoneTether">
+              <svg viewBox="0 0 40 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 2 C 28 2, 34 14, 34 32 C 34 48, 24 55, 20 60 C 16 55, 6 48, 6 32 C 6 14, 12 2, 20 2 Z" stroke="#241A18" stroke-width="2.5" fill="none"/>
+                <path d="M20 60 V185" stroke="#241A18" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+            </div>
+
+            <div class="phone-name-beads-stack" id="phoneNameBeadsColumn"></div>
+            <div class="phone-floating-tooltip" id="phoneTapHint"><span>Tap charms to attach them!</span></div>
+            <div class="phone-attached-items" id="phoneAttachedList" role="listbox" aria-label="Phone strap charm arrangement"></div>
+            <p class="charm-arrangement-hint" id="phoneArrangementHint">↔ Drag to reorder · Arrow keys supported</p>
+          </div>
+
+          <div class="phone-attached-counter-bar">
+            <span class="counter-text" id="phoneCharmsCounterText">Charms Attached: <strong>0/4</strong></span>
+            <button type="button" class="reset-link-btn" id="phoneResetCharmsBtn">Reset All</button>
+          </div>
+        </div>
+
+        <div class="desktop-only-action-bar">
+          <div class="phone-price-breakdown">
+            <div class="price-row"><span>Base Design Price:</span><strong id="phoneBasePriceText">₹50.00</strong></div>
+            <div class="price-row"><span>Add-ons Total:</span><strong id="phoneAddonsText">₹0.00</strong></div>
+            <div class="price-divider"></div>
+            <div class="price-row total-row"><span class="total-label">Estimated Total:</span><span class="total-amount" id="phoneEstimatedTotal">₹50.00</span></div>
+          </div>
+          <button type="button" class="phone-add-to-bag-btn" id="phoneDirectAddBtn"><span>✨ Add Custom Design To Bag</span></button>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           VIEW 2: Multi-Strand Bag Clip
+           ========================================== -->
+      <div id="stageBagClipMultiWrapper" style="display: none; width: 100%;">
+        <div class="stage-header">
+          <span class="stage-pill">LIVE ATELIER PREVIEW</span>
+          <h2 class="stage-title">Multi-Strand Bag Clip</h2>
+        </div>
+
+        <div class="unified-preview-box">
+          <span class="phone-palette-tag" id="multiPaletteLabel">PASTEL DREAM PALETTE</span>
+          <div class="keychain-assembly" id="multiBagClipAssembly">
+            <div class="keychain-clasp-wrap" id="renderClasp">
+              <svg class="clasp-svg" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="40" r="28" stroke="currentColor" stroke-width="7" fill="none"/>
+                <path d="M50 68 V92 M36 92 H64" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+                <circle cx="50" cy="104" r="8" stroke="currentColor" stroke-width="4" fill="none"/>
+              </svg>
+            </div>
+
+            <div class="strands-fan-cluster" id="strandsCluster" role="listbox" aria-label="Multi-strand charm arrangement">
+              <!-- Strand 1: Outer-Left Dotted Cord & Bell Charm -->
+              <div class="strand-branch strand-1-accent" id="renderStrand1" title="Strand 1: Dotted Accent (Tap to customize)">
+                <div class="dotted-strand-graphic"></div>
+                <div class="strand-drop-frame" id="renderDrop1"><span class="drop-placeholder-icon">🔔</span></div>
+              </div>
+
+              <!-- Strand 2: Center-Left Name Strand & Heart Charm -->
+              <div class="strand-branch strand-2-name" id="renderStrand2" title="Strand 2: Personalized Name (Tap to customize)">
+                <div class="strand-beads-vertical" id="renderNameBeads"></div>
+                <div class="strand-drop-frame" id="renderDrop2"><span class="drop-placeholder-icon">💚</span></div>
+              </div>
+
+              <!-- Strand 3: Center-Right Statement Floral Strand & Flower Charm -->
+              <div class="strand-branch strand-3-statement" id="renderStrand3" title="Strand 3: Floral Statement Beads (Tap to customize)">
+                <div class="strand-beads-vertical" id="renderFloralBeads"></div>
+                <div class="strand-drop-frame" id="renderDrop3"><span class="drop-placeholder-icon">🌸</span></div>
+              </div>
+
+              <!-- Strand 4: Outer-Right Pastel Beads & Key Dangle -->
+              <div class="strand-branch strand-4-dangle" id="renderStrand4" title="Strand 4: Star & Bow Dangle (Tap to customize)">
+                <div class="strand-beads-vertical" id="renderPastelBeads"></div>
+                <div class="strand-drop-frame" id="renderDrop4"><span class="drop-placeholder-icon">🗝️</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="phone-attached-counter-bar">
+            <span class="counter-text" id="multiCharmsCounterText">Charms Attached: <strong>0/4</strong></span>
+            <button type="button" class="reset-link-btn" id="multiResetCharmsBtn">Reset All</button>
+          </div>
+          <p class="charm-arrangement-hint" id="multiArrangementHint">↔ Drag charms on preview to swap strings or move</p>
+        </div>
+
+        <div class="desktop-only-action-bar">
+          <div class="phone-price-breakdown">
+            <div class="price-row"><span>Base Design Price:</span><strong id="multiBasePriceText">₹199.00</strong></div>
+            <div class="price-row"><span>Add-ons Total:</span><strong id="multiAddonsText">₹0.00</strong></div>
+            <div class="price-divider"></div>
+            <div class="price-row total-row"><span class="total-label">Estimated Total:</span><span class="total-amount" id="customizerTotalMultiPrice">₹199.00</span></div>
+          </div>
+          <button type="button" class="phone-add-to-bag-btn" id="addMultiToBagBtn"><span>✨ Add Custom Design To Bag</span></button>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           VIEW 3: Single-Strand Bag Clip (Single Cord + Clustered Charms)
+           ========================================== -->
+      <div id="stageBagClipSingleWrapper" style="display: none; width: 100%;">
+        <div class="stage-header">
+          <span class="stage-pill">LIVE ATELIER PREVIEW</span>
+          <h2 class="stage-title">Single-Strand Bag Clip</h2>
+        </div>
+
+        <div class="unified-preview-box">
+          <span class="phone-palette-tag" id="singlePaletteLabel">PASTEL DREAM PALETTE</span>
+
+          <div class="single-cord-assembly" id="singleCordAssembly">
+            <div class="keychain-clasp-wrap" id="renderClaspSingle">
+              <svg class="clasp-svg" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="40" r="28" stroke="currentColor" stroke-width="7" fill="none"/>
+                <path d="M50 68 V92 M36 92 H64" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+                <circle cx="50" cy="104" r="8" stroke="currentColor" stroke-width="4" fill="none"/>
+              </svg>
+            </div>
+            
+            <div class="single-cord-stage" id="singleCordStage">
+              <!-- Single Vertical Cord -->
+              <div class="single-cord-strand" id="singleCordStrand">
+                <div class="single-cord-line"></div>
+                <div class="single-cord-bottom-ring"></div>
+              </div>
+
+              <!-- Charms clustered randomly & naturally along the cord -->
+              <div class="single-cord-charms-cluster" id="singleCordCharmsCluster" role="listbox" aria-label="Single-cord charm arrangement"></div>
+            </div>
+
+            <div class="phone-floating-tooltip" id="singleTapHint"><span>Tap charms below to attach up to 7!</span></div>
+          </div>
+
+          <p class="charm-arrangement-hint" id="singleArrangementHint">↕ Drag to reorder · Arrow keys supported</p>
+
+          <div class="phone-attached-counter-bar">
+            <span class="counter-text" id="singleCharmsCounterText">Charms Attached: <strong>0/7</strong></span>
+            <button type="button" class="reset-link-btn" id="singleResetCharmsBtn">Reset All</button>
+          </div>
+        </div>
+
+        <div class="desktop-only-action-bar">
+          <div class="phone-price-breakdown">
+            <div class="price-row"><span>Base Design Price:</span><strong id="singleBasePriceText">₹100.00</strong></div>
+            <div class="price-row"><span>Add-ons Total:</span><strong id="singleAddonsText">₹0.00</strong></div>
+            <div class="price-divider"></div>
+            <div class="price-row total-row"><span class="total-label">Estimated Total:</span><span class="total-amount" id="singleEstimatedTotal">₹100.00</span></div>
+          </div>
+          <button type="button" class="phone-add-to-bag-btn" id="singleDirectAddBtn"><span>✨ Add Custom Design To Bag</span></button>
+        </div>
+      </div>
+
+    </div>
+    <div class="customizer-stage-spacer" id="stageSpacer"></div>
+
+    <!-- Right Column: Controls Panel -->
+    <div class="customizer-controls-card">
+      
+      <!-- Type Switcher -->
+      <div class="customizer-type-selector">
+        <label class="section-label">Select Atelier Creation Type</label>
+        <div class="type-switch-row">
+          <button type="button" class="type-btn active" id="btnTypePhoneCharm" data-type="phone-charm">
+            <span class="type-icon">📱</span>
+            <span class="type-text"><strong>Phone Strap</strong><small>Wrist loop (Max 4)</small></span>
+          </button>
+          <button type="button" class="type-btn" id="btnTypeBagClipMulti" data-type="bag-clip-multi">
+            <span class="type-icon">🗝️</span>
+            <span class="type-text"><strong>Bag Clip (Multi)</strong><small>4 distinct strands</small></span>
+          </button>
+          <button type="button" class="type-btn" id="btnTypeBagClipSingle" data-type="bag-clip-single">
+            <span class="type-icon">🎐</span>
+            <span class="type-text"><strong>Bag Clip (Single)</strong><small>1 cord (Max 7)</small></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="controls-nav-tabs">
+        <button type="button" class="tab-btn active" data-tab="tab-clasp" id="tabBtnClasp">1. Tether Cord</button>
+        <button type="button" class="tab-btn" data-tab="tab-name" id="tabBtnName">2. Custom Name</button>
+        <button type="button" class="tab-btn" data-tab="tab-palette" id="tabBtnPalette">3. Color Story</button>
+        <button type="button" class="tab-btn" data-tab="tab-charms" id="tabBtnCharms">4. Charms</button>
+      </div>
+
+      <form id="multiStrandCustomizerForm" class="controls-form" onsubmit="return false;">
+        
+        <!-- Tab 1: Clasp / Cord -->
+        <div class="tab-pane active" id="tab-clasp">
+          <label class="section-label" id="claspHeadingLabel">Select Tether Cord Color</label>
+          <p class="section-desc" id="claspDescText">Choose your soft durable nylon cord that loops through your phone case.</p>
+          
+          <!-- Option Grid 1: Phone Strap (Nylon Tether Cords) -->
+          <div class="option-grid clasp-selector-grid" id="claspSelectorPhone">
+            <button type="button" class="option-card active" data-clasp-color="#8A58B5" data-clasp-name="Lilac Purple" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #8A58B5;"></span><span class="option-title">Lilac Purple</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#E27396" data-clasp-name="Blush Pink" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #E27396;"></span><span class="option-title">Blush Pink</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#EADBB6" data-clasp-name="Buttercream Ivory" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #EADBB6;"></span><span class="option-title">Buttercream Ivory</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#2B2B2B" data-clasp-name="Onyx Black" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #2B2B2B;"></span><span class="option-title">Onyx Black</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#88B04B" data-clasp-name="Sage Green" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #88B04B;"></span><span class="option-title">Sage Green</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#7EA7CC" data-clasp-name="Sky Blue" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #7EA7CC;"></span><span class="option-title">Sky Blue</span>
+            </button>
+          </div>
+
+          <!-- Option Grid 2: Multi-Strand Bag Clip (Hardware Finishes) -->
+          <div class="option-grid clasp-selector-grid" id="claspSelectorBagMulti" style="display: none;">
+            <button type="button" class="option-card active" data-clasp-color="#9B6B28" data-clasp-name="Antique Brass / Vintage Gold" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #C5A059 0%, #9B6B28 100%); border: 1px solid #7D551E;"></span>
+              <span class="option-title">Antique Brass / Gold</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#A0A5A3" data-clasp-name="Silver Metallic" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #E0E2E1 0%, #A0A5A3 100%); border: 1px solid #7B817F;"></span>
+              <span class="option-title">Silver Metallic</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#D4AF37" data-clasp-name="Polished Classic Gold" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #FBE082 0%, #D4AF37 100%); border: 1px solid #B89324;"></span>
+              <span class="option-title">Polished Gold</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#B76E79" data-clasp-name="Rose Gold" data-clasp-price="20">
+              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #F2B5BE 0%, #B76E79 100%); border: 1px solid #9A5661;"></span>
+              <span class="option-title">Rose Gold (+₹20)</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#2E2E2E" data-clasp-name="Gunmetal Black" data-clasp-price="20">
+              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #4A4A4A 0%, #202020 100%); border: 1px solid #111111;"></span>
+              <span class="option-title">Gunmetal Black (+₹20)</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#6A1E22" data-clasp-name="Crimson Burgundy" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #8B262B 0%, #6A1E22 100%); border: 1px solid #4D1216;"></span>
+              <span class="option-title">Crimson Burgundy</span>
+            </button>
+          </div>
+
+          <!-- Option Grid 3: Single-Strand Bag Clip (Cord & Clasp Colors) -->
+          <div class="option-grid clasp-selector-grid" id="claspSelectorBagSingle" style="display: none;">
+            <button type="button" class="option-card active" data-clasp-color="#9B6B28" data-clasp-name="Antique Brass & Gold" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #C5A059 0%, #9B6B28 100%); border: 1px solid #7D551E;"></span>
+              <span class="option-title">Antique Brass / Gold</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#A0A5A3" data-clasp-name="Silver Metallic" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #E0E2E1 0%, #A0A5A3 100%); border: 1px solid #7B817F;"></span>
+              <span class="option-title">Silver Metallic</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#8A58B5" data-clasp-name="Lilac Purple Cord" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #8A58B5;"></span>
+              <span class="option-title">Lilac Purple</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#E27396" data-clasp-name="Blush Pink Cord" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #E27396;"></span>
+              <span class="option-title">Blush Pink</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#EADBB6" data-clasp-name="Ivory Cream Cord" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #EADBB6;"></span>
+              <span class="option-title">Ivory Cream</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#2B2B2B" data-clasp-name="Onyx Black Cord" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #2B2B2B;"></span>
+              <span class="option-title">Onyx Black</span>
+            </button>
+          </div>
+
+          <!-- Stepper Footer: Tab 1 -->
+          <div class="stepper-nav-row">
+            <span class="stepper-step-indicator">Phase 1 of 4: Base Canvas</span>
+            <button type="button" class="stepper-nav-btn stepper-next-btn" id="stepperNextFromClasp">
+              <span>Next: Personalize Name</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tab 2: Custom Name -->
+        <div class="tab-pane" id="tab-name">
+          <label class="section-label">Personalized Name / Word</label>
+          <p class="section-desc">Up to 8 characters. Acrylic letter beads strung directly along the core design.</p>
+          <div class="name-input-group">
+            <input type="text" id="customNameInput" maxlength="8" placeholder="e.g. CRAFT" value="CRAFT" class="custom-text-input" autocomplete="off">
+            <button type="button" id="clearNameBtn" class="clear-btn">✕</button>
+          </div>
+
+          <!-- Stepper Footer: Tab 2 -->
+          <div class="stepper-nav-row">
+            <button type="button" class="stepper-nav-btn stepper-back-btn" id="stepperBackFromName">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              <span>Back: Canvas</span>
+            </button>
+            <span class="stepper-step-indicator">Phase 2 of 4: Name Beads</span>
+            <button type="button" class="stepper-nav-btn stepper-next-btn" id="stepperNextFromName">
+              <span>Next: Color Story</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tab 3: Color Story -->
+        <div class="tab-pane" id="tab-palette">
+          <label class="section-label">Select Color Palette Theme</label>
+          <div class="palette-list" id="paletteSelector">
+            <button type="button" class="palette-row-btn active" data-palette="fairy-garden" data-palette-name="PASTEL DREAM PALETTE" data-accent="#6BB377" data-primary="#8A58B5">
+              <div class="swatch-strip"><span style="background:#8A58B5;"></span><span style="background:#6BB377;"></span><span style="background:#ECA1A6;"></span><span style="background:#FFF;"></span></div>
+              <div class="palette-meta"><strong>Pastel Dream (Lilac &amp; Matcha)</strong><small>Faceted lilac beads, matcha beads, and butterflies</small></div>
+            </button>
+            <button type="button" class="palette-row-btn" data-palette="cherry-blossom" data-palette-name="SAKURA BLOSSOM PALETTE" data-accent="#E27396" data-primary="#B32025">
+              <div class="swatch-strip"><span style="background:#B32025;"></span><span style="background:#E27396;"></span><span style="background:#F7B2BD;"></span><span style="background:#FFF;"></span></div>
+              <div class="palette-meta"><strong>Sakura Blossom (Pinks &amp; Ruby)</strong><small>Rose quartz tones, frosted flowers, and blush beads</small></div>
+            </button>
+            <button type="button" class="palette-row-btn" data-palette="ocean-mist" data-palette-name="OCEAN MIST PALETTE" data-accent="#5BC0BE" data-primary="#3A506B">
+              <div class="swatch-strip"><span style="background:#3A506B;"></span><span style="background:#5BC0BE;"></span><span style="background:#A3CEF1;"></span><span style="background:#FFF;"></span></div>
+              <div class="palette-meta"><strong>Ocean Mist (Aquas &amp; Indigo)</strong><small>Clear sea-glass beads, frosted stars, and silver accents</small></div>
+            </button>
+          </div>
+
+          <!-- Stepper Footer: Tab 3 -->
+          <div class="stepper-nav-row">
+            <button type="button" class="stepper-nav-btn stepper-back-btn" id="stepperBackFromPalette">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              <span id="stepperBackFromPaletteLabel">Back: Name Beads</span>
+            </button>
+            <span class="stepper-step-indicator">Phase 3 of 4: Palette</span>
+            <button type="button" class="stepper-nav-btn stepper-next-btn" id="stepperNextFromPalette">
+              <span>Next: Select Charms</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tab 4: Charms (Curated Phased Atelier Visual Builder) -->
+        <div class="tab-pane" id="tab-charms">
+          <!-- Hidden compatibility anchor (replaced with direct auto-fill & drag reordering) -->
+          <div id="bagClipStrandTargetSection" style="display: none !important;"></div>
+
+          <!-- Aesthetic Categories (Theme Pills) -->
+          <div class="charms-category-pills-wrap">
+            <div class="charms-tab-header" style="margin-bottom: 6px;">
+              <label class="section-label" style="margin-bottom: 0;">Explore by Theme &amp; Aesthetic Vibe</label>
+              <span class="charms-limit-pill" id="charmsLimitBadge">Max 4 Charms</span>
+            </div>
+            <div class="charms-category-pills" id="charmsCategoryPills" role="tablist" aria-label="Charm categories">
+              <button type="button" class="cat-pill active" data-category="all" role="tab" aria-selected="true">
+                <span>✨ All Charms</span>
+                <span class="cat-count-badge" id="catCountAll">700+</span>
+              </button>
+              <button type="button" class="cat-pill" data-category="avengers" role="tab" aria-selected="false">
+                <span>🛡️ Avengers</span>
+                <span class="cat-count-badge" id="catCountAvengers"></span>
+              </button>
+              <button type="button" class="cat-pill" data-category="harrypotter" role="tab" aria-selected="false">
+                <span>⚡ Harry Potter</span>
+                <span class="cat-count-badge" id="catCountHarryPotter"></span>
+              </button>
+              <button type="button" class="cat-pill" data-category="stitch" role="tab" aria-selected="false">
+                <span>🌺 Stitch</span>
+                <span class="cat-count-badge" id="catCountStitch"></span>
+              </button>
+              <button type="button" class="cat-pill" data-category="htd" role="tab" aria-selected="false">
+                <span>🐉 HTD</span>
+                <span class="cat-count-badge" id="catCountHtd"></span>
+              </button>
+              <button type="button" class="cat-pill" data-category="minions" role="tab" aria-selected="false">
+                <span>🍌 Minions</span>
+                <span class="cat-count-badge" id="catCountMinions"></span>
+              </button>
+              <button type="button" class="cat-pill" data-category="flowers" role="tab" aria-selected="false">
+                <span>🌸 Flowers</span>
+                <span class="cat-count-badge" id="catCountFlowers"></span>
+              </button>
+              <button type="button" class="cat-pill" data-category="eye" role="tab" aria-selected="false">
+                <span>🧿 Eye</span>
+                <span class="cat-count-badge" id="catCountEye"></span>
+              </button>
+              <button type="button" class="cat-pill" data-category="heart" role="tab" aria-selected="false">
+                <span>💖 Heart</span>
+                <span class="cat-count-badge" id="catCountHeart"></span>
+              </button>
+              <button type="button" class="cat-pill" data-category="butterflies" role="tab" aria-selected="false">
+                <span>🦋 Butterflies, Titli</span>
+                <span class="cat-count-badge" id="catCountButterflies"></span>
+              </button>
+              <button type="button" class="cat-pill" data-category="cats" role="tab" aria-selected="false">
+                <span>🐱 Cats</span>
+                <span class="cat-count-badge" id="catCountCats"></span>
+              </button>
+              <button type="button" class="cat-pill" data-category="dogs" role="tab" aria-selected="false">
+                <span>🐶 Dogs</span>
+                <span class="cat-count-badge" id="catCountDogs"></span>
+              </button>
+              <button type="button" class="cat-pill" data-category="sea" role="tab" aria-selected="false">
+                <span>🌊 Sea</span>
+                <span class="cat-count-badge" id="catCountSea"></span>
+              </button>
+              <button type="button" class="cat-pill" data-category="leafs" role="tab" aria-selected="false">
+                <span>🍃 Leafs</span>
+                <span class="cat-count-badge" id="catCountLeafs"></span>
+              </button>
+              <button type="button" class="cat-pill" data-category="ribbons" role="tab" aria-selected="false">
+                <span>🎀 Ribbons</span>
+                <span class="cat-count-badge" id="catCountRibbons"></span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Multi-Filter & Search Toolbar -->
+          <div class="charms-toolbar-card">
+            <div class="charm-search-wrap">
+              <svg class="search-input-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="charmQuickSearchInput" placeholder="Search all charms by keyword..." aria-label="Search charms">
+              <button type="button" class="search-clear-btn" id="charmSearchClearBtn" aria-label="Clear search" style="display: none;">✕</button>
+            </div>
+
+            <div class="charm-dropdown-filters">
+              <!-- Fandom / Theme Filter -->
+              <div class="charm-select-box charm-select-box-fandom">
+                <select id="charmFandomSelect" class="charm-filter-select" aria-label="Filter by Theme or Fandom">
+                  <option value="all">🎬 All Themes</option>
+                  <option value="avengers">🛡️ Avengers</option>
+                  <option value="harrypotter">⚡ Harry Potter</option>
+                  <option value="stitch">🌺 Stitch (Stnitch)</option>
+                  <option value="htd">🐉 HTD (Dragons)</option>
+                  <option value="minions">🍌 Minions</option>
+                </select>
+              </div>
+
+              <!-- Colour Filter -->
+              <div class="charm-select-box">
+                <select id="charmColorSelect" class="charm-filter-select" aria-label="Filter by Colour">
+                  <option value="all">🎨 All Colours</option>
+                  <option value="pink">🌸 Pink &amp; Rose</option>
+                  <option value="blue">💙 Blue &amp; Aqua</option>
+                  <option value="purple">💜 Purple &amp; Lilac</option>
+                  <option value="green">💚 Green &amp; Mint</option>
+                  <option value="white">🤍 White &amp; Clear</option>
+                  <option value="gold">✨ Gold &amp; Yellow</option>
+                  <option value="silver">🪙 Silver &amp; Grey</option>
+                  <option value="black">🖤 Black &amp; Dark</option>
+                  <option value="red">❤️ Red &amp; Crimson</option>
+                </select>
+              </div>
+
+              <!-- Material Filter -->
+              <div class="charm-select-box">
+                <select id="charmMaterialSelect" class="charm-filter-select" aria-label="Filter by Material">
+                  <option value="all">💎 All Materials</option>
+                  <option value="glossy">✨ Glossy</option>
+                  <option value="matt">🤍 Matt</option>
+                  <option value="silver">🪙 Silver</option>
+                  <option value="gold">👑 Gold</option>
+                  <option value="copper">🟤 Copper</option>
+                  <option value="bronze">🥉 Bronze</option>
+                  <option value="glassy">🔮 Glassy</option>
+                </select>
+              </div>
+
+              <!-- Price Filter -->
+              <div class="charm-select-box">
+                <select id="charmPriceTierSelect" class="charm-filter-select" aria-label="Filter by Price Tier">
+                  <option value="all">💰 All Prices</option>
+                  <option value="tier-low">Under ₹20</option>
+                  <option value="tier-mid">₹20 – ₹35</option>
+                  <option value="tier-high">₹35+</option>
+                </select>
+              </div>
+
+              <!-- Sort Dropdown -->
+              <div class="charm-select-box">
+                <select id="charmSortSelect" class="charm-filter-select" aria-label="Sort Charms">
+                  <option value="featured">✨ Curated Picks</option>
+                  <option value="price-asc">Price: Low to High</option>
+                  <option value="price-desc">Price: High to Low</option>
+                  <option value="title-asc">Name: A to Z</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Filter Meta & Result Counter -->
+          <div class="charms-results-meta-bar">
+            <div class="charms-meta-left">
+              <span class="charms-results-stat" id="charmsResultsSummary">Showing <strong>1–16</strong> Charms</span>
+              <span class="charms-count-pill" id="charmsCountAvailableBadge">Charms</span>
+            </div>
+            <button type="button" class="charms-reset-filters-btn" id="charmsResetFiltersBtn" style="display: none;">
+              Reset Filters ✕
+            </button>
+          </div>
+
+          <!-- Paginated Charm Grid Container -->
+          <div class="uploaded-charms-grid paginated-charms-grid" id="uploadedCharmsGrid" role="list" aria-label="Charms Catalog">
+            <!-- Populated reactively via JS with max 16 items per page -->
+          </div>
+
+          <!-- Load More & Catalog Status -->
+          <div class="charms-load-more-container" id="charmsLoadMoreContainer">
+            <button type="button" class="charms-load-more-btn" id="charmsLoadMoreBtn">
+              <span class="load-more-spinner" id="charmsLoadMoreSpinner" style="display: none;" aria-hidden="true"></span>
+              <span id="charmsLoadMoreBtnText">Load More Charms (+24)</span>
+            </button>
+            <div class="charms-load-more-progress" id="charmsLoadMoreProgress">
+              Showing <strong id="charmsLoadedProgressNum">16</strong> of <strong id="charmsTotalProgressNum">...</strong> Charms
+            </div>
+
+            <!-- End of Catalog Notice -->
+            <div class="charms-end-of-catalog" id="charmsEndOfCatalog" style="display: none;">
+              <span class="end-sparkle">✨</span>
+              <span id="charmsEndNoticeText">You've explored all charms in this category</span>
+            </div>
+          </div>
+
+          <!-- Stepper Footer: Tab 4 -->
+          <div class="stepper-nav-row" style="margin-top: 22px;">
+            <button type="button" class="stepper-nav-btn stepper-back-btn" id="stepperBackFromCharms">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              <span>Back: Color Story</span>
+            </button>
+            <button type="button" class="stepper-nav-btn stepper-finish-btn" id="stepperDirectAddBtn">
+              <span>✨ Add Custom Design To Bag</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile-Integrated Checkout Bar -->
+        <div class="mobile-integrated-checkout">
+          <div class="mobile-price-summary">
+            <span class="mobile-price-lbl">Estimated Total:</span>
+            <span class="mobile-price-amt" id="mobileIntegratedPrice">₹50.00</span>
+          </div>
+          <button type="button" class="mobile-integrated-btn" id="mobileIntegratedAddBtn">
+            <span>✨ Add Custom Design To Bag</span>
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  /* ==========================================================================
+     GLOBAL BASE & DESKTOP STYLES
+     ========================================================================== */
+  .titli-customizer-section { max-width: 1200px; margin: 20px auto 50px; padding: 0 16px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  .customizer-container { display: grid; grid-template-columns: 350px 1fr; gap: 24px; align-items: start; }
+  .customizer-stage-card { 
+    background: #FFFDF9; 
+    border: 1.5px solid #EFE4D6; 
+    border-radius: 18px; 
+    padding: 16px 14px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    box-shadow: 0 8px 30px rgba(179, 32, 37, 0.04); 
+    width: 100%; 
+    box-sizing: border-box;
+    position: sticky;
+    top: 20px;
+    align-self: start;
+    z-index: 20;
+    overflow: visible;
+  }
+  
+  .stage-header { display: flex; flex-direction: column; align-items: flex-start; width: 100%; margin-bottom: 8px; gap: 3px; }
+  .stage-title { font-family: 'Playfair Display', Georgia, serif; font-size: 18px; font-weight: 700; color: #B32025; margin: 0; line-height: 1.2; white-space: nowrap; }
+  .stage-pill { font-size: 9px; text-transform: uppercase; letter-spacing: 0.8px; color: #9B6B28; font-weight: 700; background: #FAF5EE; padding: 2px 8px; border-radius: 999px; border: 1px solid #E2C79A; }
+
+  .unified-preview-box { width: 100%; background: #FAF6F0; border: 1.5px dashed #E2D5C3; border-radius: 14px; padding: 12px 10px 10px; box-sizing: border-box; text-align: center; position: relative; overflow: hidden; }
+  .phone-palette-tag { font-size: 10px; font-weight: 800; color: #9B6B28; letter-spacing: 0.8px; text-transform: uppercase; display: block; margin-bottom: 6px; }
+  
+  .phone-graphic-container { position: relative; min-height: 175px; height: 175px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 6px; }
+  .phone-tether-svg-wrap { width: 36px; height: 160px; color: #241A18; }
+  .phone-tether-svg-wrap svg { width: 100%; height: 100%; display: block; }
+  .phone-name-beads-stack { position: absolute; top: 54px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 2px; z-index: 4; }
+  .phone-bead-item { width: 14px; height: 14px; border-radius: 50%; background: #FFFFFF; border: 1px solid #D5C7B5; font-size: 8.5px; font-weight: 800; color: #241A18; text-transform: uppercase; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.12); }
+  .phone-spacer-dot { width: 8px; height: 8px; border-radius: 50%; box-shadow: inset -1px -1px 2px rgba(0,0,0,0.25); }
+
+  .phone-floating-tooltip { background: #FFFFFF; border: 1px solid #E8DECE; box-shadow: 0 3px 10px rgba(0,0,0,0.06); padding: 4px 12px; border-radius: 999px; font-size: 11px; color: #7A6B67; font-weight: 600; margin-top: 6px; z-index: 5; }
+  .phone-attached-items { display: flex; gap: 6px; justify-content: center; margin-top: 6px; min-height: 36px; }
+  .attached-charm-thumb { width: 34px; height: 34px; border-radius: 50%; background: #FFFFFF; border: 1.5px solid #E2D7C8; box-shadow: 0 3px 8px rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; overflow: hidden; transition: transform 0.2s ease; }
+  .attached-charm-thumb:hover { transform: scale(1.1); }
+  .attached-charm-thumb img { width: 24px; height: 24px; object-fit: contain; }
+
+  .charm-arrangement-hint { display: none; width: fit-content; max-width: calc(100% - 16px); margin: 6px auto 0; padding: 4px 8px; border: 1px solid #E8DECE; border-radius: 999px; background: rgba(255,255,255,0.72); color: #7A6B67; font-size: 10px; font-weight: 650; line-height: 1.25; text-align: center; box-sizing: border-box; }
+  .charm-arrangement-hint.is-visible { display: flex; align-items: center; justify-content: center; }
+  [data-charm-reorder] { cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; }
+  [data-charm-reorder]:active { cursor: grabbing; }
+  [data-charm-reorder]:focus-visible { outline: 3px solid rgba(179, 32, 37, 0.3); outline-offset: 3px; }
+  [data-charm-reorder].is-drag-source { opacity: 0.35; }
+  [data-reorder-type].is-drop-target { border-color: #B32025 !important; box-shadow: 0 0 0 4px rgba(179, 32, 37, 0.14), 0 6px 16px rgba(179, 32, 37, 0.18) !important; }
+  .charm-drag-ghost { position: fixed !important; right: auto !important; z-index: 10000 !important; margin: 0 !important; pointer-events: none !important; opacity: 0.92; transform: translate(-50%, -50%) scale(1.08) !important; filter: drop-shadow(0 8px 14px rgba(36, 26, 24, 0.25)); }
+  body.is-reordering-charm { cursor: grabbing; }
+
+  .phone-attached-counter-bar { background: #FFFFFF; border: 1px solid #EBE2D5; border-radius: 8px; padding: 6px 10px; display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+  .counter-text { font-size: 12px; color: #241A18; }
+  .reset-link-btn { background: #FAF5EE; border: 1px solid #E2D5C3; color: #B32025; font-size: 10.5px; font-weight: 600; padding: 2px 8px; border-radius: 6px; cursor: pointer; }
+
+  .phone-price-breakdown { width: 100%; margin-top: 10px; }
+  .price-row { display: flex; justify-content: space-between; font-size: 12px; color: #574B48; margin-bottom: 4px; }
+  .price-row strong { color: #B32025; font-weight: 700; }
+  .price-divider { height: 1px; background: #EFE4D6; margin: 6px 0; }
+  .total-row .total-label { font-family: 'Playfair Display', Georgia, serif; font-size: 14px; font-weight: 700; color: #B32025; }
+  .total-row .total-amount { font-family: 'Playfair Display', Georgia, serif; font-size: 18px; font-weight: 800; color: #B32025; }
+  
+  .phone-add-to-bag-btn, .customizer-submit-btn { width: 100%; background: linear-gradient(180deg, #9C1F24 0%, #7E1519 100%); color: #FFFFFF; border: none; border-radius: 999px; padding: 10px 16px; font-size: 13.5px; font-weight: 700; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 14px rgba(179, 32, 37, 0.22); }
+
+  .keychain-assembly {
+    position: relative;
+    padding: 14px 0 24px;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 380px;
+  }
+  .keychain-clasp-wrap {
+    width: 52px !important;
+    height: 66px !important;
+    color: #6A1E22;
+    transition: color 0.3s ease;
+    z-index: 10;
+  }
+  .clasp-svg {
+    width: 52px !important;
+    height: 66px !important;
+    display: block;
+    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.12));
+  }
+  .strands-fan-cluster {
+    position: relative;
+    width: 320px;
+    max-width: 100%;
+    height: 330px;
+    margin: 6px auto 0;
+    z-index: 2;
+  }
+  .strand-branch {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.2s ease;
+    cursor: pointer;
+  }
+  .strand-branch:hover {
+    filter: drop-shadow(0 3px 8px rgba(179,32,37,0.2));
+  }
+
+  /* Exact V-Formation with Reduced Space Between Strand 2 & 3 */
+  /* Strand 1: Far Left, angles down toward Bell drop, dynamically colored with clasp finish */
+  .strand-1-accent {
+    left: calc(50% - 78px);
+    top: 14px;
+    transform-origin: top center;
+    transform: rotate(10deg);
+    z-index: 4;
+  }
+  /* Strand 2: Center-Left, reduced space with Strand 3 (36px total gap) */
+  .strand-2-name {
+    left: calc(50% - 18px);
+    top: 14px;
+    transform: translateX(-50%);
+    z-index: 5;
+  }
+  /* Strand 3: Center-Right, reduced space with Strand 2 */
+  .strand-3-statement {
+    left: calc(50% + 18px);
+    top: 14px;
+    transform: translateX(-50%) rotate(-3deg);
+    z-index: 3;
+  }
+  /* Strand 4: Far Right, closer to Strand 3 with reduced gap */
+  .strand-4-dangle {
+    left: calc(50% + 56px);
+    top: 16px;
+    transform-origin: top center;
+    transform: rotate(-7deg);
+    z-index: 4;
+  }
+
+  .dotted-strand-graphic {
+    width: 5px;
+    height: 105px;
+    background-image: radial-gradient(circle, var(--strand-clasp-color, currentColor) 65%, transparent 70%);
+    background-size: 5px 11px;
+    background-repeat: repeat-y;
+    background-position: center top;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08));
+    transition: background-image 0.25s ease;
+  }
+
+  .strand-beads-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3.5px;
+  }
+  .bead-round {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    box-shadow: inset -1px -1px 3px rgba(0,0,0,0.22), 0 1px 2px rgba(0,0,0,0.1);
+  }
+  .bead-letter {
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 1px solid #D5C7B5;
+    font-size: 10px;
+    font-weight: 800;
+    color: #241A18;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .bead-accent-charm {
+    font-size: 17px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .strand-drop-frame {
+    margin-top: 5px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 1.5px solid #F0EAE1;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    position: relative;
+    cursor: grab;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .strand-drop-frame:hover {
+    transform: scale(1.15);
+    border-color: #B32025;
+    box-shadow: 0 6px 16px rgba(179,32,37,0.18);
+  }
+  .strand-drop-frame.is-drop-target {
+    border-color: #B32025 !important;
+    background: #FFF7F7 !important;
+    box-shadow: 0 0 0 5px rgba(179, 32, 37, 0.22), 0 8px 20px rgba(179, 32, 37, 0.25) !important;
+    transform: scale(1.24) !important;
+    z-index: 25 !important;
+  }
+  .strand-drop-frame img {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .strand-remove-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #B32025;
+    color: #FFF;
+    font-size: 9px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+    z-index: 30;
+    pointer-events: auto;
+  }
+  .strand-drop-frame:hover .strand-remove-badge {
+    display: flex;
+  }
+  .drop-placeholder-icon {
+    font-size: 18px;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  /* ==========================================================================
+     SINGLE-CORD STAGE & CLUSTERED CHARMS
+     ========================================================================== */
+  .single-cord-assembly {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 300px;
+    padding-top: 4px;
+  }
+  .single-cord-stage {
+    position: relative;
+    width: 220px;
+    height: 250px;
+    margin: -8px auto 12px;
+  }
+  .single-cord-strand {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 230px;
+    color: #8A58B5;
+    transition: color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+  }
+  .single-cord-line {
+    width: 5px;
+    height: 220px;
+    border-radius: 999px;
+    background: currentColor;
+    background: repeating-linear-gradient(180deg, currentColor 0 7px, color-mix(in srgb, currentColor 72%, white) 7px 11px);
+    box-shadow: inset -1px 0 1px rgba(0,0,0,0.22), 0 2px 5px rgba(0,0,0,0.12);
+  }
+  .single-cord-bottom-ring {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2.5px solid currentColor;
+    margin-top: -2px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+  }
+  .single-cord-charms-cluster {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+  }
+  .cord-dangle-item {
+    position: absolute;
+    pointer-events: auto;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
+    filter: drop-shadow(0 3px 5px rgba(91, 54, 30, 0.12));
+  }
+  .cord-dangle-item:hover {
+    z-index: 20;
+    filter: drop-shadow(0 6px 8px rgba(91, 54, 30, 0.18));
+  }
+  .cord-dangle-item.is-drop-target .cord-dangle-frame {
+    border-color: #B32025;
+    box-shadow: 0 0 0 4px rgba(179, 32, 37, 0.14), 0 6px 16px rgba(179, 32, 37, 0.18);
+  }
+  .cord-dangle-item.charm-drag-ghost {
+    transform: translate(-50%, -50%) scale(1.08) !important;
+  }
+  .cord-connector-link {
+    height: 2.5px;
+    background: currentColor;
+    background: linear-gradient(90deg, currentColor, color-mix(in srgb, currentColor 55%, white));
+    opacity: 0.9;
+    border-radius: 999px;
+    flex-shrink: 0;
+  }
+  .cord-dangle-frame {
+    width: 39px;
+    height: 39px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 1.5px solid #DECBAF;
+    box-shadow: 0 4px 10px rgba(91, 54, 30, 0.16), inset 0 0 0 3px #FFFDF9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    flex-shrink: 0;
+  }
+  .cord-dangle-item:hover .cord-dangle-frame {
+    transform: scale(1.12);
+    border-color: #B32025;
+    box-shadow: 0 4px 12px rgba(179,32,37,0.25);
+  }
+  .cord-dangle-frame img {
+    width: 29px;
+    height: 29px;
+    object-fit: contain;
+  }
+  .cord-dangle-emoji {
+    font-size: 20px;
+    line-height: 1;
+  }
+  .cord-remove-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #B32025;
+    color: #FFF;
+    font-size: 9px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+  }
+  .cord-dangle-item:hover .cord-remove-badge {
+    display: flex;
+  }
+
+  /* Controls */
+  .customizer-controls-card { background: #FFFFFF; border: 1.5px solid #EFE4D6; border-radius: 20px; padding: 24px; box-shadow: 0 8px 30px rgba(0,0,0,0.02); width: 100%; box-sizing: border-box;}
+  .customizer-type-selector { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid #FAF4EE; }
+  
+  .type-switch-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 8px; }
+  .type-btn { display: flex; align-items: center; gap: 8px; background: #FAF8F5; border: 2px solid #EFE8DE; border-radius: 12px; padding: 8px 10px; cursor: pointer; text-align: left; transition: all 0.2s ease; }
+  .type-btn:hover { border-color: #E2C79A; }
+  .type-btn.active { border-color: #B32025; background: #FFF7F7; }
+  .type-icon { font-size: 20px; flex-shrink: 0; }
+  .type-text strong { display: block; font-size: 12px; color: #241A18; white-space: nowrap;}
+  .type-text small { display: block; font-size: 9.5px; color: #7A6B67; line-height: 1.25; }
+
+  .controls-nav-tabs { display: flex; gap: 8px; border-bottom: 2px solid #FAF4EE; padding-bottom: 12px; margin-bottom: 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .controls-nav-tabs::-webkit-scrollbar { display: none; }
+  .tab-btn { background: none; border: none; font-size: 13px; font-weight: 700; color: #8C7E7A; padding: 7px 14px; border-radius: 8px; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+  .tab-btn.active { background: #FAF5EE; color: #B32025; }
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+
+  .section-label { display: block; font-size: 13px; font-weight: 700; color: #241A18; margin-bottom: 6px; }
+  .section-desc { font-size: 12px; color: #7A6B67; margin: 0 0 12px; }
+
+  .strand-target-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+  .strand-target-btn { background: #FAF8F5; border: 1.5px solid #EFE8DE; border-radius: 10px; padding: 9px 12px; text-align: left; cursor: pointer; display: flex; flex-direction: column; gap: 2px; }
+  .strand-target-btn.active { border-color: #B32025; background: #FFF7F7; box-shadow: 0 3px 8px rgba(179,32,37,0.08); }
+  .strand-target-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .strand-num { font-size: 12px; font-weight: 800; color: #B32025; }
+  .strand-role { font-size: 10px; color: #6E5F5B; }
+  .strand-assigned { font-size: 11px; font-weight: 600; color: #9B6B28; }
+
+  /* Stepper Navigation Footers */
+  .stepper-nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1.5px solid #FAF4EE;
+  }
+  .stepper-step-indicator {
+    font-size: 11px;
+    font-weight: 700;
+    color: #8C7E7A;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .stepper-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    font-family: inherit;
+  }
+  .stepper-back-btn {
+    background: #FAF8F5;
+    border: 1.5px solid #EAE0D3;
+    color: #6E5F5B;
+  }
+  .stepper-back-btn:hover {
+    background: #F2ECE1;
+    color: #241A18;
+  }
+  .stepper-next-btn {
+    background: linear-gradient(135deg, #FAF5EE 0%, #F5ECE0 100%);
+    border: 1.5px solid #DECBAF;
+    color: #9C1F24;
+    margin-left: auto;
+  }
+  .stepper-next-btn:hover {
+    border-color: #9C1F24;
+    transform: translateX(2px);
+    box-shadow: 0 3px 10px rgba(156, 31, 36, 0.12);
+  }
+  .stepper-finish-btn {
+    background: linear-gradient(180deg, #9C1F24 0%, #7E1519 100%);
+    color: #FFFFFF;
+    border: none;
+    padding: 11px 22px;
+    margin-left: auto;
+    box-shadow: 0 4px 14px rgba(156, 31, 36, 0.25);
+  }
+  .stepper-finish-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(156, 31, 36, 0.35);
+  }
+
+  /* Aesthetic Categories */
+  .charms-category-pills-wrap {
+    margin-bottom: 12px;
+  }
+  .charms-category-pills {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 2px 2px 8px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .charms-category-pills::-webkit-scrollbar { display: none; }
+  .cat-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #FAF8F5;
+    border: 1.5px solid #EFE8DE;
+    border-radius: 999px;
+    padding: 6px 13px;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #6E5F5B;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+  .cat-pill:hover {
+    border-color: #DECBAF;
+    color: #241A18;
+    background: #FFFFFF;
+  }
+  .cat-pill.active {
+    background: #9C1F24;
+    border-color: #9C1F24;
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(156, 31, 36, 0.2);
+  }
+  .cat-count-badge {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.06);
+    color: inherit;
+  }
+  .cat-pill.active .cat-count-badge {
+    background: rgba(255,255,255,0.25);
+    color: #FFFFFF;
+  }
+
+  /* Multi-Filter & Search Toolbar */
+  .charms-toolbar-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .charm-search-wrap {
+    position: relative;
+    width: 100%;
+  }
+  .search-input-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9B6B28;
+    pointer-events: none;
+  }
+  .charm-search-wrap input {
+    width: 100%;
+    height: 36px;
+    padding: 0 32px 0 34px;
+    border-radius: 999px;
+    border: 1.5px solid #EFE8DE;
+    background: #FFFFFF;
+    font-size: 12.5px;
+    color: #241A18;
+    outline: none;
+    font-family: inherit;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .charm-search-wrap input:focus {
+    border-color: #9C1F24;
+    box-shadow: 0 0 0 3px rgba(156, 31, 36, 0.08);
+  }
+  .search-clear-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 11px;
+    color: #999;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .search-clear-btn:hover { color: #9C1F24; }
+
+  .charm-dropdown-filters {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+  .charm-select-box {
+    position: relative;
+    width: 100%;
+  }
+  .charm-filter-select {
+    width: 100%;
+    height: 34px;
+    padding: 0 24px 0 10px;
+    border-radius: 999px;
+    border: 1.5px solid #EFE8DE;
+    background: #FFFFFF;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #4A3E3B;
+    outline: none;
+    font-family: inherit;
+    box-sizing: border-box;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239B6B28' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 11px;
+    transition: border-color 0.2s ease;
+  }
+  .charm-filter-select:focus {
+    border-color: #9C1F24;
+  }
+
+  /* Active Filter Meta Bar */
+  .charms-results-meta-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 2px 10px;
+    border-bottom: 1px solid #FAF4EE;
+    margin-bottom: 10px;
+  }
+  .charms-meta-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .charms-results-stat {
+    font-size: 11.5px;
+    color: #6E5F5B;
+  }
+  .charms-results-stat strong {
+    color: #241A18;
+  }
+  .charms-count-pill {
+    font-size: 11px;
+    font-weight: 700;
+    color: #712423;
+    background: #FAF5EE;
+    border: 1px solid #E2C79A;
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
+  .charms-limit-pill {
+    font-size: 11px;
+    font-weight: 700;
+    color: #9B6B28;
+    background: #FAF5EE;
+    border: 1px solid #E2C79A;
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
+  .charms-reset-filters-btn {
+    background: #FAF5EE;
+    border: 1px solid #DECBAF;
+    border-radius: 999px;
+    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #9C1F24;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .charms-reset-filters-btn:hover {
+    background: #9C1F24;
+    color: #FFFFFF;
+    border-color: #9C1F24;
+  }
+
+  /* Paginated Grid & Cards */
+  .uploaded-charms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+    gap: 12px;
+    margin-top: 6px;
+    min-height: 200px;
+    padding-right: 4px;
+  }
+  .paginated-charms-grid {
+    max-height: none;
+    overflow-y: visible;
+  }
+  .charm-product-card {
+    background: #FAF8F5;
+    border: 1.5px solid #EFE8DE;
+    border-radius: 12px;
+    padding: 10px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    font-family: inherit;
+  }
+  .charm-product-card:hover {
+    border-color: #DECBAF;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(156, 31, 36, 0.08);
+  }
+  .charm-product-card.active {
+    border-color: #9C1F24;
+    background: #FFF7F7;
+    box-shadow: 0 4px 12px rgba(156, 31, 36, 0.14);
+  }
+  .charm-img-wrap {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    border: 1px solid #EBE2D5;
+    overflow: hidden;
+  }
+  .charm-img-wrap img {
+    max-width: 50px;
+    max-height: 50px;
+    object-fit: contain;
+  }
+  .charm-emoji-wrap {
+    font-size: 30px;
+  }
+  .charm-card-title {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #241A18;
+    text-align: center;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .charm-card-price {
+    font-size: 11px;
+    font-weight: 800;
+    color: #9B6B28;
+  }
+  .charm-check-badge {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #9C1F24;
+    color: #FFFFFF;
+    font-size: 11px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  .charm-product-card.active .charm-check-badge {
+    display: flex;
+  }
+
+  /* Load More & Catalog Status Indicators */
+  .charms-load-more-container {
+    width: 100%;
+    margin-top: 16px;
+    padding: 6px 0 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+    min-height: 48px;
+  }
+  .charms-load-more-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #FAF5EE;
+    color: #9C1F24;
+    border: 1.5px solid #DECBAF;
+    border-radius: 999px;
+    padding: 11px 28px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(156, 31, 36, 0.06);
+    transition: all 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+    outline: none;
+  }
+  .charms-load-more-btn:hover {
+    background: #9C1F24;
+    color: #FFFFFF;
+    border-color: #9C1F24;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(156, 31, 36, 0.16);
+  }
+  .charms-load-more-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(156, 31, 36, 0.12);
+  }
+  .charms-load-more-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  .load-more-spinner {
+    width: 13px;
+    height: 13px;
+    border: 2px solid rgba(156, 31, 36, 0.25);
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: titliSpinner 0.7s linear infinite;
+    display: inline-block;
+  }
+  @keyframes titliSpinner {
+    to { transform: rotate(360deg); }
+  }
+  .charms-load-more-progress {
+    font-size: 11.5px;
+    color: #8C7E7A;
+    font-weight: 600;
+  }
+  .charms-load-more-progress strong {
+    color: #241A18;
+  }
+  .charms-end-of-catalog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #8C7E7A;
+    background: #FAF8F5;
+    border: 1px dashed #DECBAF;
+    padding: 7px 18px;
+    border-radius: 999px;
+  }
+  .end-sparkle { color: #9B6B28; }
+
+  .charms-empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 36px 16px;
+    background: #FAF8F5;
+    border: 1.5px dashed #DECBAF;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .charms-empty-state .empty-icon { font-size: 28px; }
+  .charms-empty-state h4 {
+    margin: 0;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 15px;
+    color: #241A18;
+  }
+  .charms-empty-state p {
+    margin: 0 0 8px;
+    font-size: 12px;
+    color: #7A6B67;
+  }
+
+  .option-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
+  .option-card { display: flex; align-items: center; gap: 8px; padding: 10px; background: #FAF8F5; border: 1.5px solid #EFE8DE; border-radius: 10px; cursor: pointer; text-align: left; }
+  .option-card.active { border-color: #B32025; background: #FFF7F7; }
+  .color-swatch-circle { width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0; }
+  .option-title { font-size: 12px; font-weight: 600; color: #332624; }
+
+  .name-input-group { display: flex; align-items: center; background: #FAF8F5; border: 1.5px solid #E5DBD0; border-radius: 12px; padding: 4px 10px; }
+  .custom-text-input { border: none; background: transparent; width: 100%; padding: 8px; font-size: 15px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #241A18; }
+  .custom-text-input:focus { outline: none; }
+  .clear-btn { background: none; border: none; cursor: pointer; color: #999; font-size: 14px; }
+
+  .palette-list { display: flex; flex-direction: column; gap: 10px; }
+  .palette-row-btn { display: flex; align-items: center; gap: 12px; background: #FAF8F5; border: 1.5px solid #EFE8DE; border-radius: 12px; padding: 10px; cursor: pointer; text-align: left; }
+  .palette-row-btn.active { border-color: #B32025; background: #FFF8F8; }
+  .swatch-strip { display: flex; gap: 3px; }
+  .swatch-strip span { width: 16px; height: 32px; border-radius: 4px; }
+  .palette-meta strong { display: block; font-size: 13px; color: #241A18; }
+  .palette-meta small { font-size: 11px; color: #7A6B67; }
+
+  .customizer-summary-bar { display: flex; justify-content: space-between; align-items: center; padding-top: 18px; border-top: 1.5px solid #FAF4EE; }
+  .price-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #8C7E7A; display: block; }
+  .price-amount { font-size: 20px; font-weight: 800; color: #B32025; }
+
+  .mobile-integrated-checkout { display: none; }
+  .mobile-integrated-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #9C1F24 0%, #B32025 50%, #7E1519 100%);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 999px;
+    padding: 13px 20px;
+    font-size: 14.5px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(156, 31, 36, 0.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: inherit;
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-sizing: border-box;
+    outline: none;
+  }
+  .mobile-integrated-btn:hover {
+    background: linear-gradient(135deg, #A82227 0%, #C42329 50%, #8E171C 100%);
+    box-shadow: 0 6px 18px rgba(156, 31, 36, 0.35);
+  }
+  .mobile-integrated-btn:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(156, 31, 36, 0.2);
+  }
+
+  /* Zoom Trigger Button on Charm Cards */
+  .charm-zoom-trigger {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #FAF5EE;
+    border: 1px solid #E2D5C3;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, background 0.2s ease;
+    z-index: 5;
+  }
+  .charm-zoom-trigger:hover {
+    transform: scale(1.15);
+    background: #ffffff;
+  }
+
+  /* Floating Mini-Preview Pill (Mobile Picture-in-Picture) */
+  .mobile-floating-preview-pill {
+    position: fixed;
+    top: 68px;
+    right: 12px;
+    z-index: 180;
+    background: rgba(255, 253, 249, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1.5px solid #712423;
+    border-radius: 28px;
+    box-shadow: 0 8px 24px rgba(113, 36, 35, 0.18);
+    padding: 6px 12px 6px 10px;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform: translateY(-80px);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .mobile-floating-preview-pill.is-active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .pip-icon-box {
+    position: relative;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #FAF5EE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+  }
+  .pip-pulse-dot {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #607353;
+    border: 1px solid #ffffff;
+  }
+  .pip-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .pip-title {
+    font-size: 11px;
+    font-weight: 800;
+    color: #712423;
+    line-height: 1.1;
+  }
+  .pip-charms-row {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .pip-mini-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #ECE5DC;
+  }
+  .pip-empty-hint {
+    font-size: 9.5px;
+    color: #7A6B67;
+  }
+  .pip-arrow {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #712423;
+    background: #FAF5EE;
+    padding: 3px 8px;
+    border-radius: 12px;
+    border: 1px solid #ECE5DC;
+  }
+
+  /* Instant Feedback Toast */
+  .customizer-toast-notice {
+    position: fixed;
+    bottom: 82px;
+    left: 50%;
+    transform: translateX(-50%) translateY(40px);
+    background: #241D26;
+    color: #FAF5EE;
+    padding: 10px 20px;
+    border-radius: 30px;
+    z-index: 350;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    white-space: nowrap;
+    border: 1px solid rgba(231, 219, 202, 0.3);
+  }
+  .customizer-toast-notice.toast-active {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  /* High-Res Charm Inspection Modal */
+  .charm-zoom-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(36, 26, 24, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .charm-zoom-modal-backdrop.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .charm-zoom-card {
+    background: #ffffff;
+    border: 1.5px solid #EFE4D6;
+    border-radius: 22px;
+    padding: 24px 20px;
+    max-width: 320px;
+    width: 100%;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.22);
+    position: relative;
+    text-align: center;
+    transform: scale(0.92);
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .charm-zoom-modal-backdrop.is-open .charm-zoom-card {
+    transform: scale(1);
+  }
+  .zoom-close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #FAF5EE;
+    border: 1px solid #E2D5C3;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #712423;
+  }
+  .zoom-media-box {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 14px;
+    border-radius: 16px;
+    background: #FAF7F2;
+    border: 1px solid #ECE5DC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+    overflow: hidden;
+  }
+  .zoom-media-box img {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: contain;
+  }
+  .zoom-title {
+    font-family: var(--font-heading, 'Quicksand', sans-serif);
+    font-size: 18px;
+    font-weight: 700;
+    color: #712423;
+    margin: 0 0 8px;
+  }
+  .zoom-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .zoom-price {
+    font-size: 15px;
+    font-weight: 800;
+    color: #607353;
+  }
+  .zoom-badge {
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #712423;
+    background: #FFF2F2;
+    padding: 2px 8px;
+    border-radius: 20px;
+    border: 1px solid #F6D6D7;
+  }
+  .zoom-desc {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: #554D48;
+    margin: 0 0 18px;
+  }
+  .zoom-action-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #712423 0%, #8D302F 100%);
+    color: #FAF5EE;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 18px;
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(113, 36, 35, 0.2);
+  }
+
+  @media (max-width: 880px) {
+    .titli-minimal-header {
+      position: relative !important;
+      top: auto !important;
+    }
+    .mobile-floating-preview-pill {
+      display: none !important;
+    }
+    html, body {
+      overflow-x: clip !important;
+      overflow-y: visible !important;
+    }
+    .titli-customizer-section, .titli-customizer-page-wrap {
+      overflow: visible !important;
+    }
+    .titli-customizer-page-wrap {
+      padding: 6px 6px 30px !important;
+    }
+    .titli-customizer-section { 
+      width: 100% !important; 
+      margin: 0 auto 6px !important; 
+      padding: 0 4px !important; 
+    }
+    .customizer-container { 
+      display: block !important; 
+      overflow: visible !important; 
+      position: relative !important;
+    }
+    .customizer-stage-card { 
+      position: -webkit-sticky !important;
+      position: sticky !important; 
+      top: 6px !important; 
+      top: max(6px, env(safe-area-inset-top)) !important;
+      z-index: 100 !important; 
+      padding: 6px 10px !important; 
+      border-radius: 14px !important; 
+      background: #FFFDF9 !important; 
+      border: 1.5px solid #EFE4D6 !important;
+      box-shadow: 0 4px 18px rgba(179, 32, 37, 0.11) !important; 
+      overflow: hidden !important; 
+      width: 100% !important;
+      box-sizing: border-box !important;
+      margin-bottom: 8px !important; 
+      transition: box-shadow 0.2s ease;
+    }
+    .customizer-stage-card.is-mobile-pinned {
+      position: fixed !important;
+      top: 6px !important;
+      top: max(6px, env(safe-area-inset-top)) !important;
+      left: 6px !important;
+      right: 6px !important;
+      width: calc(100% - 12px) !important;
+      max-width: calc(100% - 12px) !important;
+      z-index: 120 !important;
+      box-shadow: 0 6px 22px rgba(179, 32, 37, 0.18) !important;
+    }
+    .customizer-stage-spacer {
+      display: none;
+      width: 100%;
+    }
+    .customizer-controls-card { 
+      padding: 12px 10px !important; 
+      border-radius: 14px !important; 
+      margin-top: 8px !important;
+    }
+    
+    .stage-header {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      width: 100% !important;
+      margin-bottom: 3px !important;
+      gap: 6px !important;
+    }
+    .stage-title {
+      font-size: 13.5px !important;
+      line-height: 1.2 !important;
+    }
+    .stage-pill {
+      font-size: 8px !important;
+      padding: 1.5px 6px !important;
+      letter-spacing: 0.5px !important;
+    }
+    .unified-preview-box {
+      padding: 4px 8px 4px !important;
+      border-radius: 10px !important;
+      border-width: 1px !important;
+      overflow: hidden !important;
+      background: #FAF6F0 !important;
+    }
+    .phone-palette-tag {
+      font-size: 8.5px !important;
+      margin-bottom: 2px !important;
+      letter-spacing: 0.5px !important;
+    }
+    
+    /* 3-segment Creation Type Row on Mobile */
+    .type-switch-row { 
+      display: grid !important; 
+      grid-template-columns: repeat(3, 1fr) !important; 
+      gap: 6px !important; 
+    }
+    .type-btn { 
+      padding: 8px 4px !important; 
+      border-radius: 10px !important; 
+      flex-direction: column !important; 
+      align-items: center !important; 
+      text-align: center !important; 
+      gap: 2px !important;
+    }
+    .type-icon { font-size: 18px !important; }
+    .type-text strong { font-size: 11px !important; line-height: 1.2 !important; white-space: normal !important; text-align: center !important; }
+    .type-text small { display: none !important; }
+
+    /* Touch-Scrollable Step Tabs on Mobile */
+    .controls-nav-tabs {
+      display: flex !important;
+      overflow-x: auto !important;
+      scroll-snap-type: x mandatory !important;
+      -webkit-overflow-scrolling: touch !important;
+      gap: 6px !important;
+      padding: 2px 2px 8px !important;
+      scrollbar-width: none !important;
+      margin-bottom: 12px !important;
+    }
+    .controls-nav-tabs::-webkit-scrollbar { display: none !important; }
+    .tab-btn {
+      flex-shrink: 0 !important;
+      padding: 8px 14px !important;
+      font-size: 12px !important;
+      font-weight: 700 !important;
+      border-radius: 999px !important;
+      background: #FAF5EE !important;
+      border: 1px solid #EAE0D3 !important;
+      color: #6E5F5B !important;
+      min-height: 36px !important;
+      scroll-snap-align: start !important;
+    }
+    .tab-btn.active {
+      background: #9C1F24 !important;
+      color: #FFFFFF !important;
+      border-color: #9C1F24 !important;
+      box-shadow: 0 2px 8px rgba(156, 31, 36, 0.25) !important;
+    }
+
+    /* Option Grids (Cords / Hardware) */
+    .option-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 6px !important;
+    }
+    .option-card {
+      padding: 8px 10px !important;
+      border-radius: 8px !important;
+    }
+    .option-title { font-size: 11.5px !important; }
+
+    /* Aesthetic Category Pills on Mobile */
+    .charms-category-pills-wrap {
+      margin-bottom: 12px !important;
+    }
+    .charms-category-pills {
+      display: flex !important;
+      gap: 6px !important;
+      overflow-x: auto !important;
+      scroll-snap-type: x proximity !important;
+      -webkit-overflow-scrolling: touch !important;
+      padding: 2px 2px 8px !important;
+      scrollbar-width: none !important;
+    }
+    .charms-category-pills::-webkit-scrollbar { display: none !important; }
+    .cat-pill {
+      min-height: 38px !important;
+      padding: 6px 14px !important;
+      font-size: 11.5px !important;
+      border-radius: 999px !important;
+      scroll-snap-align: start !important;
+      flex-shrink: 0 !important;
+    }
+
+    /* Charms Toolbar & Filters on Mobile */
+    .charm-dropdown-filters {
+      grid-template-columns: 1fr 1fr !important;
+      gap: 6px !important;
+    }
+    .charm-select-box-fandom {
+      grid-column: span 2;
+    }
+
+    /* 2-Column Charms Grid on Mobile - natural scroll, no trapped box */
+    .uploaded-charms-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 10px !important;
+      max-height: none !important;
+      overflow-y: visible !important;
+      padding-right: 0 !important;
+      margin-top: 8px !important;
+    }
+    .charm-product-card {
+      padding: 10px 8px !important;
+      border-radius: 12px !important;
+      min-height: 115px !important;
+    }
+    .charm-img-wrap {
+      width: 54px !important;
+      height: 54px !important;
+      border-radius: 10px !important;
+      margin-bottom: 6px !important;
+    }
+    .charm-img-wrap img { max-width: 44px !important; max-height: 44px !important; }
+    .charm-emoji-wrap { font-size: 26px !important; }
+    .charm-card-title {
+      font-size: 11px !important;
+      line-height: 1.25 !important;
+      text-align: center !important;
+      max-width: 100% !important;
+    }
+    .charm-card-price {
+      font-size: 11.5px !important;
+      font-weight: 800 !important;
+      margin-top: 3px !important;
+    }
+    .charm-zoom-trigger {
+      width: 28px !important;
+      height: 28px !important;
+      top: 5px !important;
+      right: 5px !important;
+    }
+
+    /* Scaled Previews on Mobile (Moderately enlarged for crystal clarity) */
+    .phone-graphic-container { 
+      min-height: 124px !important; 
+      height: 124px !important; 
+      padding-top: 0px !important; 
+      position: relative !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+    }
+    .phone-tether-svg-wrap { 
+      width: 26px !important; 
+      height: 112px !important; 
+    }
+    .phone-tether-svg-wrap svg {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .phone-name-beads-stack { 
+      top: 32px !important; 
+      gap: 1.6px !important; 
+    }
+    .phone-bead-item { 
+      width: 11px !important; 
+      height: 11px !important; 
+      font-size: 7px !important; 
+      box-shadow: 0 1px 2px rgba(0,0,0,0.12) !important; 
+    }
+    .phone-spacer-dot { 
+      width: 5px !important; 
+      height: 5px !important; 
+    }
+    .phone-floating-tooltip { 
+      padding: 2px 7px !important; 
+      font-size: 8.5px !important; 
+      margin-top: 2px !important; 
+      border-radius: 999px !important; 
+    }
+    .phone-attached-items { 
+      min-height: 26px !important; 
+      margin-top: 2px !important; 
+      gap: 4px !important; 
+    }
+    .attached-charm-thumb { 
+      width: 25px !important; 
+      height: 25px !important; 
+      border-width: 1px !important; 
+    }
+    .attached-charm-thumb img { 
+      width: 18px !important; 
+      height: 18px !important; 
+    }
+    .charm-arrangement-hint { 
+      display: none !important; 
+    }
+    .phone-attached-counter-bar { 
+      padding: 3px 6px !important; 
+      margin-top: 2px !important; 
+      border-radius: 6px !important; 
+    }
+    .counter-text { 
+      font-size: 10.5px !important; 
+    }
+    .reset-link-btn { 
+      font-size: 9px !important; 
+      padding: 1.5px 5px !important; 
+    }
+
+    .keychain-assembly { 
+      min-height: 135px !important; 
+      padding: 2px 0 4px !important; 
+    }
+    .keychain-clasp-wrap { 
+      width: 30px !important; 
+      height: 38px !important; 
+    }
+    .clasp-svg { 
+      width: 30px !important; 
+      height: 38px !important; 
+    }
+    .strands-fan-cluster { 
+      width: 210px !important; 
+      height: 145px !important; 
+      transform: scale(0.64) !important; 
+      transform-origin: top center !important; 
+      margin-top: -14px !important; 
+    }
+
+    .single-cord-assembly { 
+      min-height: 135px !important; 
+      padding-top: 2px !important; 
+    }
+    .single-cord-stage { 
+      width: 135px !important; 
+      height: 135px !important; 
+      margin-bottom: 2px !important; 
+      transform: scale(0.72) !important; 
+      transform-origin: top center !important; 
+    }
+    .single-cord-strand { 
+      height: 130px !important; 
+      width: 8px !important; 
+    }
+    .single-cord-line { 
+      height: 120px !important; 
+      width: 3px !important; 
+    }
+    .cord-dangle-frame { 
+      width: 26px !important; 
+      height: 26px !important; 
+    }
+    .cord-dangle-frame img { 
+      width: 18px !important; 
+      height: 18px !important; 
+    }
+
+    .desktop-only-action-bar { display: none !important; }
+
+    /* Sticky Bottom Checkout Bar on Mobile */
+    .mobile-integrated-checkout { 
+      display: block !important; 
+      position: sticky !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      z-index: 95 !important;
+      background: rgba(255, 253, 249, 0.98) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      padding: 10px 14px calc(12px + env(safe-area-inset-bottom, 0px)) !important;
+      margin: 12px -12px -14px -12px !important;
+      border-top: 1.5px solid #EFE4D6 !important;
+      box-shadow: 0 -6px 20px rgba(113, 36, 35, 0.08) !important;
+      border-radius: 16px 16px 0 0 !important;
+    }
+    .mobile-price-summary { 
+      display: flex !important; 
+      justify-content: space-between !important; 
+      align-items: baseline !important; 
+      margin-bottom: 6px !important; 
+    }
+    .mobile-price-lbl { font-size: 11.5px !important; font-weight: 700 !important; color: #7A6B67 !important; text-transform: uppercase !important; letter-spacing: 0.5px !important; }
+    .mobile-price-amt { font-family: 'Playfair Display', Georgia, serif !important; font-size: 20px !important; font-weight: 800 !important; color: #B32025 !important; }
+
+    .mobile-integrated-btn {
+      width: 100% !important;
+      background: linear-gradient(135deg, #9C1F24 0%, #B32025 50%, #7E1519 100%) !important;
+      color: #FFFFFF !important;
+      border: none !important;
+      border-radius: 999px !important;
+      padding: 13px 20px !important;
+      font-size: 14px !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.3px !important;
+      cursor: pointer !important;
+      box-shadow: 0 4px 14px rgba(156, 31, 36, 0.28) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      box-sizing: border-box !important;
+      margin-top: 4px !important;
+      outline: none !important;
+      -webkit-appearance: none !important;
+      appearance: none !important;
+    }
+    .mobile-integrated-btn:active {
+      transform: scale(0.98) !important;
+      box-shadow: 0 2px 8px rgba(156, 31, 36, 0.2) !important;
+    }
+
+    .stepper-nav-row { margin-top: 14px !important; padding-top: 12px !important; }
+    .stepper-nav-btn { padding: 9px 14px !important; font-size: 11.5px !important; }
+  }
+</style>
+
+<script>
+(function() {
+  function initTitliCustomizer() {
+    var appRoot = document.getElementById('titliCustomizerApp');
+    var phoneVariantId = appRoot ? appRoot.getAttribute('data-phone-variant') : '50663420952773';
+    var bagVariantId = appRoot ? appRoot.getAttribute('data-bag-variant') : '50663426982085';
+    var bagSingleVariantId = appRoot ? appRoot.getAttribute('data-bag-single-variant') : '50666935517381';
+
+    var state = {
+      modelType: 'phone-charm',
+      bagClipMultiBasePrice: 199,
+      bagClipSingleBasePrice: 100,
+      phoneBasePrice: 50,
+      claspPrice: 0,
+      
+      phoneCharms: [],
+      bagClipSingleCharms: [], // Holds up to 7 charms clustered along the single cord
+
+      bagClipCharms: { 1: null, 2: null, 3: null, 4: null },
+      activeStrandTarget: 1,
+
+      claspColor: '#6A1E22',
+      claspName: 'Antique Brass & Burgundy',
+      customName: 'CRAFT',
+      palette: 'fairy-garden',
+      paletteName: 'PASTEL DREAM PALETTE',
+      accentColor: '#6BB377',
+      primaryColor: '#8A58B5'
+    };
+
+    var stagePhoneCharm = document.getElementById('stagePhoneCharmWrapper');
+    var stageBagClipMulti = document.getElementById('stageBagClipMultiWrapper');
+    var stageBagClipSingle = document.getElementById('stageBagClipSingleWrapper');
+    
+    var tabBtnClasp = document.getElementById('tabBtnClasp');
+    var tabBtnName = document.getElementById('tabBtnName');
+    var tabBtnPalette = document.getElementById('tabBtnPalette');
+    var tabBtnCharms = document.getElementById('tabBtnCharms');
+    var claspHeadingLabel = document.getElementById('claspHeadingLabel');
+    var claspDescText = document.getElementById('claspDescText');
+    var claspSelectorPhone = document.getElementById('claspSelectorPhone');
+    var claspSelectorBagMulti = document.getElementById('claspSelectorBagMulti');
+    var claspSelectorBagSingle = document.getElementById('claspSelectorBagSingle');
+    var bagClipTargetSection = document.getElementById('bagClipStrandTargetSection');
+    var mobilePriceAmt = document.getElementById('mobileIntegratedPrice');
+    var mobileAddBtn = document.getElementById('mobileIntegratedAddBtn');
+
+    // Phone UI Elements
+    var phonePaletteLabel = document.getElementById('phonePaletteLabel');
+    var phoneCharmsCounter = document.getElementById('phoneCharmsCounterText');
+    var phoneResetBtn = document.getElementById('phoneResetCharmsBtn');
+    var phoneBasePriceEl = document.getElementById('phoneBasePriceText');
+    var phoneAddonsEl = document.getElementById('phoneAddonsText');
+    var phoneEstimatedTotalEl = document.getElementById('phoneEstimatedTotal');
+    var phoneDirectAddBtn = document.getElementById('phoneDirectAddBtn');
+    var phoneTether = document.getElementById('renderPhoneTether');
+    var phoneAttachedList = document.getElementById('phoneAttachedList');
+    var phoneTapHint = document.getElementById('phoneTapHint');
+    var phoneArrangementHint = document.getElementById('phoneArrangementHint');
+    var phoneNameBeadsStack = document.getElementById('phoneNameBeadsColumn');
+
+    // Multi Bag UI
+    var multiPaletteLabel = document.getElementById('multiPaletteLabel');
+    var multiCharmsCounter = document.getElementById('multiCharmsCounterText');
+    var multiResetBtn = document.getElementById('multiResetCharmsBtn');
+    var multiTabResetBtn = document.getElementById('multiTabResetCharmsBtn');
+    var renderClasp = document.getElementById('renderClasp');
+    var renderNameBeads = document.getElementById('renderNameBeads');
+    var renderFloralBeads = document.getElementById('renderFloralBeads');
+    var renderPastelBeads = document.getElementById('renderPastelBeads');
+    var renderDrop1 = document.getElementById('renderDrop1');
+    var renderDrop2 = document.getElementById('renderDrop2');
+    var renderDrop3 = document.getElementById('renderDrop3');
+    var renderDrop4 = document.getElementById('renderDrop4');
+    var customizerTotalMultiPrice = document.getElementById('customizerTotalMultiPrice');
+    var multiBasePriceEl = document.getElementById('multiBasePriceText');
+    var multiAddonsEl = document.getElementById('multiAddonsText');
+    var addMultiToBagBtn = document.getElementById('addMultiToBagBtn');
+    var multiArrangementHint = document.getElementById('multiArrangementHint');
+
+    // Single Bag UI
+    var singlePaletteLabel = document.getElementById('singlePaletteLabel');
+    var renderClaspSingle = document.getElementById('renderClaspSingle');
+    var singleCordStrand = document.getElementById('singleCordStrand');
+    var singleCordCharmsCluster = document.getElementById('singleCordCharmsCluster');
+    var singleTapHint = document.getElementById('singleTapHint');
+    var singleCharmsCounter = document.getElementById('singleCharmsCounterText');
+    var singleResetBtn = document.getElementById('singleResetCharmsBtn');
+    var singleBasePriceEl = document.getElementById('singleBasePriceText');
+    var singleAddonsEl = document.getElementById('singleAddonsText');
+    var singleEstimatedTotalEl = document.getElementById('singleEstimatedTotal');
+    var singleDirectAddBtn = document.getElementById('singleDirectAddBtn');
+    var singleArrangementHint = document.getElementById('singleArrangementHint');
+
+    // Reversed placement: charms attach from bottom anchor upwards toward the clasp
+    var singleCordSlots = [
+      { side: 'bottom', top: 73, rotate: 0,  connLen: 8 },
+      { side: 'left',   top: 62, rotate: -5, connLen: 11 },
+      { side: 'right',  top: 52, rotate: 5,  connLen: 11 },
+      { side: 'left',   top: 42, rotate: -4, connLen: 13 },
+      { side: 'right',  top: 32, rotate: 5,  connLen: 13 },
+      { side: 'left',   top: 22, rotate: -4, connLen: 10 },
+      { side: 'right',  top: 12, rotate: 4,  connLen: 10 }
+    ];
+
+    // Pointer Events support mouse, pen, and touch with one reorder interaction.
+    var charmDrag = null;
+    var suppressCharmClickUntil = 0;
+
+    function moveArrayItem(items, fromIndex, toIndex) {
+      if (fromIndex === toIndex || fromIndex < 0 || toIndex < 0 || fromIndex >= items.length || toIndex >= items.length) return false;
+      var moved = items.splice(fromIndex, 1)[0];
+      items.splice(toIndex, 0, moved);
+      return true;
+    }
+
+    function updateArrangementHints() {
+      if (phoneArrangementHint) phoneArrangementHint.classList.toggle('is-visible', state.phoneCharms.length > 1);
+      if (singleArrangementHint) singleArrangementHint.classList.toggle('is-visible', state.bagClipSingleCharms.length > 1);
+      var multiCount = [1, 2, 3, 4].filter(function(s) { return !!state.bagClipCharms[s]; }).length;
+      if (multiArrangementHint) multiArrangementHint.classList.toggle('is-visible', multiCount > 0);
+    }
+
+    function renderReorderedCharms(type) {
+      if (type === 'phone') renderAttachedLists();
+      else if (type === 'single') renderSingleCordCharms();
+      else renderBagClipMultiDrops();
+      syncCharmsGridActiveState();
+      updateMobileFloatingPill();
+      updateArrangementHints();
+    }
+
+    function reorderCharm(type, fromIndex, toIndex) {
+      var changed = false;
+      if (type === 'phone') changed = moveArrayItem(state.phoneCharms, fromIndex, toIndex);
+      else if (type === 'single') changed = moveArrayItem(state.bagClipSingleCharms, fromIndex, toIndex);
+      else if (type === 'multi' && fromIndex !== toIndex) {
+        var sourceCharm = state.bagClipCharms[fromIndex];
+        var destCharm = state.bagClipCharms[toIndex];
+        state.bagClipCharms[fromIndex] = destCharm;
+        state.bagClipCharms[toIndex] = sourceCharm;
+        state.activeStrandTarget = toIndex;
+        changed = true;
+      }
+      if (!changed) return false;
+      renderReorderedCharms(type);
+      updatePrices();
+      if (type === 'multi') {
+        var isSwap = state.bagClipCharms[fromIndex] && state.bagClipCharms[toIndex];
+        showCustomizerToast(isSwap ? 'Swapped strings ' + fromIndex + ' & ' + toIndex : 'Moved charm to string ' + toIndex);
+      } else {
+        showCustomizerToast('Charm arrangement updated');
+      }
+      return true;
+    }
+
+    function clearCharmDropTargets() {
+      if (!appRoot) return;
+      appRoot.querySelectorAll('.is-drop-target').forEach(function(el) { el.classList.remove('is-drop-target'); });
+    }
+
+    function closestCharmDropTarget(type, clientX, clientY) {
+      if (!appRoot) return null;
+      if (type === 'multi') {
+        var drops = [renderDrop1, renderDrop2, renderDrop3, renderDrop4];
+        var strands = [
+          document.getElementById('renderStrand1'),
+          document.getElementById('renderStrand2'),
+          document.getElementById('renderStrand3'),
+          document.getElementById('renderStrand4')
+        ];
+        var closest = null;
+        var closestDistance = Infinity;
+        for (var i = 0; i < 4; i++) {
+          var dropEl = drops[i];
+          var strandEl = strands[i];
+          if (!dropEl) continue;
+          var dropRect = dropEl.getBoundingClientRect();
+          var dropDist = Math.hypot(clientX - (dropRect.left + dropRect.width / 2), clientY - (dropRect.top + dropRect.height / 2));
+          var strandDist = Infinity;
+          if (strandEl) {
+            var strandRect = strandEl.getBoundingClientRect();
+            var clampY = Math.max(strandRect.top, Math.min(clientY, strandRect.bottom));
+            strandDist = Math.hypot(clientX - (strandRect.left + strandRect.width / 2), clientY - clampY);
+          }
+          var effectiveDist = Math.min(dropDist, strandDist);
+          if (effectiveDist < closestDistance) {
+            closestDistance = effectiveDist;
+            closest = dropEl;
+          }
+        }
+        return closestDistance <= 115 ? closest : null;
+      }
+
+      var targets = appRoot.querySelectorAll('[data-reorder-type="' + type + '"]');
+      var closest = null;
+      var closestDistance = Infinity;
+      targets.forEach(function(target) {
+        var rect = target.getBoundingClientRect();
+        var dx = clientX - (rect.left + rect.width / 2);
+        var dy = clientY - (rect.top + rect.height / 2);
+        var distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < closestDistance) {
+          closest = target;
+          closestDistance = distance;
+        }
+      });
+      return closestDistance <= 90 ? closest : null;
+    }
+
+    function positionCharmGhost(clientX, clientY) {
+      if (!charmDrag || !charmDrag.ghost) return;
+      charmDrag.ghost.style.left = clientX + 'px';
+      charmDrag.ghost.style.top = clientY + 'px';
+    }
+
+    function finishCharmDrag(event, cancelled) {
+      if (!charmDrag || event.pointerId !== charmDrag.pointerId) return;
+      var finishedDrag = charmDrag;
+      charmDrag = null;
+      clearCharmDropTargets();
+      document.body.classList.remove('is-reordering-charm');
+      finishedDrag.source.classList.remove('is-drag-source');
+      if (finishedDrag.ghost) finishedDrag.ghost.remove();
+
+      if (!cancelled && finishedDrag.started) {
+        suppressCharmClickUntil = Date.now() + 400;
+        var target = closestCharmDropTarget(finishedDrag.type, event.clientX, event.clientY);
+        if (target) {
+          var toIndex = parseInt(target.getAttribute('data-reorder-index'), 10);
+          reorderCharm(finishedDrag.type, finishedDrag.fromIndex, toIndex);
+        }
+      }
+    }
+
+    function bindCharmReorder(item, type, index, label) {
+      item.setAttribute('data-charm-reorder', 'true');
+      item.setAttribute('data-reorder-type', type);
+      item.setAttribute('data-reorder-index', index);
+      item.setAttribute('tabindex', '0');
+      item.setAttribute('role', 'option');
+      item.setAttribute('aria-posinset', type === 'multi' ? index : index + 1);
+      item.setAttribute('aria-setsize', type === 'multi' ? 4 : (type === 'phone' ? state.phoneCharms.length : state.bagClipSingleCharms.length));
+      item.setAttribute('aria-label', label + '. Drag to rearrange, or use arrow keys.');
+      item.querySelectorAll('img').forEach(function(img) { img.setAttribute('draggable', 'false'); });
+      if (item.getAttribute('data-reorder-bound') === 'true') return;
+      item.setAttribute('data-reorder-bound', 'true');
+
+      item.addEventListener('pointerdown', function(event) {
+        if (event.button !== 0 || charmDrag || !item.hasAttribute('data-charm-reorder')) return;
+        var currentType = item.getAttribute('data-reorder-type');
+        var currentIndex = parseInt(item.getAttribute('data-reorder-index'), 10);
+        if (item.setPointerCapture) item.setPointerCapture(event.pointerId);
+        charmDrag = {
+          pointerId: event.pointerId,
+          type: currentType,
+          fromIndex: currentIndex,
+          source: item,
+          startX: event.clientX,
+          startY: event.clientY,
+          started: false,
+          ghost: null
+        };
+      });
+
+      item.addEventListener('keydown', function(event) {
+        var backwards = event.key === 'ArrowLeft' || event.key === 'ArrowUp';
+        var forwards = event.key === 'ArrowRight' || event.key === 'ArrowDown';
+        if (!backwards && !forwards) return;
+        event.preventDefault();
+        var currentType = item.getAttribute('data-reorder-type');
+        var currentIndex = parseInt(item.getAttribute('data-reorder-index'), 10);
+        var maxIndex = currentType === 'multi' ? 4 : (currentType === 'phone' ? state.phoneCharms.length - 1 : state.bagClipSingleCharms.length - 1);
+        var minIndex = currentType === 'multi' ? 1 : 0;
+        var toIndex = Math.max(minIndex, Math.min(maxIndex, currentIndex + (backwards ? -1 : 1)));
+        if (reorderCharm(currentType, currentIndex, toIndex)) {
+          window.requestAnimationFrame(function() {
+            var moved = appRoot.querySelector('[data-reorder-type="' + currentType + '"][data-reorder-index="' + toIndex + '"]');
+            if (moved) moved.focus();
+          });
+        }
+      });
+    }
+
+    document.addEventListener('pointermove', function(event) {
+      if (!charmDrag || event.pointerId !== charmDrag.pointerId) return;
+      var distance = Math.hypot(event.clientX - charmDrag.startX, event.clientY - charmDrag.startY);
+      if (!charmDrag.started && distance >= 6) {
+        charmDrag.started = true;
+        charmDrag.source.classList.add('is-drag-source');
+        charmDrag.ghost = charmDrag.source.cloneNode(true);
+        charmDrag.ghost.removeAttribute('id');
+        charmDrag.ghost.removeAttribute('tabindex');
+        charmDrag.ghost.removeAttribute('data-charm-reorder');
+        charmDrag.ghost.classList.remove('is-drag-source');
+        charmDrag.ghost.classList.add('charm-drag-ghost');
+        charmDrag.ghost.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(charmDrag.ghost);
+        document.body.classList.add('is-reordering-charm');
+      }
+      if (!charmDrag.started) return;
+      event.preventDefault();
+      positionCharmGhost(event.clientX, event.clientY);
+      clearCharmDropTargets();
+      var target = closestCharmDropTarget(charmDrag.type, event.clientX, event.clientY);
+      if (target) target.classList.add('is-drop-target');
+    }, { passive: false });
+
+    document.addEventListener('pointerup', function(event) { finishCharmDrag(event, false); });
+    document.addEventListener('pointercancel', function(event) { finishCharmDrag(event, true); });
+
+    // 1. Mode Switcher
+    var typeBtns = document.querySelectorAll('.type-switch-row .type-btn');
+    typeBtns.forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        typeBtns.forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+
+        var chosen = btn.getAttribute('data-type');
+        state.modelType = chosen;
+
+        // Hide all stages first
+        stagePhoneCharm.style.display = 'none';
+        stageBagClipMulti.style.display = 'none';
+        stageBagClipSingle.style.display = 'none';
+
+        if (chosen === 'bag-clip-multi') {
+          stageBagClipMulti.style.display = 'block';
+          if (bagClipTargetSection) bagClipTargetSection.style.display = 'none';
+          if (tabBtnName) tabBtnName.style.display = '';
+          if (tabBtnClasp) tabBtnClasp.textContent = '1. Clasp Finish';
+          if (tabBtnPalette) tabBtnPalette.textContent = '3. Color Story';
+          if (tabBtnCharms) tabBtnCharms.textContent = '4. Charms';
+
+          if (claspHeadingLabel) claspHeadingLabel.textContent = 'Select Clasp Hardware Finish';
+          if (claspDescText) claspDescText.textContent = 'Choose the luxury metal swivel clasp & ring for your handbag charm.';
+          if (claspSelectorPhone) claspSelectorPhone.style.display = 'none';
+          if (claspSelectorBagSingle) claspSelectorBagSingle.style.display = 'none';
+          if (claspSelectorBagMulti) claspSelectorBagMulti.style.display = 'grid';
+
+          var activeMultiCard = document.querySelector('#claspSelectorBagMulti .option-card.active');
+          if (activeMultiCard) applySelectedClasp(activeMultiCard);
+
+          var chHeading = document.getElementById('charmsListHeading');
+          if (chHeading) chHeading.textContent = 'Select Atelier Charms';
+          var chDesc = document.getElementById('charmsListDesc');
+          if (chDesc) chDesc.textContent = 'Tap charms below to auto-attach (up to 4). Drag charms on the preview above to swap strings.';
+          var chBadge = document.getElementById('charmsLimitBadge');
+          if (chBadge) chBadge.textContent = 'Max 4 Charms';
+
+        } else if (chosen === 'bag-clip-single') {
+          stageBagClipSingle.style.display = 'block';
+          bagClipTargetSection.style.display = 'none';
+          if (tabBtnClasp) tabBtnClasp.textContent = '1. Cord & Clasp';
+          if (tabBtnPalette) tabBtnPalette.textContent = '2. Color Story';
+          if (tabBtnCharms) tabBtnCharms.textContent = '3. Charms';
+          
+          // Hide custom name tab for Single Cord style
+          if (tabBtnName) tabBtnName.style.display = 'none';
+          
+          // If on Name tab, switch automatically to Charms tab
+          if (tabBtnName && tabBtnName.classList.contains('active')) {
+            tabBtns.forEach(function(b) { b.classList.remove('active'); });
+            tabPanes.forEach(function(p) { p.classList.remove('active'); });
+            var charmsTabBtn = document.querySelector('.controls-nav-tabs .tab-btn[data-tab="tab-charms"]');
+            if (charmsTabBtn) charmsTabBtn.classList.add('active');
+            var charmsPane = document.getElementById('tab-charms');
+            if (charmsPane) charmsPane.classList.add('active');
+          }
+
+          if (claspHeadingLabel) claspHeadingLabel.textContent = 'Select Cord Color & Clasp';
+          if (claspDescText) claspDescText.textContent = 'Choose the central jewelry cord color and clasp for your attached charms.';
+          if (claspSelectorPhone) claspSelectorPhone.style.display = 'none';
+          if (claspSelectorBagMulti) claspSelectorBagMulti.style.display = 'none';
+          if (claspSelectorBagSingle) claspSelectorBagSingle.style.display = 'grid';
+
+          var activeSingleCard = document.querySelector('#claspSelectorBagSingle .option-card.active');
+          if (activeSingleCard) applySelectedClasp(activeSingleCard);
+
+          document.getElementById('charmsListHeading').textContent = 'Select Atelier Charms to Attach';
+          document.getElementById('charmsListDesc').textContent = 'Tap any charm below to attach it along your cord (up to 7). Tap on attached charm to remove.';
+          document.getElementById('charmsLimitBadge').textContent = 'Max 7 Charms';
+
+        } else {
+          stagePhoneCharm.style.display = 'block';
+          bagClipTargetSection.style.display = 'none';
+          if (tabBtnName) tabBtnName.style.display = '';
+          if (tabBtnClasp) tabBtnClasp.textContent = '1. Tether Cord';
+          if (tabBtnPalette) tabBtnPalette.textContent = '3. Color Story';
+          if (tabBtnCharms) tabBtnCharms.textContent = '4. Charms';
+
+          if (claspHeadingLabel) claspHeadingLabel.textContent = 'Select Tether Cord Color';
+          if (claspDescText) claspDescText.textContent = 'Choose your soft durable nylon cord that loops through your phone case.';
+          if (claspSelectorBagMulti) claspSelectorBagMulti.style.display = 'none';
+          if (claspSelectorBagSingle) claspSelectorBagSingle.style.display = 'none';
+          if (claspSelectorPhone) claspSelectorPhone.style.display = 'grid';
+
+          var activePhoneCard = document.querySelector('#claspSelectorPhone .option-card.active');
+          if (activePhoneCard) applySelectedClasp(activePhoneCard);
+
+          document.getElementById('charmsListHeading').textContent = 'Select Atelier Charms to Attach';
+          document.getElementById('charmsListDesc').textContent = 'Tap any charm to attach it to your piece. Tap again to remove.';
+          document.getElementById('charmsLimitBadge').textContent = 'Max 4 Charms';
+        }
+        
+        syncCharmsGridActiveState();
+        updatePrices();
+        renderBagClipMultiStrands();
+        renderNameBeadsVerticals();
+        renderSingleCordCharms();
+      });
+    });
+
+    // 2. Phased Stepper & Navigation Tabs
+    // 2. Navigation Tabs Logic
+    var tabBtns = document.querySelectorAll('.controls-nav-tabs .tab-btn');
+    var tabPanes = document.querySelectorAll('.tab-pane');
+
+    function updateStepperUI(activeTabId) {
+      tabBtns.forEach(function(b) {
+        if (b.getAttribute('data-tab') === activeTabId) {
+          b.classList.add('active');
+          try {
+            b.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          } catch(e) {}
+        } else {
+          b.classList.remove('active');
+        }
+      });
+
+      tabPanes.forEach(function(p) {
+        if (p.id === activeTabId) p.classList.add('active');
+        else p.classList.remove('active');
+      });
+
+      var isSingleCord = state.modelType === 'bag-clip-single';
+      var tabBtnName = document.getElementById('tabBtnName');
+      if (tabBtnName) {
+        tabBtnName.style.display = isSingleCord ? 'none' : 'inline-block';
+      }
+    }
+
+    function switchTab(targetId) {
+      if (!targetId) return;
+      tabBtns.forEach(function(b) {
+        if (b.getAttribute('data-tab') === targetId) b.classList.add('active');
+        else b.classList.remove('active');
+      });
+      tabPanes.forEach(function(p) {
+        if (p.id === targetId) p.classList.add('active');
+        else p.classList.remove('active');
+      });
+      updateStepperUI(targetId);
+
+      // In case we switched to charms tab, sync active state & setup infinite scroll observer
+      if (targetId === 'tab-charms') {
+        syncCharmsGridActiveState();
+        setupInfiniteScrollObserver();
+      }
+    }
+
+    tabBtns.forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var tabId = btn.getAttribute('data-tab');
+        switchTab(tabId);
+      });
+    });
+
+    // Stepper Footer Buttons
+    var nextFromClaspBtn = document.getElementById('stepperNextFromClasp');
+    if (nextFromClaspBtn) {
+      nextFromClaspBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (state.modelType === 'bag-clip-single') {
+          switchTab('tab-palette');
+        } else {
+          switchTab('tab-name');
+        }
+      });
+    }
+
+    var backFromNameBtn = document.getElementById('stepperBackFromName');
+    if (backFromNameBtn) {
+      backFromNameBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        switchTab('tab-clasp');
+      });
+    }
+
+    var nextFromNameBtn = document.getElementById('stepperNextFromName');
+    if (nextFromNameBtn) {
+      nextFromNameBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        switchTab('tab-palette');
+      });
+    }
+
+    var backFromPaletteBtn = document.getElementById('stepperBackFromPalette');
+    if (backFromPaletteBtn) {
+      backFromPaletteBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (state.modelType === 'bag-clip-single') {
+          switchTab('tab-clasp');
+        } else {
+          switchTab('tab-name');
+        }
+      });
+    }
+
+    var nextFromPaletteBtn = document.getElementById('stepperNextFromPalette');
+    if (nextFromPaletteBtn) {
+      nextFromPaletteBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        switchTab('tab-charms');
+      });
+    }
+
+    var backFromCharmsBtn = document.getElementById('stepperBackFromCharms');
+    if (backFromCharmsBtn) {
+      backFromCharmsBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        switchTab('tab-palette');
+      });
+    }
+
+    var stepperDirectAddBtn = document.getElementById('stepperDirectAddBtn');
+    if (stepperDirectAddBtn) {
+      stepperDirectAddBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (state.modelType === 'bag-clip-multi') {
+          if (addMultiToBagBtn) addMultiToBagBtn.click();
+        } else if (state.modelType === 'bag-clip-single') {
+          if (singleDirectAddBtn) singleDirectAddBtn.click();
+        } else {
+          if (phoneDirectAddBtn) phoneDirectAddBtn.click();
+        }
+      });
+    }
+
+    // 3. Clasp Swatches
+    function applySelectedClasp(card) {
+      if (!card) return;
+      state.claspColor = card.getAttribute('data-clasp-color');
+      state.claspName = card.getAttribute('data-clasp-name');
+      state.claspPrice = parseInt(card.getAttribute('data-clasp-price') || '0', 10);
+      
+      if (renderClasp) renderClasp.style.color = state.claspColor;
+      var strandsCluster = document.getElementById('strandsCluster');
+      if (strandsCluster) {
+        strandsCluster.style.color = state.claspColor;
+        strandsCluster.style.setProperty('--strand-clasp-color', state.claspColor);
+      }
+      if (renderClaspSingle) renderClaspSingle.style.color = state.claspColor;
+      if (singleCordStrand) singleCordStrand.style.color = state.claspColor;
+      if (phoneTether) phoneTether.querySelectorAll('path').forEach(function(p) { p.setAttribute('stroke', state.claspColor); });
+      
+      renderBagClipMultiStrands();
+      renderSingleCordCharms();
+      updatePrices();
+    }
+
+    var allClaspCards = document.querySelectorAll('.clasp-selector-grid .option-card');
+    allClaspCards.forEach(function(card) {
+      card.addEventListener('click', function(e) {
+        e.preventDefault();
+        var parentGrid = card.closest('.clasp-selector-grid');
+        if (parentGrid) {
+          parentGrid.querySelectorAll('.option-card').forEach(function(c) { c.classList.remove('active'); });
+        }
+        card.classList.add('active');
+        applySelectedClasp(card);
+      });
+    });
+
+    // 4. Personalized Name (Phone & Multi-Strand)
+    var nameInput = document.getElementById('customNameInput');
+    var clearNameBtn = document.getElementById('clearNameBtn');
+
+    if (nameInput) {
+      nameInput.addEventListener('input', function(e) {
+        state.customName = e.target.value.toUpperCase().replace(/[^A-Z]/g, '');
+        nameInput.value = state.customName;
+        renderNameBeadsVerticals();
+        renderBagClipMultiStrands();
+      });
+    }
+
+    if (clearNameBtn) {
+      clearNameBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        state.customName = '';
+        if (nameInput) nameInput.value = '';
+        renderNameBeadsVerticals();
+        renderBagClipMultiStrands();
+      });
+    }
+
+    // 5. Palette Selection
+    var paletteRows = document.querySelectorAll('#paletteSelector .palette-row-btn');
+    paletteRows.forEach(function(row) {
+      row.addEventListener('click', function(e) {
+        e.preventDefault();
+        paletteRows.forEach(function(r) { r.classList.remove('active'); });
+        row.classList.add('active');
+        state.palette = row.getAttribute('data-palette');
+        state.paletteName = row.getAttribute('data-palette-name') || 'PASTEL DREAM PALETTE';
+        state.accentColor = row.getAttribute('data-accent');
+        state.primaryColor = row.getAttribute('data-primary');
+        
+        if (phonePaletteLabel) phonePaletteLabel.textContent = state.paletteName;
+        if (singlePaletteLabel) singlePaletteLabel.textContent = state.paletteName;
+        if (multiPaletteLabel) multiPaletteLabel.textContent = state.paletteName;
+        
+        renderNameBeadsVerticals();
+        renderBagClipMultiStrands();
+      });
+    });
+
+    // Click on attached multi drops to quickly remove charm
+    [1, 2, 3, 4].forEach(function(sNum) {
+      var dropEl = document.getElementById('renderDrop' + sNum);
+      if (dropEl) {
+        dropEl.addEventListener('click', function(e) {
+          if (Date.now() < suppressCharmClickUntil) return;
+          if (state.bagClipCharms[sNum]) {
+            var cTitle = state.bagClipCharms[sNum].title;
+            state.bagClipCharms[sNum] = null;
+            showCustomizerToast('Removed ' + cTitle + ' from string ' + sNum);
+            renderBagClipMultiDrops();
+            syncCharmsGridActiveState();
+            updatePrices();
+            updateMobileFloatingPill();
+          }
+        });
+      }
+    });
+
+    function handleCharmCardClick(card) {
+      if (!card) return;
+      var charmId = card.getAttribute('data-charm-id');
+      var charmTitle = card.getAttribute('data-charm-title');
+      var charmPrice = parseFloat(card.getAttribute('data-charm-price') || '0');
+      var charmImg = card.getAttribute('data-charm-img');
+
+      if (state.modelType === 'bag-clip-multi') {
+        // 1. If already attached to ANY strand, toggle it off/remove it
+        var attachedStrand = null;
+        for (var s = 1; s <= 4; s++) {
+          if (state.bagClipCharms[s] && String(state.bagClipCharms[s].id) === String(charmId)) {
+            attachedStrand = s;
+            break;
+          }
+        }
+
+        if (attachedStrand !== null) {
+          state.bagClipCharms[attachedStrand] = null;
+          showCustomizerToast('Removed ' + charmTitle + ' from string ' + attachedStrand);
+        } else {
+          // 2. Auto-fill the next available empty string (1 -> 2 -> 3 -> 4)
+          var nextEmptyStrand = null;
+          for (var es = 1; es <= 4; es++) {
+            if (!state.bagClipCharms[es]) {
+              nextEmptyStrand = es;
+              break;
+            }
+          }
+
+          if (!nextEmptyStrand) {
+            showCustomizerToast('All 4 strings are full! Drag on preview to swap, or tap a charm to remove.');
+            return;
+          }
+
+          state.bagClipCharms[nextEmptyStrand] = { id: charmId, title: charmTitle, price: charmPrice, img: charmImg };
+          showCustomizerToast('✨ ' + charmTitle + ' attached to string ' + nextEmptyStrand);
+        }
+        renderBagClipMultiDrops();
+        
+      } else if (state.modelType === 'bag-clip-single') {
+        var bsIndex = state.bagClipSingleCharms.findIndex(function(c) { return String(c.id) === String(charmId); });
+        if (bsIndex > -1) {
+          state.bagClipSingleCharms.splice(bsIndex, 1);
+          showCustomizerToast('Removed ' + charmTitle + ' (' + state.bagClipSingleCharms.length + '/7)');
+        } else {
+          if (state.bagClipSingleCharms.length >= 7) { alert('You can attach up to 7 charms along this single cord.'); return; }
+          state.bagClipSingleCharms.push({ id: charmId, title: charmTitle, price: charmPrice, img: charmImg });
+          showCustomizerToast('✨ ' + charmTitle + ' attached (' + state.bagClipSingleCharms.length + '/7)');
+        }
+        renderSingleCordCharms();
+        
+      } else {
+        var pIndex = state.phoneCharms.findIndex(function(c) { return String(c.id) === String(charmId); });
+        if (pIndex > -1) {
+          state.phoneCharms.splice(pIndex, 1);
+          showCustomizerToast('Removed ' + charmTitle + ' (' + state.phoneCharms.length + '/4)');
+        } else {
+          if (state.phoneCharms.length >= 4) { alert('You can attach up to 4 charms per piece.'); return; }
+          state.phoneCharms.push({ id: charmId, title: charmTitle, price: charmPrice, img: charmImg });
+          showCustomizerToast('✨ ' + charmTitle + ' attached (' + state.phoneCharms.length + '/4)');
+        }
+        renderAttachedLists();
+      }
+
+      syncCharmsGridActiveState();
+      updatePrices();
+      updateMobileFloatingPill();
+    }
+
+    // Delegated click listener for all charm cards and zoom triggers
+    var charmsGrid = document.getElementById('uploadedCharmsGrid');
+    if (charmsGrid) {
+      charmsGrid.addEventListener('click', function(e) {
+        var zoomBtn = e.target.closest('.charm-zoom-trigger');
+        if (zoomBtn) {
+          e.preventDefault();
+          e.stopPropagation();
+          openCharmZoom(zoomBtn.closest('.charm-product-card'));
+          return;
+        }
+
+        var card = e.target.closest('.charm-product-card');
+        if (card) {
+          e.preventDefault();
+          handleCharmCardClick(card);
+        }
+      });
+    }
+
+    // =========================================================================
+    // 700+ ATELIER CHARM CATALOG ENGINE: PHASING, CATEGORIES & PAGINATION
+    // =========================================================================
+    var SEED_CHARMS = [
+      // 1. Flowers
+      { id: 'seed-f1', title: 'Blush Rose Enamel', price: 20, img: '🌸', category: 'flowers', categories: ['flowers'], finish: 'enamel', tags: ['flowers', 'rose', 'blush', 'enamel', 'garden'] },
+      { id: 'seed-f2', title: 'Sakura Blossom Crystal', price: 25, img: '🌺', category: 'flowers', categories: ['flowers'], finish: 'crystal', tags: ['flowers', 'sakura', 'crystal', 'pink'] },
+      { id: 'seed-f3', title: 'Daisy Meadow Charm', price: 20, img: '🌼', category: 'flowers', categories: ['flowers'], finish: 'enamel', tags: ['flowers', 'daisy', 'yellow', 'garden'] },
+      { id: 'seed-f4', title: 'Golden Tulip Drop', price: 30, img: '🌷', category: 'flowers', categories: ['flowers'], finish: 'gold', tags: ['flowers', 'tulip', 'gold', 'spring'] },
+      { id: 'seed-f5', title: 'Lavender Bloom Bell', price: 25, img: '🪻', category: 'flowers', categories: ['flowers'], finish: 'enamel', tags: ['flowers', 'lavender', 'lilac'] },
+      { id: 'seed-f6', title: 'Sunflower Sun Glow', price: 25, img: '🌻', category: 'flowers', categories: ['flowers'], finish: 'gold', tags: ['flowers', 'sunflower', 'bright'] },
+
+      // 2. Eye
+      { id: 'seed-e1', title: 'Royal Evil Eye Sapphire', price: 35, img: '🧿', category: 'eye', categories: ['eye'], finish: 'crystal', tags: ['eye', 'evil eye', 'nazar', 'protection'] },
+      { id: 'seed-e2', title: 'Protection Hamsa Hand', price: 35, img: '🪬', category: 'eye', categories: ['eye'], finish: 'silver', tags: ['eye', 'hamsa', 'hand', 'protection'] },
+      { id: 'seed-e3', title: 'Mystic Nazar Glass Eye', price: 30, img: '👁️', category: 'eye', categories: ['eye'], finish: 'enamel', tags: ['eye', 'nazar', 'mystic', 'protection'] },
+      { id: 'seed-e4', title: 'Greek Azure Eye Charm', price: 25, img: '🧿', category: 'eye', categories: ['eye'], finish: 'gold', tags: ['eye', 'greek eye', 'azure'] },
+      { id: 'seed-e5', title: 'Third Eye Sun Amulet', price: 35, img: '🔆', category: 'eye', categories: ['eye'], finish: 'gold', tags: ['eye', 'sunburst', 'amulet'] },
+
+      // 3. Heart
+      { id: 'seed-h1', title: 'Sweetheart Pink Opal', price: 25, img: '💖', category: 'heart', categories: ['heart'], finish: 'crystal', tags: ['heart', 'love', 'sweetheart', 'pink'] },
+      { id: 'seed-h2', title: 'Engraved Heart Padlock', price: 35, img: '🔒', category: 'heart', categories: ['heart'], finish: 'gold', tags: ['heart', 'lock', 'padlock', 'love'] },
+      { id: 'seed-h3', title: 'Cupid Love Arrow Heart', price: 30, img: '💘', category: 'heart', categories: ['heart'], finish: 'gold', tags: ['heart', 'cupid', 'arrow'] },
+      { id: 'seed-h4', title: 'Mother of Pearl Heart', price: 35, img: '🤍', category: 'heart', categories: ['heart'], finish: 'pearl', tags: ['heart', 'pearl', 'white'] },
+      { id: 'seed-h5', title: 'Rose Quartz Love Heart', price: 30, img: '💓', category: 'heart', categories: ['heart'], finish: 'crystal', tags: ['heart', 'quartz', 'love'] },
+
+      // 4. Butterflies, Titli
+      { id: 'seed-b1', title: 'Titli Crystal Butterfly', price: 30, img: '🦋', category: 'butterflies', categories: ['butterflies'], finish: 'crystal', tags: ['butterflies', 'titli', 'butterfly', 'sparkle'] },
+      { id: 'seed-b2', title: 'Aurora Fairy Wing', price: 35, img: '🪽', category: 'butterflies', categories: ['butterflies'], finish: 'crystal', tags: ['butterflies', 'wing', 'fairy', 'aurora'] },
+      { id: 'seed-b3', title: 'Golden Monarch Titli', price: 30, img: '🦋', category: 'butterflies', categories: ['butterflies'], finish: 'gold', tags: ['butterflies', 'titli', 'monarch', 'gold'] },
+      { id: 'seed-b4', title: 'Pastel Blue Titli', price: 25, img: '🦋', category: 'butterflies', categories: ['butterflies'], finish: 'enamel', tags: ['butterflies', 'titli', 'blue', 'pastel'] },
+      { id: 'seed-b5', title: 'Fairy Moth of Dreams', price: 30, img: '💫', category: 'butterflies', categories: ['butterflies'], finish: 'silver', tags: ['butterflies', 'moth', 'fairy'] },
+
+      // 5. Cats
+      { id: 'seed-cat1', title: 'Lucky Calico Kitty', price: 25, img: '🐱', category: 'cats', categories: ['cats'], finish: 'enamel', tags: ['cats', 'cat', 'kitty', 'lucky'] },
+      { id: 'seed-cat2', title: 'Golden Kitten Paw', price: 25, img: '🐾', category: 'cats', categories: ['cats'], finish: 'gold', tags: ['cats', 'paw', 'cat', 'gold'] },
+      { id: 'seed-cat3', title: 'Midnight Velvet Cat', price: 30, img: '🐈‍⬛', category: 'cats', categories: ['cats'], finish: 'enamel', tags: ['cats', 'black cat', 'meow'] },
+      { id: 'seed-cat4', title: 'Sweet Boba Kitty', price: 25, img: '🐱', category: 'cats', categories: ['cats'], finish: 'crystal', tags: ['cats', 'kitty', 'cute'] },
+
+      // 6. Dogs
+      { id: 'seed-dog1', title: 'Golden Puppy Charm', price: 25, img: '🐶', category: 'dogs', categories: ['dogs'], finish: 'gold', tags: ['dogs', 'dog', 'puppy', 'gold'] },
+      { id: 'seed-dog2', title: 'Sweet Little Dog Bone', price: 20, img: '🦴', category: 'dogs', categories: ['dogs'], finish: 'enamel', tags: ['dogs', 'bone', 'dog'] },
+      { id: 'seed-dog3', title: 'Corgi Smile Charm', price: 25, img: '🐕', category: 'dogs', categories: ['dogs'], finish: 'enamel', tags: ['dogs', 'corgi', 'puppy'] },
+      { id: 'seed-dog4', title: 'Faithful Pup Paw', price: 20, img: '🐾', category: 'dogs', categories: ['dogs'], finish: 'silver', tags: ['dogs', 'paw', 'dog', 'silver'] },
+
+      // 7. Sea
+      { id: 'seed-s1', title: 'Baroque Freshwater Pearl', price: 40, img: '🐚', category: 'sea', categories: ['sea'], finish: 'pearl', tags: ['sea', 'pearl', 'ocean', 'shell'] },
+      { id: 'seed-s2', title: 'Ocean Starfish Drop', price: 30, img: '⭐', category: 'sea', categories: ['sea'], finish: 'gold', tags: ['sea', 'starfish', 'ocean', 'beach'] },
+      { id: 'seed-s3', title: 'Mother of Pearl Shell', price: 35, img: '🦪', category: 'sea', categories: ['sea'], finish: 'pearl', tags: ['sea', 'shell', 'nacre'] },
+      { id: 'seed-s4', title: 'Faceted Sea-Glass Drop', price: 30, img: '🧊', category: 'sea', categories: ['sea'], finish: 'crystal', tags: ['sea', 'sea-glass', 'aqua', 'glass'] },
+      { id: 'seed-s5', title: 'Dolphin Wave Crest', price: 30, img: '🐬', category: 'sea', categories: ['sea'], finish: 'silver', tags: ['sea', 'dolphin', 'wave'] },
+
+      // 8. Leafs
+      { id: 'seed-l1', title: 'Lucky 4-Leaf Gold Clover', price: 30, img: '🍀', category: 'leafs', categories: ['leafs'], finish: 'gold', tags: ['leafs', 'clover', 'leaf', 'lucky'] },
+      { id: 'seed-l2', title: 'Emerald Fern Leaf', price: 25, img: '🍃', category: 'leafs', categories: ['leafs'], finish: 'enamel', tags: ['leafs', 'leaf', 'fern', 'green'] },
+      { id: 'seed-l3', title: 'Monstera Botanical Frond', price: 30, img: '🌿', category: 'leafs', categories: ['leafs'], finish: 'gold', tags: ['leafs', 'monstera', 'plant'] },
+      { id: 'seed-l4', title: 'Golden Maple Autumn Leaf', price: 30, img: '🍁', category: 'leafs', categories: ['leafs'], finish: 'gold', tags: ['leafs', 'maple', 'autumn'] },
+      { id: 'seed-l5', title: 'Dainty Ivy Vine Drop', price: 25, img: '🪴', category: 'leafs', categories: ['leafs'], finish: 'silver', tags: ['leafs', 'ivy', 'vine'] },
+
+      // 9. Ribbons
+      { id: 'seed-r1', title: 'Satin Pink Bow Ribbon', price: 25, img: '🎀', category: 'ribbons', categories: ['ribbons'], finish: 'enamel', tags: ['ribbons', 'ribbon', 'bow', 'pink'] },
+      { id: 'seed-r2', title: 'Ballet Satin Slipper Tie', price: 25, img: '🩰', category: 'ribbons', categories: ['ribbons'], finish: 'enamel', tags: ['ribbons', 'ballet', 'ribbon'] },
+      { id: 'seed-r3', title: 'Coquette Gold Bow', price: 30, img: '🎀', category: 'ribbons', categories: ['ribbons'], finish: 'gold', tags: ['ribbons', 'gold bow', 'coquette'] },
+      { id: 'seed-r4', title: 'Vintage Lace Knot Ribbon', price: 25, img: '🎗️', category: 'ribbons', categories: ['ribbons'], finish: 'pearl', tags: ['ribbons', 'lace', 'knot'] },
+      { id: 'seed-r5', title: 'Velvet Ribbon Rosette', price: 30, img: '🎀', category: 'ribbons', categories: ['ribbons'], finish: 'enamel', tags: ['ribbons', 'velvet', 'bow'] },
+
+      // 10. Avengers
+      { id: 'seed-av1', title: 'Captain America Shield', price: 35, img: '🛡️', category: 'avengers', categories: ['avengers'], finish: 'enamel', color: 'red', material: 'glossy', tags: ['avengers', 'captain america', 'shield', 'marvel'] },
+      { id: 'seed-av2', title: 'Iron Man Arc Reactor', price: 35, img: '⚡', category: 'avengers', categories: ['avengers'], finish: 'crystal', color: 'gold', material: 'glassy', tags: ['avengers', 'iron man', 'arc reactor', 'marvel'] },
+      { id: 'seed-av3', title: 'Thor Mjolnir Hammer', price: 30, img: '🔨', category: 'avengers', categories: ['avengers'], finish: 'silver', color: 'silver', material: 'silver', tags: ['avengers', 'thor', 'hammer', 'marvel'] },
+      { id: 'seed-av4', title: 'Spider-Man Web Mask', price: 25, img: '🕷️', category: 'avengers', categories: ['avengers'], finish: 'enamel', color: 'red', material: 'glossy', tags: ['avengers', 'spiderman', 'spider-man', 'marvel'] },
+      { id: 'seed-av5', title: 'Infinity Gauntlet Sparkle', price: 35, img: '✨', category: 'avengers', categories: ['avengers'], finish: 'gold', color: 'gold', material: 'gold', tags: ['avengers', 'thanos', 'infinity', 'marvel'] },
+
+      // 11. Harry Potter
+      { id: 'seed-hp1', title: 'Golden Snitch Wings', price: 35, img: '⚡', category: 'harrypotter', categories: ['harrypotter'], finish: 'gold', color: 'gold', material: 'gold', tags: ['harry potter', 'potter', 'snitch', 'golden snitch', 'hogwarts'] },
+      { id: 'seed-hp2', title: 'Hogwarts Wax Crest', price: 30, img: '📜', category: 'harrypotter', categories: ['harrypotter'], finish: 'gold', color: 'gold', material: 'glossy', tags: ['harry potter', 'potter', 'hogwarts', 'letter'] },
+      { id: 'seed-hp3', title: 'Deathly Hallows Amulet', price: 30, img: '🔮', category: 'harrypotter', categories: ['harrypotter'], finish: 'silver', color: 'silver', material: 'silver', tags: ['harry potter', 'potter', 'deathly hallows', 'magic'] },
+      { id: 'seed-hp4', title: 'Magic Wand Starburst', price: 25, img: '🪄', category: 'harrypotter', categories: ['harrypotter'], finish: 'silver', color: 'silver', material: 'glassy', tags: ['harry potter', 'potter', 'wand', 'wizard'] },
+      { id: 'seed-hp5', title: 'Gryffindor Lion Relic', price: 30, img: '🦁', category: 'harrypotter', categories: ['harrypotter'], finish: 'gold', color: 'red', material: 'gold', tags: ['harry potter', 'potter', 'gryffindor', 'lion'] },
+
+      // 12. Stitch / Stnitch
+      { id: 'seed-st1', title: 'Playful Stitch Aloha', price: 30, img: '🌺', category: 'stitch', categories: ['stitch'], finish: 'enamel', color: 'blue', material: 'glossy', tags: ['stitch', 'stnitch', 'lilo', 'aloha', 'disney'] },
+      { id: 'seed-st2', title: 'Stitch Hugging Heart', price: 30, img: '💙', category: 'stitch', categories: ['stitch', 'heart'], finish: 'crystal', color: 'blue', material: 'glassy', tags: ['stitch', 'stnitch', 'heart', 'blue'] },
+      { id: 'seed-st3', title: 'Space Alien Stitch Drop', price: 25, img: '👾', category: 'stitch', categories: ['stitch'], finish: 'enamel', color: 'purple', material: 'glossy', tags: ['stitch', 'stnitch', 'alien', 'experiment 626'] },
+      { id: 'seed-st4', title: 'Stitch Hibiscus Bloom', price: 25, img: '🌸', category: 'stitch', categories: ['stitch', 'flowers'], finish: 'enamel', color: 'pink', material: 'glossy', tags: ['stitch', 'stnitch', 'hibiscus', 'hawaii', 'flowers'] },
+
+      // 13. HTD (How to Train Your Dragon)
+      { id: 'seed-htd1', title: 'Toothless Night Fury', price: 35, img: '🐉', category: 'htd', categories: ['htd'], finish: 'enamel', color: 'black', material: 'glossy', tags: ['htd', 'httyd', 'toothless', 'night fury', 'dragon'] },
+      { id: 'seed-htd2', title: 'Light Fury Opal Wing', price: 35, img: '🤍', category: 'htd', categories: ['htd'], finish: 'crystal', color: 'white', material: 'glassy', tags: ['htd', 'httyd', 'light fury', 'dragon'] },
+      { id: 'seed-htd3', title: 'Dragon Fire Flare Drop', price: 30, img: '🔥', category: 'htd', categories: ['htd'], finish: 'gold', color: 'red', material: 'gold', tags: ['htd', 'dragon', 'fire', 'viking'] },
+      { id: 'seed-htd4', title: 'Viking Dragon Emblem', price: 25, img: '🛡️', category: 'htd', categories: ['htd'], finish: 'silver', color: 'silver', material: 'silver', tags: ['htd', 'dragon', 'crest', 'viking'] },
+
+      // 14. Minions (mininons)
+      { id: 'seed-mn1', title: 'Bello Minion Stuart', price: 25, img: '🍌', category: 'minions', categories: ['minions'], finish: 'enamel', color: 'gold', material: 'glossy', tags: ['minions', 'mininons', 'minion', 'stuart', 'banana'] },
+      { id: 'seed-mn2', title: 'Bob & Teddy Bear', price: 30, img: '🧸', category: 'minions', categories: ['minions'], finish: 'enamel', color: 'gold', material: 'glossy', tags: ['minions', 'mininons', 'minion', 'bob', 'cute'] },
+      { id: 'seed-mn3', title: 'Minion Goggles Drop', price: 25, img: '👓', category: 'minions', categories: ['minions'], finish: 'silver', color: 'silver', material: 'silver', tags: ['minions', 'mininons', 'goggles', 'minion'] },
+      { id: 'seed-mn4', title: 'Golden Banana Pendant', price: 20, img: '🍌', category: 'minions', categories: ['minions'], finish: 'gold', color: 'gold', material: 'gold', tags: ['minions', 'mininons', 'banana', 'yellow'] }
+    ];
+
+    function getCharmCategories(title, tags, productType) {
+      var raw = (title + ' ' + (tags ? (Array.isArray(tags) ? tags.join(' ') : tags) : '') + ' ' + (productType || '')).toLowerCase();
+      var text = raw.replace(/[_-]+/g, ' ').replace(/\s+/g, ' ');
+      var cats = [];
+
+      // 1. Flowers: Strictly flower, flowers, flr, flrs, blossom, tulip, daisy, rose, floral, petal, sunflower, lily, orchid, bloom, sakura
+      if (/\b(flower|flowers|flr|flrs|floral|blossom|tulip|tulips|daisy|daisies|rose|roses|petal|petals|sunflower|sunflowers|orchid|orchids|lily|lilies|bloom|blooms|sakura)\b/i.test(text)) {
+        cats.push('flowers');
+      }
+
+      // 2. Eye: Strictly eye, eyes, evil eye, nazar, hamsa, third eye
+      if (/\b(eye|eyes|nazar|hamsa)\b/i.test(text)) {
+        cats.push('eye');
+      }
+
+      // 3. Heart: Strictly heart, hearts, sweetheart, cupid, love heart
+      if (/\b(heart|hearts|sweetheart|cupid)\b/i.test(text) || /\blove heart\b/i.test(text)) {
+        cats.push('heart');
+      }
+
+      // 4. Butterflies, Titli: Strictly butterfly, butterflies, titli, moth, mariposa
+      if (/\b(butterfly|butterflies|titli|moth|moths|mariposa)\b/i.test(text)) {
+        cats.push('butterflies');
+      }
+
+      // 5. Cats: Strictly cat, cats, kitty, kitten, feline, meow
+      if (/\b(cat|cats|kitty|kitten|kittens|feline|meow)\b/i.test(text)) {
+        cats.push('cats');
+      }
+
+      // 6. Dogs: Strictly dog, dogs, puppy, pup, doggy, pooch, canine, dog bone, paw
+      if ((/\b(dog|dogs|puppy|puppies|pup|doggy|pooch|canine)\b/i.test(text) || /\bdog bone\b/i.test(text) || /\bpaw\b/i.test(text)) && !/\bhot dog\b/i.test(text)) {
+        cats.push('dogs');
+      }
+
+      // 7. Sea: Strictly sea, ocean, shell, starfish, fish, mermaid, marine, wave, dolphin, coral, oyster, conch, nautical, octopus
+      if (/\b(sea|ocean|shell|shells|starfish|fish|mermaid|mermaids|marine|wave|waves|dolphin|dolphins|coral|oyster|conch|nautical|octopus)\b/i.test(text)) {
+        cats.push('sea');
+      }
+
+      // 8. Leafs: Strictly leaf, leafs, leaves, clover, monstera, fern, plant, plants, vine, branch, foliage, cactus, ivy, maple
+      if (/\b(leaf|leafs|leaves|clover|clovers|monstera|fern|ferns|plant|plants|vine|vines|branch|foliage|cactus|ivy|maple)\b/i.test(text)) {
+        cats.push('leafs');
+      }
+
+      // 9. Ribbons: Strictly ribbon, ribbons, bow, bows, coquette, lace, knot
+      if (/\b(ribbon|ribbons|bow|bows|coquette|lace|knot|knots)\b/i.test(text)) {
+        cats.push('ribbons');
+      }
+
+      // 10. Avengers: Strictly avenger, avengers, marvel, mcu, iron man, captain america, thor, hulk, spiderman, spider man, black widow, hawkeye, thanos, loki, deadpool, wolverine, shield, mjolnir, arc reactor, infinity gauntlet
+      if (/\b(avenger|avengers|marvel|mcu|iron\s*man|captain\s*america|thor|hulk|spiderman|spider\s*man|black\s*widow|hawkeye|thanos|loki|deadpool|wolverine|shield|mjolnir|arc\s*reactor|infinity\s*gauntlet)\b/i.test(text)) {
+        cats.push('avengers');
+      }
+
+      // 11. Harry Potter: Strictly harry potter, potter, hogwarts, gryffindor, slytherin, hufflepuff, ravenclaw, dumbledore, hermione, voldemort, deathly hallows, snitch, golden snitch, quidditch, wizard, wand
+      if (/\b(harry\s*potter|potter|hogwarts|gryffindor|slytherin|hufflepuff|ravenclaw|dumbledore|hermione|voldemort|deathly\s*hallows|snitch|golden\s*snitch|quidditch|wizard|wand)\b/i.test(text)) {
+        cats.push('harrypotter');
+      }
+
+      // 12. Stitch / Stnitch: Strictly stitch, stnitch, lilo, experiment 626
+      if (/\b(stitch|stnitch|lilo|experiment\s*626)\b/i.test(text)) {
+        cats.push('stitch');
+      }
+
+      // 13. HTD (How to Train Your Dragon): Strictly htd, httyd, toothless, light fury, night fury, hiccup, dragon, dragons, how to train your dragon
+      if (/\b(htd|httyd|toothless|light\s*fury|night\s*fury|hiccup|dragon|dragons|how\s*to\s*train\s*your\s*dragon)\b/i.test(text)) {
+        cats.push('htd');
+      }
+
+      // 14. Minions (mininons): Strictly minion, minions, mininon, mininons, despicable me, kevin, stuart, gru, banana minion
+      if (/\b(minion|minions|mininon|mininons|despicable\s*me|kevin|stuart|gru)\b/i.test(text) || (/\b(bob)\b/i.test(text) && /minion|despicable/i.test(text))) {
+        cats.push('minions');
+      }
+
+      // STRICT: Charms not matching any specific aesthetic or theme categories do NOT receive a fallback.
+      // They belong exclusively to "All Charms" so categories remain 100% clean and pure.
+      return cats;
+    }
+
+    function categorizeCharm(title, tags, productType) {
+      var cats = getCharmCategories(title, tags, productType);
+      return cats.length > 0 ? cats[0] : 'other';
+    }
+
+    function deriveFinish(title, tags) {
+      var text = (title + ' ' + (tags ? (Array.isArray(tags) ? tags.join(' ') : tags) : '')).toLowerCase();
+      if (/gold|brass|amber|gilt/i.test(text)) return 'gold';
+      if (/silver|chrome|rhodium|steel|metallic/i.test(text)) return 'silver';
+      if (/enamel|paint|pastel|color|colorful|pink|blue|green|lilac/i.test(text)) return 'enamel';
+      if (/pearl|shell|nacre/i.test(text)) return 'pearl';
+      if (/crystal|glass|acrylic|resin|prism|quartz|zirconia|rhinestone/i.test(text)) return 'crystal';
+      return 'gold';
+    }
+
+    function deriveColor(title, tags) {
+      var text = (title + ' ' + (tags ? (Array.isArray(tags) ? tags.join(' ') : tags) : '')).toLowerCase().replace(/[^a-z0-9]+/g, ' ');
+      if (/\b(pink|rose|blush|peach|coral|magenta|fuchsia)\b/i.test(text)) return 'pink';
+      if (/\b(blue|azure|navy|sapphire|aqua|cyan|teal|sky|ocean)\b/i.test(text)) return 'blue';
+      if (/\b(purple|violet|lilac|lavender|plum|amethyst|mauve)\b/i.test(text)) return 'purple';
+      if (/\b(green|emerald|mint|sage|olive|jade|leaf|leaves|fern|clover|plant|cactus)\b/i.test(text)) return 'green';
+      if (/\b(gold|golden|yellow|amber|sun|mustard|honey)\b/i.test(text)) return 'gold';
+      if (/\b(silver|grey|gray|chrome|rhodium|steel|metallic)\b/i.test(text)) return 'silver';
+      if (/\b(white|pearl|ivory|cream|clear|opal|cloud)\b/i.test(text)) return 'white';
+      if (/\b(black|onyx|dark|midnight|noir|charcoal|obsidian)\b/i.test(text)) return 'black';
+      if (/\b(red|crimson|ruby|cherry|scarlet|burgundy|maroon)\b/i.test(text)) return 'red';
+
+      // Characteristic semantic fallbacks
+      if (/love|heart|bow|ribbon|ballet|cupid|sweetheart|strawberry|berry|kiss/i.test(text)) return 'pink';
+      if (/eye|nazar|wave|sea|shell|starfish|dolphin|water|rain/i.test(text)) return 'blue';
+      if (/flower|blossom|tulip|daisy|orchid|bloom/i.test(text)) return 'pink';
+      if (/cat|kitty|moon|star|planet|cosmos|night/i.test(text)) return 'purple';
+      if (/dog|puppy|paw|bone/i.test(text)) return 'gold';
+      if (/avenger|marvel|iron\s*man|spiderman|captain\s*america/i.test(text)) return 'red';
+      if (/harry\s*potter|potter|snitch|gryffindor|hogwarts/i.test(text)) return 'gold';
+      if (/stitch|stnitch|lilo/i.test(text)) return 'blue';
+      if (/toothless|htd|httyd|dragon/i.test(text)) return 'black';
+      if (/minion|mininon|banana/i.test(text)) return 'gold';
+
+      var hash = 0;
+      for (var i = 0; i < text.length; i++) hash = ((hash << 5) - hash) + text.charCodeAt(i);
+      var fallbacks = ['pink', 'blue', 'purple', 'green', 'gold', 'silver', 'white', 'black', 'red'];
+      return fallbacks[Math.abs(hash) % fallbacks.length];
+    }
+
+    function getCharmMaterials(title, tags) {
+      var raw = (title + ' ' + (tags ? (Array.isArray(tags) ? tags.join(' ') : tags) : '')).toLowerCase();
+      var text = raw.replace(/[_-]+/g, ' ').replace(/\s+/g, ' ');
+      var mats = [];
+
+      // 1. Glossy
+      if (/\b(glossy|gloss|shine|shiny)\b/i.test(text)) {
+        mats.push('glossy');
+      }
+
+      // 2. Matt (matches matt and matte)
+      if (/\b(matt|matte)\b/i.test(text)) {
+        mats.push('matt');
+      }
+
+      // 3. Silver (matches silver, sliver typo, chrome, rhodium, steel)
+      if (/\b(silver|sliver|chrome|rhodium|steel)\b/i.test(text)) {
+        mats.push('silver');
+      }
+
+      // 4. Gold (matches gold, golden, gilt, brass)
+      if (/\b(gold|golden|gilt|brass)\b/i.test(text)) {
+        mats.push('gold');
+      }
+
+      // 5. Copper
+      if (/\b(copper)\b/i.test(text)) {
+        mats.push('copper');
+      }
+
+      // 6. Bronze
+      if (/\b(bronze)\b/i.test(text)) {
+        mats.push('bronze');
+      }
+
+      // 7. Glassy (matches glassy, glass, crystal, transparent, trasperent)
+      if (/\b(glassy|glass|crystal|transparent|trasperent)\b/i.test(text)) {
+        mats.push('glassy');
+      }
+
+      return mats;
+    }
+
+    function deriveMaterial(title, tags) {
+      var mats = getCharmMaterials(title, tags);
+      return mats.length > 0 ? mats[0] : 'other';
+    }
+
+    SEED_CHARMS.forEach(function(c) {
+      if (!c.color) c.color = deriveColor(c.title, c.tags);
+      if (!c.material || c.material === 'metal' || c.material === 'enamel') {
+        c.materials = getCharmMaterials(c.title, c.tags);
+        if (c.materials.length === 0) {
+          if (c.finish === 'silver') c.materials.push('silver');
+          else if (c.finish === 'crystal') c.materials.push('glassy');
+          else if (c.finish === 'gold') c.materials.push('gold');
+          else c.materials.push('glossy');
+        }
+        c.material = c.materials[0];
+      }
+    });
+
+    var allCatalogCharms = SEED_CHARMS.slice();
+    var charmsState = {
+      activeCategory: 'all',
+      activeColor: 'all',
+      activeMaterial: 'all',
+      activePriceTier: 'all',
+      searchTerm: '',
+      sortOrder: 'featured',
+      loadedCount: 24,
+      batchSize: 24,
+      isLoadingMore: false
+    };
+
+    function getFilteredCharms() {
+      var list = allCatalogCharms.slice();
+
+      // Category filter
+      if (charmsState.activeCategory !== 'all') {
+        list = list.filter(function(c) {
+          if (c.categories && Array.isArray(c.categories)) {
+            return c.categories.indexOf(charmsState.activeCategory) > -1;
+          }
+          return c.category === charmsState.activeCategory;
+        });
+      }
+
+      // Colour filter
+      if (charmsState.activeColor !== 'all') {
+        list = list.filter(function(c) {
+          return c.color === charmsState.activeColor;
+        });
+      }
+
+      // Material filter
+      if (charmsState.activeMaterial !== 'all') {
+        list = list.filter(function(c) {
+          if (c.materials && Array.isArray(c.materials)) {
+            return c.materials.indexOf(charmsState.activeMaterial) > -1;
+          }
+          return c.material === charmsState.activeMaterial;
+        });
+      }
+
+      // Price Tier filter
+      if (charmsState.activePriceTier === 'tier-low') {
+        list = list.filter(function(c) { return c.price < 20; });
+      } else if (charmsState.activePriceTier === 'tier-mid') {
+        list = list.filter(function(c) { return c.price >= 20 && c.price <= 35; });
+      } else if (charmsState.activePriceTier === 'tier-high') {
+        list = list.filter(function(c) { return c.price > 35; });
+      }
+
+      // Search term
+      if (charmsState.searchTerm) {
+        var term = charmsState.searchTerm.toLowerCase();
+        list = list.filter(function(c) {
+          var t = (c.title || '').toLowerCase();
+          var tagsStr = (c.tags && Array.isArray(c.tags)) ? c.tags.join(' ').toLowerCase() : '';
+          return t.indexOf(term) > -1 || tagsStr.indexOf(term) > -1;
+        });
+      }
+
+      // Sort
+      if (charmsState.sortOrder === 'price-asc') {
+        list.sort(function(a, b) { return a.price - b.price; });
+      } else if (charmsState.sortOrder === 'price-desc') {
+        list.sort(function(a, b) { return b.price - a.price; });
+      } else if (charmsState.sortOrder === 'title-asc') {
+        list.sort(function(a, b) { return a.title.localeCompare(b.title); });
+      }
+
+      return list;
+    }
+
+    function createCharmCardElement(c) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'charm-product-card';
+      btn.setAttribute('data-charm-id', c.id);
+      btn.setAttribute('data-charm-title', c.title);
+      btn.setAttribute('data-charm-price', c.price);
+      btn.setAttribute('data-charm-img', c.img);
+      btn.setAttribute('data-charm-category', c.category);
+      btn.setAttribute('data-charm-finish', c.finish || 'gold');
+      btn.setAttribute('data-charm-color', c.color || 'gold');
+      btn.setAttribute('data-charm-material', c.material || 'metal');
+
+      var imgWrap = document.createElement('div');
+      imgWrap.className = 'charm-img-wrap' + (!c.img.includes('/') && !c.img.startsWith('http') ? ' charm-emoji-wrap' : '');
+      if (c.img.includes('/') || c.img.startsWith('http')) {
+        var img = document.createElement('img');
+        img.src = c.img;
+        img.alt = c.title;
+        img.loading = 'lazy';
+        imgWrap.appendChild(img);
+      } else {
+        var fallback = document.createElement('span');
+        fallback.textContent = c.img;
+        imgWrap.appendChild(fallback);
+      }
+      btn.appendChild(imgWrap);
+
+      var titleSpan = document.createElement('span');
+      titleSpan.className = 'charm-card-title';
+      titleSpan.textContent = c.title.length > 18 ? c.title.slice(0, 18) + '...' : c.title;
+      btn.appendChild(titleSpan);
+
+      var priceSpan = document.createElement('span');
+      priceSpan.className = 'charm-card-price';
+      priceSpan.textContent = '+₹' + parseFloat(c.price).toFixed(2);
+      btn.appendChild(priceSpan);
+
+      var checkBadge = document.createElement('span');
+      checkBadge.className = 'charm-check-badge';
+      checkBadge.textContent = '✓';
+      btn.appendChild(checkBadge);
+
+      var zoomTrigger = document.createElement('span');
+      zoomTrigger.className = 'charm-zoom-trigger';
+      zoomTrigger.title = 'Inspect Charm';
+      zoomTrigger.setAttribute('aria-label', 'Zoom charm');
+      zoomTrigger.textContent = '🔍';
+      btn.appendChild(zoomTrigger);
+
+      return btn;
+    }
+
+    function renderCharmsPage(keepScroll) {
+      var grid = document.getElementById('uploadedCharmsGrid');
+      if (!grid) return;
+
+      var filtered = getFilteredCharms();
+      var totalItems = filtered.length;
+
+      if (!keepScroll || charmsState.loadedCount < charmsState.batchSize) {
+        charmsState.loadedCount = Math.min(charmsState.batchSize, totalItems);
+      } else {
+        charmsState.loadedCount = Math.min(charmsState.loadedCount, totalItems);
+      }
+      var visibleItems = filtered.slice(0, charmsState.loadedCount);
+
+      // Results stat
+      var summaryEl = document.getElementById('charmsResultsSummary');
+      if (summaryEl) {
+        if (totalItems === 0) {
+          summaryEl.innerHTML = '<strong>0 Charms</strong> found';
+        } else {
+          summaryEl.innerHTML = 'Showing <strong>' + visibleItems.length + '</strong> of <strong>' + totalItems + '</strong> Charms';
+        }
+      }
+
+      var badge = document.getElementById('charmsCountAvailableBadge');
+      if (badge) {
+        badge.textContent = allCatalogCharms.length + '+ Charms';
+      }
+
+      // Clear filters button
+      var resetBtn = document.getElementById('charmsResetFiltersBtn');
+      if (resetBtn) {
+        var hasActiveFilters = charmsState.activeCategory !== 'all' || 
+                               charmsState.activeColor !== 'all' || 
+                               charmsState.activeMaterial !== 'all' || 
+                               charmsState.activePriceTier !== 'all' || 
+                               charmsState.searchTerm !== '';
+        resetBtn.style.display = hasActiveFilters ? 'inline-block' : 'none';
+      }
+
+      var loadMoreBtn = document.getElementById('charmsLoadMoreBtn');
+      var loadMoreText = document.getElementById('charmsLoadMoreBtnText');
+      var loadMoreSpinner = document.getElementById('charmsLoadMoreSpinner');
+      var loadMoreProgress = document.getElementById('charmsLoadMoreProgress');
+      var endEl = document.getElementById('charmsEndOfCatalog');
+
+      if (loadMoreSpinner) loadMoreSpinner.style.display = 'none';
+      if (loadMoreBtn) loadMoreBtn.disabled = false;
+
+      if (totalItems === 0) {
+        grid.innerHTML = '<div class="charms-empty-state"><span class="empty-icon">🔍</span><h4>No matching charms found</h4><p>Try resetting your colour, material, or keyword filters.</p><button type="button" class="charms-reset-filters-btn" id="emptyResetFiltersBtn">Reset All Filters ✕</button></div>';
+        var emptyReset = document.getElementById('emptyResetFiltersBtn');
+        if (emptyReset) {
+          emptyReset.addEventListener('click', resetAllCharmFilters);
+        }
+        if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+        if (loadMoreProgress) loadMoreProgress.style.display = 'none';
+        if (endEl) endEl.style.display = 'none';
+        return;
+      }
+
+      var fragment = document.createDocumentFragment();
+      visibleItems.forEach(function(c) {
+        fragment.appendChild(createCharmCardElement(c));
+      });
+
+      grid.innerHTML = '';
+      grid.appendChild(fragment);
+
+      // Manage Load More button & catalog completion status
+      if (visibleItems.length < totalItems) {
+        if (loadMoreBtn) {
+          loadMoreBtn.style.display = 'inline-flex';
+          var remaining = totalItems - visibleItems.length;
+          var nextCount = Math.min(charmsState.batchSize, remaining);
+          if (loadMoreText) loadMoreText.textContent = 'Load More Charms (+' + nextCount + ')';
+        }
+        if (loadMoreProgress) {
+          loadMoreProgress.style.display = 'block';
+          var loadedProg = document.getElementById('charmsLoadedProgressNum');
+          var totalProg = document.getElementById('charmsTotalProgressNum');
+          if (loadedProg) loadedProg.textContent = visibleItems.length;
+          if (totalProg) totalProg.textContent = totalItems;
+        }
+        if (endEl) endEl.style.display = 'none';
+      } else {
+        if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+        if (loadMoreProgress) loadMoreProgress.style.display = 'none';
+        if (endEl) {
+          endEl.style.display = 'flex';
+          var endText = document.getElementById('charmsEndNoticeText');
+          if (endText) {
+            endText.textContent = totalItems <= charmsState.batchSize 
+              ? '✨ All ' + totalItems + ' matching charms shown' 
+              : "✨ You've explored all " + totalItems + ' charms in this view';
+          }
+        }
+      }
+
+      syncCharmsGridActiveState();
+
+      if (!keepScroll && grid) {
+        var cardBox = grid.closest('.customizer-controls-card');
+        if (cardBox && window.innerWidth <= 880) {
+          grid.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+    }
+
+    function loadMoreCharms() {
+      if (charmsState.isLoadingMore) return;
+      var grid = document.getElementById('uploadedCharmsGrid');
+      if (!grid) return;
+
+      var filtered = getFilteredCharms();
+      var totalItems = filtered.length;
+      if (charmsState.loadedCount >= totalItems) return;
+
+      charmsState.isLoadingMore = true;
+      var loadMoreBtn = document.getElementById('charmsLoadMoreBtn');
+      var loadMoreSpinner = document.getElementById('charmsLoadMoreSpinner');
+      var loadMoreText = document.getElementById('charmsLoadMoreBtnText');
+
+      if (loadMoreBtn) loadMoreBtn.disabled = true;
+      if (loadMoreSpinner) loadMoreSpinner.style.display = 'inline-block';
+      if (loadMoreText) loadMoreText.textContent = 'Loading Charms...';
+
+      setTimeout(function() {
+        var nextBatchStart = charmsState.loadedCount;
+        var nextBatchEnd = Math.min(nextBatchStart + charmsState.batchSize, totalItems);
+        var nextItems = filtered.slice(nextBatchStart, nextBatchEnd);
+
+        var fragment = document.createDocumentFragment();
+        nextItems.forEach(function(c) {
+          fragment.appendChild(createCharmCardElement(c));
+        });
+
+        grid.appendChild(fragment);
+        charmsState.loadedCount = nextBatchEnd;
+        charmsState.isLoadingMore = false;
+
+        if (loadMoreSpinner) loadMoreSpinner.style.display = 'none';
+        if (loadMoreBtn) loadMoreBtn.disabled = false;
+
+        var summaryEl = document.getElementById('charmsResultsSummary');
+        if (summaryEl) {
+          summaryEl.innerHTML = 'Showing <strong>' + charmsState.loadedCount + '</strong> of <strong>' + totalItems + '</strong> Charms';
+        }
+
+        var loadMoreProgress = document.getElementById('charmsLoadMoreProgress');
+        var endEl = document.getElementById('charmsEndOfCatalog');
+
+        if (charmsState.loadedCount < totalItems) {
+          if (loadMoreBtn) {
+            loadMoreBtn.style.display = 'inline-flex';
+            var remaining = totalItems - charmsState.loadedCount;
+            var nextCount = Math.min(charmsState.batchSize, remaining);
+            if (loadMoreText) loadMoreText.textContent = 'Load More Charms (+' + nextCount + ')';
+          }
+          if (loadMoreProgress) {
+            loadMoreProgress.style.display = 'block';
+            var loadedProg = document.getElementById('charmsLoadedProgressNum');
+            var totalProg = document.getElementById('charmsTotalProgressNum');
+            if (loadedProg) loadedProg.textContent = charmsState.loadedCount;
+            if (totalProg) totalProg.textContent = totalItems;
+          }
+          if (endEl) endEl.style.display = 'none';
+        } else {
+          if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+          if (loadMoreProgress) loadMoreProgress.style.display = 'none';
+          if (endEl) {
+            endEl.style.display = 'flex';
+            var endText = document.getElementById('charmsEndNoticeText');
+            if (endText) {
+              endText.textContent = "✨ You've explored all " + totalItems + ' charms in this view';
+            }
+          }
+        }
+
+        syncCharmsGridActiveState();
+      }, 100);
+    }
+
+    function updateCategoryCounts() {
+      var counts = {
+        all: allCatalogCharms.length,
+        avengers: 0,
+        harrypotter: 0,
+        stitch: 0,
+        htd: 0,
+        minions: 0,
+        flowers: 0,
+        eye: 0,
+        heart: 0,
+        butterflies: 0,
+        cats: 0,
+        dogs: 0,
+        sea: 0,
+        leafs: 0,
+        ribbons: 0
+      };
+
+      allCatalogCharms.forEach(function(c) {
+        if (c.categories && Array.isArray(c.categories)) {
+          c.categories.forEach(function(cat) {
+            if (counts[cat] !== undefined) counts[cat]++;
+          });
+        } else if (counts[c.category] !== undefined) {
+          counts[c.category]++;
+        }
+      });
+
+      var allEl = document.getElementById('catCountAll');
+      if (allEl) allEl.textContent = counts.all + (counts.all >= 100 ? '+' : '');
+
+      var catIdMap = {
+        avengers: 'catCountAvengers',
+        harrypotter: 'catCountHarryPotter',
+        stitch: 'catCountStitch',
+        htd: 'catCountHtd',
+        minions: 'catCountMinions',
+        flowers: 'catCountFlowers',
+        eye: 'catCountEye',
+        heart: 'catCountHeart',
+        butterflies: 'catCountButterflies',
+        cats: 'catCountCats',
+        dogs: 'catCountDogs',
+        sea: 'catCountSea',
+        leafs: 'catCountLeafs',
+        ribbons: 'catCountRibbons'
+      };
+
+      Object.keys(catIdMap).forEach(function(cat) {
+        var el = document.getElementById(catIdMap[cat]);
+        if (el) el.textContent = counts[cat] > 0 ? counts[cat] : '';
+      });
+    }
+
+    function resetAllCharmFilters() {
+      charmsState.activeCategory = 'all';
+      charmsState.activeColor = 'all';
+      charmsState.activeMaterial = 'all';
+      charmsState.activePriceTier = 'all';
+      charmsState.searchTerm = '';
+      charmsState.sortOrder = 'featured';
+      charmsState.loadedCount = charmsState.batchSize;
+
+      // Reset DOM controls
+      var catPills = document.querySelectorAll('#charmsCategoryPills .cat-pill');
+      catPills.forEach(function(p) {
+        if (p.getAttribute('data-category') === 'all') {
+          p.classList.add('active');
+          p.setAttribute('aria-selected', 'true');
+        } else {
+          p.classList.remove('active');
+          p.setAttribute('aria-selected', 'false');
+        }
+      });
+
+      var fandomSelect = document.getElementById('charmFandomSelect');
+      if (fandomSelect) fandomSelect.value = 'all';
+      var colorSelect = document.getElementById('charmColorSelect');
+      if (colorSelect) colorSelect.value = 'all';
+      var materialSelect = document.getElementById('charmMaterialSelect');
+      if (materialSelect) materialSelect.value = 'all';
+      var priceSelect = document.getElementById('charmPriceTierSelect');
+      if (priceSelect) priceSelect.value = 'all';
+      var sortSelect = document.getElementById('charmSortSelect');
+      if (sortSelect) sortSelect.value = 'featured';
+      var searchInput = document.getElementById('charmQuickSearchInput');
+      if (searchInput) searchInput.value = '';
+      var clearBtn = document.getElementById('charmSearchClearBtn');
+      if (clearBtn) clearBtn.style.display = 'none';
+
+      renderCharmsPage();
+    }
+
+    // Aesthetic & Theme Category Pills Listeners
+    var categoryPills = document.querySelectorAll('#charmsCategoryPills .cat-pill');
+    categoryPills.forEach(function(pill) {
+      pill.addEventListener('click', function(e) {
+        e.preventDefault();
+        categoryPills.forEach(function(p) { p.classList.remove('active'); p.setAttribute('aria-selected', 'false'); });
+        pill.classList.add('active');
+        pill.setAttribute('aria-selected', 'true');
+        var chosenCat = pill.getAttribute('data-category') || 'all';
+        charmsState.activeCategory = chosenCat;
+        charmsState.loadedCount = charmsState.batchSize;
+
+        // Sync Fandom dropdown if matching
+        var fandomSelect = document.getElementById('charmFandomSelect');
+        if (fandomSelect) {
+          var hasOpt = Array.prototype.some.call(fandomSelect.options, function(opt) {
+            return opt.value === chosenCat;
+          });
+          fandomSelect.value = hasOpt ? chosenCat : 'all';
+        }
+
+        renderCharmsPage();
+      });
+    });
+
+    // Fandom / Theme Dropdown Listener
+    var fandomSelectEl = document.getElementById('charmFandomSelect');
+    if (fandomSelectEl) {
+      fandomSelectEl.addEventListener('change', function(e) {
+        var val = e.target.value;
+        charmsState.activeCategory = val;
+        charmsState.loadedCount = charmsState.batchSize;
+
+        // Sync pills
+        var pills = document.querySelectorAll('#charmsCategoryPills .cat-pill');
+        var targetPill = null;
+        pills.forEach(function(p) {
+          if (p.getAttribute('data-category') === val) {
+            p.classList.add('active');
+            p.setAttribute('aria-selected', 'true');
+            targetPill = p;
+          } else {
+            p.classList.remove('active');
+            p.setAttribute('aria-selected', 'false');
+          }
+        });
+        if (targetPill && targetPill.scrollIntoView) {
+          targetPill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+
+        renderCharmsPage();
+      });
+    }
+
+    // Colour Dropdown Listener
+    var colorSelectEl = document.getElementById('charmColorSelect');
+    if (colorSelectEl) {
+      colorSelectEl.addEventListener('change', function(e) {
+        charmsState.activeColor = e.target.value;
+        charmsState.loadedCount = charmsState.batchSize;
+        renderCharmsPage();
+      });
+    }
+
+    // Material Dropdown Listener
+    var materialSelectEl = document.getElementById('charmMaterialSelect');
+    if (materialSelectEl) {
+      materialSelectEl.addEventListener('change', function(e) {
+        charmsState.activeMaterial = e.target.value;
+        charmsState.loadedCount = charmsState.batchSize;
+        renderCharmsPage();
+      });
+    }
+
+    // Load More Button Listener
+    var loadMoreBtnEl = document.getElementById('charmsLoadMoreBtn');
+    if (loadMoreBtnEl) {
+      loadMoreBtnEl.addEventListener('click', function(e) {
+        e.preventDefault();
+        loadMoreCharms();
+      });
+    }
+
+    // Price Tier Dropdown Listener
+    var priceSelectEl = document.getElementById('charmPriceTierSelect');
+    if (priceSelectEl) {
+      priceSelectEl.addEventListener('change', function(e) {
+        charmsState.activePriceTier = e.target.value;
+        charmsState.loadedCount = charmsState.batchSize;
+        renderCharmsPage();
+      });
+    }
+
+    // Sort Dropdown Listener
+    var sortSelectEl = document.getElementById('charmSortSelect');
+    if (sortSelectEl) {
+      sortSelectEl.addEventListener('change', function(e) {
+        charmsState.sortOrder = e.target.value;
+        charmsState.loadedCount = charmsState.batchSize;
+        renderCharmsPage();
+      });
+    }
+
+    // Instant Search Input with Debounce & Clear Button
+    var charmQuickSearch = document.getElementById('charmQuickSearchInput');
+    var searchClearBtn = document.getElementById('charmSearchClearBtn');
+    var searchDebounceTimer = null;
+
+    if (charmQuickSearch) {
+      charmQuickSearch.addEventListener('input', function(e) {
+        var term = e.target.value.trim();
+        if (searchClearBtn) searchClearBtn.style.display = term.length > 0 ? 'block' : 'none';
+        clearTimeout(searchDebounceTimer);
+        searchDebounceTimer = setTimeout(function() {
+          charmsState.searchTerm = term;
+          charmsState.loadedCount = charmsState.batchSize;
+          renderCharmsPage(true);
+        }, 120);
+      });
+    }
+
+    if (searchClearBtn && charmQuickSearch) {
+      searchClearBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        charmQuickSearch.value = '';
+        searchClearBtn.style.display = 'none';
+        charmsState.searchTerm = '';
+        charmsState.loadedCount = charmsState.batchSize;
+        renderCharmsPage();
+      });
+    }
+
+    // Reset Filters Button
+    var resetFiltersBtn = document.getElementById('charmsResetFiltersBtn');
+    if (resetFiltersBtn) {
+      resetFiltersBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        resetAllCharmFilters();
+      });
+    }
+
+    function syncCharmsGridActiveState() {
+      var allCards = document.querySelectorAll('#uploadedCharmsGrid .charm-product-card');
+      allCards.forEach(function(card) {
+        var cId = card.getAttribute('data-charm-id');
+        if (state.modelType === 'bag-clip-multi') {
+          var isAssignedAnywhere = [1, 2, 3, 4].some(function(s) {
+            return state.bagClipCharms[s] && String(state.bagClipCharms[s].id) === String(cId);
+          });
+          if (isAssignedAnywhere) card.classList.add('active');
+          else card.classList.remove('active');
+        } else if (state.modelType === 'bag-clip-single') {
+          if (state.bagClipSingleCharms.some(function(c) { return String(c.id) === String(cId); })) card.classList.add('active');
+          else card.classList.remove('active');
+        } else {
+          if (state.phoneCharms.some(function(c) { return String(c.id) === String(cId); })) card.classList.add('active');
+          else card.classList.remove('active');
+        }
+      });
+
+      for (var s = 1; s <= 4; s++) {
+        var labelEl = document.getElementById('assignedText' + s);
+        if (labelEl) {
+          var assigned = state.bagClipCharms[s];
+          if (assigned) {
+            labelEl.textContent = '✓ ' + assigned.title;
+            labelEl.style.color = '#B32025';
+          } else {
+            var defaults = { 1: 'Default: Bell', 2: 'Default: Heart', 3: 'Default: Flower', 4: 'Default: Key' };
+            labelEl.textContent = defaults[s];
+            labelEl.style.color = '#9B6B28';
+          }
+        }
+      }
+
+      var multiAttachedCount = [1, 2, 3, 4].filter(function(s) { return state.bagClipCharms[s] !== null; }).length;
+      if (multiCharmsCounter) {
+        multiCharmsCounter.innerHTML = 'Charms Attached: <strong>' + multiAttachedCount + '/4</strong>';
+      }
+      updateArrangementHints();
+    }
+
+    function resetMultiCharms() {
+      state.bagClipCharms = { 1: null, 2: null, 3: null, 4: null };
+      renderBagClipMultiDrops();
+      syncCharmsGridActiveState();
+      updatePrices();
+    }
+
+    if (multiResetBtn) {
+      multiResetBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        resetMultiCharms();
+      });
+    }
+
+    if (multiTabResetBtn) {
+      multiTabResetBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        resetMultiCharms();
+      });
+    }
+
+    if (phoneResetBtn) {
+      phoneResetBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        state.phoneCharms = [];
+        renderAttachedLists();
+        syncCharmsGridActiveState();
+        updatePrices();
+      });
+    }
+
+    if (singleResetBtn) {
+      singleResetBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        state.bagClipSingleCharms = [];
+        renderSingleCordCharms();
+        syncCharmsGridActiveState();
+        updatePrices();
+      });
+    }
+
+    function generateNameBeadsHTML() {
+      if (!state.customName || state.customName.length === 0) return '';
+      var html = '<div class="phone-spacer-dot" style="background:' + state.accentColor + ';"></div>';
+      var chars = state.customName.split('');
+      for (var i = 0; i < chars.length; i++) {
+        html += '<div class="phone-bead-item">' + chars[i] + '</div>';
+      }
+      html += '<div class="phone-spacer-dot" style="background:' + state.primaryColor + ';"></div>';
+      return html;
+    }
+
+    function renderNameBeadsVerticals() {
+      var html = generateNameBeadsHTML();
+      if (phoneNameBeadsStack) phoneNameBeadsStack.innerHTML = html;
+    }
+
+    function renderAttachedLists() {
+      // Phone strap preview items
+      var pCount = state.phoneCharms.length;
+      if (phoneCharmsCounter) phoneCharmsCounter.innerHTML = 'Charms Attached: <strong>' + pCount + '/4</strong>';
+      if (phoneTapHint) phoneTapHint.style.display = pCount > 0 ? 'none' : 'block';
+      if (phoneAttachedList) {
+        phoneAttachedList.innerHTML = '';
+        state.phoneCharms.forEach(function(charm, idx) {
+          var item = document.createElement('div');
+          item.className = 'attached-charm-thumb';
+          item.innerHTML = (charm.img.includes('/') || charm.img.startsWith('http')) ? '<img src="' + charm.img + '" alt="">' : '<span style="font-size:18px;">' + charm.img + '</span>';
+          bindCharmReorder(item, 'phone', idx, charm.title + ', position ' + (idx + 1) + ' of ' + pCount);
+          phoneAttachedList.appendChild(item);
+        });
+      }
+      updateArrangementHints();
+    }
+
+    // Render charms clustered naturally & randomly along the single cord
+    function renderSingleCordCharms() {
+      var bsCount = state.bagClipSingleCharms.length;
+      if (singleCharmsCounter) singleCharmsCounter.innerHTML = 'Charms Attached: <strong>' + bsCount + '/7</strong>';
+      if (singleTapHint) singleTapHint.style.display = bsCount > 0 ? 'none' : 'block';
+
+      if (!singleCordCharmsCluster) return;
+      singleCordCharmsCluster.innerHTML = '';
+
+      state.bagClipSingleCharms.forEach(function(charm, idx) {
+        var slot = singleCordSlots[idx] || singleCordSlots[singleCordSlots.length - 1];
+        var item = document.createElement('div');
+        item.className = 'cord-dangle-item side-' + slot.side;
+        item.title = 'Drag to rearrange or click to remove ' + charm.title;
+        item.style.top = slot.top + '%';
+        item.style.color = state.claspColor;
+
+        if (slot.side === 'right') {
+          item.style.left = 'calc(50% + 2px)';
+          item.style.transform = 'rotate(' + slot.rotate + 'deg)';
+        } else if (slot.side === 'left') {
+          item.style.right = 'calc(50% + 2px)';
+          item.style.transform = 'rotate(' + slot.rotate + 'deg)';
+        } else {
+          item.style.left = '50%';
+          item.style.transform = 'translateX(-50%) rotate(' + slot.rotate + 'deg)';
+        }
+
+        var imgHtml = (charm.img.includes('/') || charm.img.startsWith('http')) 
+          ? '<img src="' + charm.img + '" alt="' + charm.title + '">' 
+          : '<span class="cord-dangle-emoji">' + charm.img + '</span>';
+
+        if (slot.side === 'right') {
+          item.innerHTML = '<span class="cord-connector-link" style="width:' + slot.connLen + 'px;"></span>' +
+                           '<div class="cord-dangle-frame">' + imgHtml + '<span class="cord-remove-badge">✕</span></div>';
+        } else if (slot.side === 'left') {
+          item.innerHTML = '<div class="cord-dangle-frame">' + imgHtml + '<span class="cord-remove-badge">✕</span></div>' +
+                           '<span class="cord-connector-link" style="width:' + slot.connLen + 'px;"></span>';
+        } else {
+          item.style.flexDirection = 'column';
+          item.innerHTML = '<span class="cord-connector-link" style="width:2px; height:' + slot.connLen + 'px; margin:0 auto;"></span>' +
+                           '<div class="cord-dangle-frame">' + imgHtml + '<span class="cord-remove-badge">✕</span></div>';
+        }
+
+        item.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (Date.now() < suppressCharmClickUntil) return;
+          state.bagClipSingleCharms.splice(idx, 1);
+          renderSingleCordCharms();
+          syncCharmsGridActiveState();
+          updatePrices();
+        });
+
+        bindCharmReorder(item, 'single', idx, charm.title + ', position ' + (idx + 1) + ' of ' + bsCount);
+        singleCordCharmsCluster.appendChild(item);
+      });
+      updateArrangementHints();
+    }
+
+    function renderBagClipMultiDrops() {
+      var drops = {
+        1: { el: renderDrop1, def: '🔔', label: 'Strand 1: Left Accent' },
+        2: { el: renderDrop2, def: '💚', label: 'Strand 2: Name Strand' },
+        3: { el: renderDrop3, def: '🌸', label: 'Strand 3: Floral Statement' },
+        4: { el: renderDrop4, def: '🗝️', label: 'Strand 4: Right Dangle' }
+      };
+      for (var s = 1; s <= 4; s++) {
+        var slot = drops[s];
+        var assigned = state.bagClipCharms[s];
+        if (slot && slot.el) {
+          slot.el.setAttribute('data-reorder-type', 'multi');
+          slot.el.setAttribute('data-reorder-index', s);
+          if (assigned) {
+            var imgHtml = (assigned.img.includes('/') || assigned.img.startsWith('http'))
+              ? '<img src="' + assigned.img + '" alt="' + assigned.title + '">'
+              : '<span class="drop-placeholder-icon">' + assigned.img + '</span>';
+            slot.el.innerHTML = imgHtml + '<span class="strand-remove-badge" title="Remove ' + assigned.title + '">✕</span>';
+            slot.el.title = assigned.title + ' on ' + slot.label + ' · Drag to swap strings, or click to remove';
+            bindCharmReorder(slot.el, 'multi', s, assigned.title + ' on ' + slot.label);
+          } else {
+            slot.el.innerHTML = '<span class="drop-placeholder-icon">' + slot.def + '</span>';
+            slot.el.title = slot.label + ' (Empty): Drag an attached charm here or tap in catalog to auto-assign';
+            slot.el.removeAttribute('data-charm-reorder');
+            slot.el.removeAttribute('tabindex');
+            slot.el.removeAttribute('role');
+            slot.el.removeAttribute('aria-posinset');
+            slot.el.removeAttribute('aria-setsize');
+            slot.el.removeAttribute('aria-label');
+          }
+        }
+      }
+      updateArrangementHints();
+    }
+
+    function renderBagClipMultiStrands() {
+      var strandsCluster = document.getElementById('strandsCluster');
+      if (strandsCluster) {
+        strandsCluster.style.color = state.claspColor;
+        strandsCluster.style.setProperty('--strand-clasp-color', state.claspColor);
+        strandsCluster.style.setProperty('--strand-accent-color', state.accentColor);
+        strandsCluster.style.setProperty('--strand-primary-color', state.primaryColor);
+      }
+
+      if (renderNameBeads) {
+        var nHtml = '<div class="bead-round" style="background:' + state.accentColor + ';"></div>';
+        if (state.customName && state.customName.trim().length > 0) {
+          var letters = state.customName.split('');
+          for (var i = 0; i < letters.length; i++) { 
+            nHtml += '<div class="bead-letter">' + letters[i] + '</div>'; 
+          }
+        } else {
+          nHtml += '<div class="bead-letter">C</div><div class="bead-letter">R</div><div class="bead-letter">A</div><div class="bead-letter">F</div><div class="bead-letter">T</div>';
+        }
+        nHtml += '<div class="bead-accent-charm">🦋</div>';
+        renderNameBeads.innerHTML = nHtml;
+      }
+      if (renderFloralBeads) {
+        renderFloralBeads.innerHTML = '<div class="bead-round" style="background:' + state.primaryColor + ';"></div><div class="bead-accent-charm">🌸</div><div class="bead-round" style="background:' + state.accentColor + ';"></div><div class="bead-accent-charm">🦋</div><div class="bead-round" style="background:' + state.primaryColor + ';"></div><div class="bead-round" style="background:' + state.accentColor + ';"></div>';
+      }
+      if (renderPastelBeads) {
+        renderPastelBeads.innerHTML = '<div class="bead-accent-charm">⭐</div><div class="bead-round" style="background:#CBE3DA;"></div><div class="bead-accent-charm">🎀</div><div class="bead-round" style="background:#CBE3DA;"></div>';
+      }
+      renderBagClipMultiDrops();
+    }
+
+    function updatePrices() {
+      var activeTotal = 0;
+      
+      if (state.modelType === 'bag-clip-multi') {
+        var bagAddons = 0;
+        for (var s = 1; s <= 4; s++) { if (state.bagClipCharms[s]) bagAddons += state.bagClipCharms[s].price; }
+        var mAddons = state.claspPrice + bagAddons;
+        activeTotal = state.bagClipMultiBasePrice + mAddons;
+
+        if (multiBasePriceEl) multiBasePriceEl.textContent = '₹' + state.bagClipMultiBasePrice + '.00';
+        if (multiAddonsEl) multiAddonsEl.textContent = '₹' + mAddons + '.00';
+        if (customizerTotalMultiPrice) customizerTotalMultiPrice.textContent = '₹' + activeTotal + '.00';
+        
+      } else if (state.modelType === 'bag-clip-single') {
+        var singleCharmsTotal = state.bagClipSingleCharms.reduce(function(sum, c) { return sum + c.price; }, 0);
+        var sAddons = state.claspPrice + singleCharmsTotal;
+        activeTotal = state.bagClipSingleBasePrice + sAddons;
+
+        if (singleBasePriceEl) singleBasePriceEl.textContent = '₹' + state.bagClipSingleBasePrice + '.00';
+        if (singleAddonsEl) singleAddonsEl.textContent = '₹' + sAddons + '.00';
+        if (singleEstimatedTotalEl) singleEstimatedTotalEl.textContent = '₹' + activeTotal + '.00';
+        
+      } else {
+        var phoneCharmsTotal = state.phoneCharms.reduce(function(sum, c) { return sum + c.price; }, 0);
+        var pAddons = state.claspPrice + phoneCharmsTotal;
+        activeTotal = state.phoneBasePrice + pAddons;
+
+        if (phoneBasePriceEl) phoneBasePriceEl.textContent = '₹' + state.phoneBasePrice + '.00';
+        if (phoneAddonsEl) phoneAddonsEl.textContent = '₹' + pAddons + '.00';
+        if (phoneEstimatedTotalEl) phoneEstimatedTotalEl.textContent = '₹' + activeTotal + '.00';
+      }
+
+      if (mobilePriceAmt) mobilePriceAmt.textContent = '₹' + activeTotal + '.00';
+    }
+
+    function sendToCart(baseVariantId, properties, selectedCharms, btn) {
+      function resetAddBtns() {
+        if (btn) { btn.disabled = false; btn.textContent = '✨ Add Custom Design To Bag'; }
+        if (mobileAddBtn) { mobileAddBtn.disabled = false; mobileAddBtn.innerHTML = '<span>✨ Add Custom Design To Bag</span>'; }
+      }
+
+      if (btn) { btn.disabled = true; btn.textContent = 'Adding to Bag...'; }
+      if (mobileAddBtn) { mobileAddBtn.disabled = true; mobileAddBtn.innerHTML = '<span>Adding to Bag...</span>'; }
+      var targetId = parseInt(baseVariantId, 10);
+      
+      if (!targetId || isNaN(targetId)) {
+        alert('Invalid Product Variant ID configuration.');
+        resetAddBtns();
+        return;
+      }
+
+      var bundleId = 'bundle_' + Date.now();
+      properties['_bundle_id'] = bundleId;
+
+      var cartItems = [{ id: targetId, quantity: 1, properties: properties }];
+
+      if (selectedCharms && selectedCharms.length > 0) {
+        selectedCharms.forEach(function(charm) {
+          var charmId = parseInt(charm.id, 10);
+          if (charmId && !isNaN(charmId) && charm.price > 0) {
+            cartItems.push({ 
+              id: charmId, 
+              quantity: 1, 
+              properties: { 
+                '_bundle_id': bundleId,
+                '_bundle_child': 'true',
+                'Customizer Add-on': 'Included in ' + properties['Creation Type'] 
+              } 
+            });
+          }
+        });
+      }
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ items: cartItems })
+      })
+      .then(function(res) {
+        if (!res.ok) return res.json().then(function(err) { throw new Error(err.description || 'Cart add failed'); });
+        resetAddBtns();
+        if (window.TitliDrawer && typeof window.TitliDrawer.open === 'function') {
+          window.TitliDrawer.open();
+        } else {
+          window.location.href = '/cart';
+        }
+      })
+      .catch(function(err) {
+        console.error('Cart Error:', err);
+        resetAddBtns();
+        alert('Could not add item to cart. Please check your variant configuration.');
+      });
+    }
+
+    if (phoneDirectAddBtn) {
+      phoneDirectAddBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var charmTitles = state.phoneCharms.map(function(c) { return c.title; }).join(', ') || 'None';
+        sendToCart(phoneVariantId, {
+          'Creation Type': 'Phone Strap Charm',
+          'Tether Cord': state.claspName,
+          'Personalized Name': state.customName || 'None',
+          'Color Palette': state.paletteName,
+          'Attached Charms': charmTitles,
+          'Clasp Upgrade Fee': state.claspPrice > 0 ? ('+₹' + state.claspPrice) : 'None'
+        }, state.phoneCharms, phoneDirectAddBtn);
+      });
+    }
+
+    if (addMultiToBagBtn) {
+      addMultiToBagBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var c1 = state.bagClipCharms[1] ? state.bagClipCharms[1] : null;
+        var c2 = state.bagClipCharms[2] ? state.bagClipCharms[2] : null;
+        var c3 = state.bagClipCharms[3] ? state.bagClipCharms[3] : null;
+        var c4 = state.bagClipCharms[4] ? state.bagClipCharms[4] : null;
+
+        var bagCharmsList = [];
+        if (c1) bagCharmsList.push(c1);
+        if (c2) bagCharmsList.push(c2);
+        if (c3) bagCharmsList.push(c3);
+        if (c4) bagCharmsList.push(c4);
+
+        sendToCart(bagVariantId, {
+          'Creation Type': 'Bag Clip Charm (Multi-Strand)',
+          'Clasp Finish': state.claspName,
+          'Personalized Name': state.customName || 'None',
+          'Color Palette': state.paletteName,
+          'Strand 1 Charm': c1 ? c1.title : 'Default Bell',
+          'Strand 2 Charm': c2 ? c2.title : 'Default Heart',
+          'Strand 3 Charm': c3 ? c3.title : 'Default Flower',
+          'Strand 4 Charm': c4 ? c4.title : 'Default Key',
+          'Clasp Upgrade Fee': state.claspPrice > 0 ? ('+₹' + state.claspPrice) : 'None'
+        }, bagCharmsList, addMultiToBagBtn);
+      });
+    }
+
+    if (singleDirectAddBtn) {
+      singleDirectAddBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var charmTitles = state.bagClipSingleCharms.map(function(c) { return c.title; }).join(', ') || 'None';
+        sendToCart(bagSingleVariantId, {
+          'Creation Type': 'Bag Clip Charm (Single-Strand)',
+          'Cord & Clasp Finish': state.claspName,
+          'Color Palette': state.paletteName,
+          'Attached Charms': charmTitles,
+          'Clasp Upgrade Fee': state.claspPrice > 0 ? ('+₹' + state.claspPrice) : 'None'
+        }, state.bagClipSingleCharms, singleDirectAddBtn);
+      });
+    }
+
+    if (mobileAddBtn) {
+      mobileAddBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (state.modelType === 'bag-clip-multi') {
+          if (addMultiToBagBtn) addMultiToBagBtn.click();
+        } else if (state.modelType === 'bag-clip-single') {
+          if (singleDirectAddBtn) singleDirectAddBtn.click();
+        } else {
+          if (phoneDirectAddBtn) phoneDirectAddBtn.click();
+        }
+      });
+    }
+
+    // -------------------------------------------------------------
+    // Mobile Helper: Floating Picture-in-Picture & Instant Toasts
+    // -------------------------------------------------------------
+    function showCustomizerToast(msg) {
+      var toast = document.getElementById('customizerToast');
+      var text = document.getElementById('toastMessageText');
+      if (!toast || !text) return;
+      text.textContent = msg;
+      toast.classList.add('toast-active');
+      clearTimeout(window._titliToastTimer);
+      window._titliToastTimer = setTimeout(function() {
+        toast.classList.remove('toast-active');
+      }, 2400);
+    }
+
+    function updateMobileFloatingPill() {
+      var pill = document.getElementById('mobileFloatingPreviewPill');
+      var countEl = document.getElementById('pipCharmCount');
+      var thumbsEl = document.getElementById('pipCharmsThumbs');
+      if (!pill || !countEl || !thumbsEl) return;
+      
+      var totalCount = 0;
+      var thumbsHtml = '';
+      
+      if (state.modelType === 'bag-clip-multi') {
+        [1, 2, 3, 4].forEach(function(s) {
+          if (state.bagClipCharms[s]) {
+            totalCount++;
+            var ch = state.bagClipCharms[s];
+            if (ch.img.includes('/') || ch.img.startsWith('http')) {
+              thumbsHtml += '<img src="' + ch.img + '" class="pip-mini-thumb" alt="">';
+            } else {
+              thumbsHtml += '<span style="font-size:12px;">' + ch.img + '</span>';
+            }
+          }
+        });
+        countEl.textContent = totalCount + '/4 Charms';
+      } else if (state.modelType === 'bag-clip-single') {
+        totalCount = state.bagClipSingleCharms.length;
+        state.bagClipSingleCharms.forEach(function(ch) {
+          if (ch.img.includes('/') || ch.img.startsWith('http')) {
+            thumbsHtml += '<img src="' + ch.img + '" class="pip-mini-thumb" alt="">';
+          } else {
+            thumbsHtml += '<span style="font-size:12px;">' + ch.img + '</span>';
+          }
+        });
+        countEl.textContent = totalCount + '/7 Charms';
+      } else {
+        totalCount = state.phoneCharms.length;
+        state.phoneCharms.forEach(function(ch) {
+          if (ch.img.includes('/') || ch.img.startsWith('http')) {
+            thumbsHtml += '<img src="' + ch.img + '" class="pip-mini-thumb" alt="">';
+          } else {
+            thumbsHtml += '<span style="font-size:12px;">' + ch.img + '</span>';
+          }
+        });
+        countEl.textContent = totalCount + '/4 Charms';
+      }
+      
+      thumbsEl.innerHTML = totalCount > 0 ? thumbsHtml : '<span class="pip-empty-hint">Tap to preview strap 🔍</span>';
+    }
+
+    // Robust Mobile Pin Enforcer
+    var stageCard = document.getElementById('stageMainCard');
+    var stageSpacer = document.getElementById('stageSpacer');
+    var customizerContainer = document.querySelector('.customizer-container');
+    var headerEl = document.querySelector('.titli-minimal-header');
+
+    function updateMobilePin() {
+      if (!stageCard || !customizerContainer) return;
+      if (window.innerWidth <= 880) {
+        var topPinOffset = 6;
+        var containerRect = customizerContainer.getBoundingClientRect();
+        var cardHeight = stageCard.offsetHeight;
+
+        // If user scrolled down past top of customizer, enforce fixed pin right at the top
+        if (containerRect.top < topPinOffset && containerRect.bottom > (cardHeight + 80)) {
+          stageCard.classList.add('is-mobile-pinned');
+          stageCard.style.top = topPinOffset + 'px';
+          if (stageSpacer) stageSpacer.style.height = cardHeight + 'px';
+        } else {
+          stageCard.classList.remove('is-mobile-pinned');
+          stageCard.style.top = '';
+          if (stageSpacer) stageSpacer.style.height = '0px';
+        }
+      } else {
+        stageCard.classList.remove('is-mobile-pinned');
+        stageCard.style.top = '';
+        if (stageSpacer) stageSpacer.style.height = '0px';
+      }
+    }
+
+    window.addEventListener('scroll', updateMobilePin, { passive: true });
+    window.addEventListener('resize', updateMobilePin, { passive: true });
+    updateMobilePin();
+
+    // High-Res Charm Inspection Zoom Modal
+    var zoomModal = document.getElementById('charmZoomModal');
+    var closeZoomBtn = document.getElementById('closeZoomModalBtn');
+    var zoomMediaBox = document.getElementById('zoomMediaContainer');
+    var zoomTitleEl = document.getElementById('zoomCharmTitle');
+    var zoomPriceEl = document.getElementById('zoomCharmPrice');
+    var zoomActionBtn = document.getElementById('zoomAttachActionBtn');
+    var activeZoomCard = null;
+
+    function openCharmZoom(card) {
+      if (!card || !zoomModal) return;
+      activeZoomCard = card;
+      
+      var title = card.getAttribute('data-charm-title') || 'Charm';
+      var price = card.getAttribute('data-charm-price') || '0';
+      var img = card.getAttribute('data-charm-img') || '';
+      var isAttached = card.classList.contains('active');
+
+      if (zoomTitleEl) zoomTitleEl.textContent = title;
+      if (zoomPriceEl) zoomPriceEl.textContent = '+₹' + parseFloat(price).toFixed(2);
+      if (zoomMediaBox) {
+        zoomMediaBox.innerHTML = (img.includes('/') || img.startsWith('http')) 
+          ? '<img src="' + img + '" alt="' + title + '">' 
+          : '<span style="font-size:46px;">' + img + '</span>';
+      }
+
+      if (zoomActionBtn) {
+        zoomActionBtn.textContent = isAttached ? '✓ Remove From Cord' : '✨ Attach Charm to Cord';
+      }
+      zoomModal.classList.add('is-open');
+    }
+
+    if (closeZoomBtn && zoomModal) {
+      closeZoomBtn.addEventListener('click', function() {
+        zoomModal.classList.remove('is-open');
+      });
+    }
+    if (zoomModal) {
+      zoomModal.addEventListener('click', function(e) {
+        if (e.target === zoomModal) zoomModal.classList.remove('is-open');
+      });
+    }
+    if (zoomActionBtn && zoomModal) {
+      zoomActionBtn.addEventListener('click', function() {
+        if (activeZoomCard) {
+          handleCharmCardClick(activeZoomCard);
+          zoomModal.classList.remove('is-open');
+        }
+      });
+    }
+
+    // Asynchronously fetch all charms from collection JSON with automatic multi-page loading
+    // Note: Shopify's products.json endpoint returns up to 250 items per page; this paginates dynamically until all items are loaded.
+    function fetchAllCharmsPages(handle, maxItems) {
+      var allProducts = [];
+      var perPage = 250;
+      var cap = maxItems || 5000;
+      var maxPages = Math.ceil(cap / perPage);
+
+      function fetchPage(page) {
+        var url = '/collections/' + handle + '/products.json?limit=' + perPage + '&page=' + page;
+        return fetch(url)
+          .then(function(res) {
+            if (!res.ok) {
+              if (page === 1) throw new Error('Failed to load collection ' + handle);
+              return { products: [] };
+            }
+            return res.json();
+          })
+          .then(function(data) {
+            var prods = (data && Array.isArray(data.products)) ? data.products : [];
+            if (prods.length === 0) return allProducts;
+            allProducts = allProducts.concat(prods);
+            // Fetch next page if Shopify gave a full page and we haven't reached the safety cap
+            if (prods.length === perPage && page < maxPages && allProducts.length < cap) {
+              return fetchPage(page + 1);
+            }
+            return allProducts;
+          });
+      }
+
+      return fetchPage(1);
+    }
+
+    function loadAllCharmsViaAjax() {
+      var grid = document.getElementById('uploadedCharmsGrid');
+      if (!grid) return;
+
+      fetchAllCharmsPages('customizer-charms', 5000)
+        .then(function(prods) {
+          if (!prods || prods.length === 0) {
+            return fetchAllCharmsPages('charms', 5000);
+          }
+          return prods;
+        })
+        .catch(function() {
+          return fetchAllCharmsPages('charms', 5000);
+        })
+        .then(function(products) {
+          if (!products || products.length === 0) return;
+
+          var remoteCharms = [];
+          products.forEach(function(product) {
+            var v = product.variants && product.variants.length > 0 ? product.variants[0] : null;
+            if (!v) return;
+
+            var priceNum = parseFloat(v.price || '0');
+            var imgUrl = (product.images && product.images.length > 0) ? product.images[0].src : '';
+            if (imgUrl && !imgUrl.includes('width=')) {
+              imgUrl += (imgUrl.includes('?') ? '&' : '?') + 'width=160';
+            }
+
+            var cats = getCharmCategories(product.title || '', product.tags, product.product_type);
+            var cat = cats[0] || 'other';
+            var fin = deriveFinish(product.title || '', product.tags);
+            var col = deriveColor(product.title || '', product.tags);
+            var mats = getCharmMaterials(product.title || '', product.tags);
+            var mat = mats.length > 0 ? mats[0] : 'other';
+
+            remoteCharms.push({
+              id: String(v.id),
+              title: product.title || 'Charm',
+              price: priceNum,
+              img: imgUrl || '✨',
+              category: cat,
+              categories: cats,
+              finish: fin,
+              color: col,
+              material: mat,
+              materials: mats,
+              tags: Array.isArray(product.tags) ? product.tags : (product.tags ? product.tags.split(',') : [])
+            });
+          });
+
+          if (remoteCharms.length > 0) {
+            allCatalogCharms = remoteCharms;
+            var totalCount = allCatalogCharms.length;
+
+            // Dynamically update UI counts
+            var stepperNextSpan = document.querySelector('#stepperNextFromPalette span');
+            if (stepperNextSpan) stepperNextSpan.textContent = 'Next: Select Charms (' + totalCount + '+)';
+            var searchInput = document.getElementById('charmQuickSearchInput');
+            if (searchInput) searchInput.setAttribute('placeholder', 'Search ' + totalCount + '+ charms by keyword...');
+            var countBadge = document.getElementById('charmsCountAvailableBadge');
+            if (countBadge) countBadge.textContent = totalCount + '+ Charms';
+
+            updateCategoryCounts();
+            renderCharmsPage(true);
+          }
+        })
+        .catch(function(err) {
+          console.warn('Charms AJAX load notice:', err);
+        });
+    }
+
+    // Init
+    var activeInitialCard = document.querySelector('.clasp-selector-grid .option-card.active');
+    if (activeInitialCard) applySelectedClasp(activeInitialCard);
+    renderNameBeadsVerticals();
+    renderAttachedLists();
+    renderSingleCordCharms();
+    renderBagClipMultiStrands();
+    updatePrices();
+    updateMobileFloatingPill();
+    updateStepperUI('tab-clasp');
+    updateCategoryCounts();
+    renderCharmsPage(true);
+    loadAllCharmsViaAjax();
+  }
+
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initTitliCustomizer); } 
+  else { initTitliCustomizer(); }
+})();
+</script>

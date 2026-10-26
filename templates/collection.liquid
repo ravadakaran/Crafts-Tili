@@ -1,0 +1,170 @@
+<section class="titli-catalog-section titli-collection-page">
+  <div class="catalog-container">
+    
+    <!-- Editorial Header -->
+    <div class="catalog-header">
+      <span class="catalog-eyebrow">HANDCRAFTED TREASURES</span>
+      <h1 class="catalog-title">Product Catalog</h1>
+      <p class="catalog-subtext">Filter by aesthetic category or search your favorite accessories.</p>
+    </div>
+
+    <!-- Category Navigation / Filter Pills -->
+    <div class="catalog-pills-row">
+      
+      <a href="{{ routes.collections_url }}/all-items"
+        class="catalog-filter-pill {% if collection.handle == 'all-items' %}active{% endif %}">
+        All Items
+      </a>
+
+      <a href="{{ routes.collections_url }}/bag-charms" class="catalog-filter-pill {% if collection.handle == 'bag-charms' %}active{% endif %}">
+        🌸 Bag Charms
+      </a>
+      <a href="{{ routes.collections_url }}/phone-charms" class="catalog-filter-pill {% if collection.handle == 'customizer-charms' or collection.handle == 'phone-charms' %}active{% endif %}">
+        📱 Phone Charms
+      </a>
+      <a href="{{ routes.collections_url }}/sun-catchers" class="catalog-filter-pill {% if collection.handle == 'sun-catchers' %}active{% endif %}">
+        ✨ Sun Catchers
+      </a>
+      <a href="{{ routes.collections_url }}/keychains-clips" class="catalog-filter-pill {% if collection.handle == 'keychains-clips' or collection.handle == 'keychains' %}active{% endif %}">
+        🔑 Keychains
+      </a>
+      <a href="{{ routes.collections_url }}/bookmarks" class="catalog-filter-pill {% if collection.handle == 'bookmarks' %}active{% endif %}">
+        🔖 Bookmarks
+      </a>
+      <a href="/pages/design-custom-piece"
+        class="catalog-filter-pill catalog-pill-custom">
+        <span class="customizer-button-content">
+          <span>🪄 Create Your Own</span>
+          <small>Design something uniquely yours ✨</small>
+        </span>
+        <span aria-hidden="true">→</span>
+      </a>
+
+        <div class="catalog-controls-row">
+        <!-- Search Input with Embedded SVG -->
+        <div class="catalog-search-wrap">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="collection-live-search" placeholder="Search items..." aria-label="Search catalog">
+        </div>
+
+        <!-- Styled Select with Custom SVG Arrow -->
+        <div class="catalog-sort-wrap">
+          <select id="collection-sort-select" aria-label="Sort products" onchange="location = this.value;">
+            {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+            <option value="?sort_by=manual" {% if sort_by == 'manual' %}selected{% endif %}>Featured</option>
+            <option value="?sort_by=price-ascending" {% if sort_by == 'price-ascending' %}selected{% endif %}>Price: Low to High</option>
+            <option value="?sort_by=price-descending" {% if sort_by == 'price-descending' %}selected{% endif %}>Price: High to Low</option>
+            <option value="?sort_by=created-descending" {% if sort_by == 'created-descending' %}selected{% endif %}>Newest First</option>
+          </select>
+          <svg class="select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+      </div>
+
+    <div class="catalog-divider"></div>
+
+    {% paginate collection.products by 48 %}
+      <!-- Products Grid (2 Columns Mobile, 4 Desktop) -->
+      <div class="titli-product-grid" id="collection-products-grid">
+        {% for product in collection.products %}
+          <div class="titli-product-card" data-title="{{ product.title | downcase }}">
+            <div class="product-card-media-wrapper">
+              <a href="{{ product.url }}" class="product-card-media">
+                {% if product.featured_image %}
+                  <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.title | escape }}" class="product-card-img" width="400" height="400" loading="lazy">
+                {% else %}
+                  <div class="product-card-fallback">✨</div>
+                {% endif %}
+              </a>
+
+              <!-- Badges & Wishlist Heart -->
+              <div class="product-card-badge-group">
+                {% if product.tags contains 'bestseller' or product.tags contains 'Best Seller' %}
+                  <span class="product-pill-badge best-seller">Best Seller</span>
+                {% endif %}
+                {% if product.type != blank %}
+                  <span class="product-pill-badge category-tag">{{ product.type }}</span>
+                {% endif %}
+              </div>
+
+              <button type="button" class="product-card-heart-btn" aria-label="Add to wishlist">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              </button>
+            </div>
+
+            <h3 class="product-card-title">
+              <a href="{{ product.url }}">{{ product.title }}</a>
+            </h3>
+
+            <div class="product-card-pricing">
+              <span>{{ product.price | money }}</span>
+            </div>
+
+            {% if product.available %}
+              <form method="post" action="{{ routes.cart_add_url }}" class="quick-add-form">
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <button type="submit" class="quick-add-btn">+ Add to Bag</button>
+              </form>
+            {% else %}
+              <button type="button" class="quick-add-btn is-sold-out" disabled>Out of Stock</button>
+            {% endif %}
+          </div>
+        {% else %}
+          <p class="catalog-empty-msg">No products found in this category.</p>
+        {% endfor %}
+      </div>
+
+      {% if paginate.pages > 1 %}
+        <!-- Pagination / Infinite Scroll & Load More Section -->
+        <div class="collection-pagination-container" id="collection-pagination-container" 
+             data-next-url="{{ paginate.next.url }}" 
+             data-current-page="{{ paginate.current_page }}" 
+             data-total-pages="{{ paginate.pages }}" 
+             data-total-items="{{ paginate.items }}"
+             data-page-size="{{ paginate.page_size }}">
+          
+          <div class="pagination-progress-wrap">
+            {% assign loaded_count = paginate.current_page | times: paginate.page_size | at_most: paginate.items %}
+            <p class="pagination-progress-text">
+              Showing <span id="pagination-loaded-count">{{ loaded_count }}</span> of {{ paginate.items }} handcrafted pieces
+            </p>
+            <div class="pagination-progress-bar" role="progressbar" aria-valuenow="{{ loaded_count }}" aria-valuemin="0" aria-valuemax="{{ paginate.items }}">
+              {% assign initial_progress = loaded_count | times: 100.0 | divided_by: paginate.items | at_most: 100.0 %}
+              <div class="pagination-progress-fill" id="pagination-progress-fill" style="width: {{ initial_progress | round }}%;"></div>
+            </div>
+          </div>
+
+          <div class="pagination-actions">
+            {% if paginate.next %}
+              <button type="button" class="titli-load-more-btn" id="titli-load-more-btn" aria-label="Load more products">
+                <span class="btn-spinner" aria-hidden="true"></span>
+                <span class="btn-text">Load More Treasures ✨</span>
+              </button>
+            {% endif %}
+            
+            <p class="pagination-completed-msg" id="pagination-completed-msg" {% if paginate.next %}style="display: none;"{% endif %}>
+              <span>✨</span> You've viewed all {{ paginate.items }} handcrafted creations <span>✨</span>
+            </p>
+          </div>
+
+          <!-- Intersection Sentinel for Auto Infinite Scroll -->
+          <div id="infinite-scroll-sentinel" class="infinite-scroll-sentinel" aria-hidden="true"></div>
+
+          <!-- Fallback Pagination for Non-JS / Search Engine Crawlers -->
+          <noscript>
+            <div class="pagination-noscript">
+              {{ paginate | default_pagination }}
+            </div>
+          </noscript>
+        </div>
+      {% endif %}
+    {% endpaginate %}
+
+  </div>
+</section>

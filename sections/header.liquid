@@ -1,0 +1,159 @@
+<header class="titli-minimal-header">
+  <div class="header-inner-row">
+    
+    <!-- Left: Hamburger Drawer Trigger (Mobile Only) -->
+    <button type="button" class="header-icon-btn mobile-menu-toggle" id="mobile-menu-open-btn" aria-label="Open Menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+
+    <!-- Brand Emblem & Title -->
+    <a href="{{ routes.root_url }}" class="header-branding">
+      <img src="{{ 'titli-logo.jpg' | asset_url }}" alt="Crafts Titli Logo" class="header-custom-logo" width="40" height="40">
+      <div class="header-title-box">
+        <span class="header-brand-name">Crafts_Titli</span>
+        <span class="header-brand-tagline">HANDCRAFTED CHARM STUDIO</span>
+      </div>
+    </a>
+
+    <!-- Center/Right: Desktop Navigation Menu -->
+    <nav class="header-desktop-nav" aria-label="Primary Navigation">
+      <a href="{{ routes.root_url }}" class="nav-link">Home</a>
+      <a href="{{ routes.collections_url }}/All-Items" class="nav-link">Shop All</a>
+      <a href="{{ routes.collections_url }}/bag-charms" class="nav-link">Bag Charms</a>
+      <a href="{{ routes.collections_url }}/phone-charms" class="nav-link">Phone Charms</a>
+      <a href="{{ routes.collections_url }}/sun-catchers" class="nav-link">Sun Catchers</a>
+      <a href="/pages/design-custom-piece" class="nav-link nav-highlight-pill">✨ Customizer Studio</a>
+      <a href="/pages/our-story" class="nav-link">Our Story</a>
+    </nav>
+
+    <!-- Right: Search & Cart Icons -->
+    {% assign visible_cart_count = 0 %}
+    {% for item in cart.items %}
+      {% unless item.properties._bundle_child == 'true' %}
+        {% assign visible_cart_count = visible_cart_count | plus: item.quantity %}
+      {% endunless %}
+    {% endfor %}
+
+    <div class="header-actions">
+      <a href="{{ routes.search_url }}" class="header-icon-btn" aria-label="Search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </a>
+      <a href="{{ routes.cart_url }}" class="header-icon-btn header-cart-wrap" aria-label="Shopping Bag">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        {% if visible_cart_count > 0 %}
+          <span class="header-cart-badge">{{ visible_cart_count }}</span>
+        {% endif %}
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Slide-in Navigation Drawer (Mobile Off-Canvas) -->
+  <div id="titli-nav-flyout" class="nav-flyout-drawer">
+    <div class="flyout-backdrop" id="mobile-menu-close-backdrop"></div>
+    <div class="flyout-panel">
+      <div class="flyout-header">
+        <span class="flyout-title">Studio Menu</span>
+        <button type="button" class="flyout-close-btn" id="mobile-menu-close-btn">×</button>
+      </div>
+      <nav class="flyout-links">
+        <a href="{{ routes.root_url }}">🌸 Home</a>
+        <a href="{{ routes.collections_url }}/All-Items">🪞 Shop All Products</a>
+        <a href="{{ routes.collections_url }}/bag-charms">👜 Bag Charms</a>
+        <a href="{{ routes.collections_url }}/customizer-charms">📱 Phone Charms</a>
+        <a href="{{ routes.collections_url }}/sun-catchers">✨ Sun Catchers</a>
+        <a href="{{ routes.collections_url }}/keychains-clips">🔑 Keychains &amp; Clips</a>
+        <a href="/pages/design-custom-piece" class="flyout-custom-btn">✨ Create Your Own</a>
+        <a href="/pages/our-story">💌 Our Story</a>
+        <a href="{{ routes.cart_url }}">🛍️ View Bag ({{ visible_cart_count }})</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<style>
+/* Desktop Navigation */
+.header-desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.header-desktop-nav .nav-link {
+  text-decoration: none;
+  font-family: var(--font-body, 'Quicksand', sans-serif);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #712423;
+  position: relative;
+  padding: 6px 0;
+  transition: color 0.2s ease;
+}
+
+.header-desktop-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #712423;
+  border-radius: 2px;
+  transition: width 0.25s ease;
+}
+
+.header-desktop-nav .nav-link:hover {
+  color: #B7684C;
+}
+
+.header-desktop-nav .nav-link:hover::after {
+  width: 100%;
+}
+
+.header-desktop-nav .nav-highlight-pill {
+  background: rgba(113, 36, 35, 0.08);
+  border: 1px solid rgba(113, 36, 35, 0.22);
+  color: #712423;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 700;
+  transition: all 0.25s ease;
+}
+
+.header-desktop-nav .nav-highlight-pill::after {
+  display: none;
+}
+
+.header-desktop-nav .nav-highlight-pill:hover {
+  background: #712423;
+  color: #FAF5EE;
+  border-color: #712423;
+  transform: translateY(-1px);
+}
+
+@media (min-width: 900px) {
+  .mobile-menu-toggle {
+    display: none !important;
+  }
+}
+
+@media (max-width: 899px) {
+  .header-desktop-nav {
+    display: none !important;
+  }
+  .mobile-menu-toggle {
+    display: flex !important;
+  }
+}
+</style>

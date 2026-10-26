@@ -1,0 +1,16 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Editor directories
+.vscode/
+.idea/
+
+# Media / Launch Video
+launch-video/
+__pycache__/
+*.pyc

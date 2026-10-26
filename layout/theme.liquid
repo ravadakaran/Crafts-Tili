@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{ page_title }}</title>
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    {{ 'customizer.css' | asset_url | stylesheet_tag }}
+    {{ content_for_header }}
+    <!-- Force-hide Judge.me Public Controls Globally -->
+    <!-- Force-hide Judge.me Public Controls Globally -->
+    <style id="titli-jdgm-cleaner">
+    /* 1. Eliminate the ENTIRE action bar (Write button + Filter icon + Sort icon) */
+    .jdgm-rev-widg__summary-actions,
+    .jdgm-widget-actions-wrapper,
+    .jdgm-rev-widg__header-actions,
+    .jdgm-write-rev-btn,
+    .jdgm-btn-filter,
+    .jdgm-btn-sort,
+    .jdgm-rev-widg__sort,
+    .jdgm-rev-widg__filter,
+    .jdgm-subtab,
+    .jdgm-subtab__name,
+    .jdgm-sort-dropdown-wrapper,
+    .jdgm-filter-tags-wrapper,
+    [data-tab="write-review"],
+    a[href*="write-review"],
+    .jdgm-rev-widg__summary > div:has(.jdgm-write-rev-btn),
+    .jdgm-rev-widg__summary > div:has(.jdgm-btn-filter) {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        pointer-events: none !important;
+    }
+
+    /* 2. Eliminate Gray Circle Avatar & Icon */
+    .jdgm-rev__avatar,
+    .jdgm-rev__icon,
+    .jdgm-rev__avatar-icon {
+        display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* 3. Eliminate Admin/Store Replies */
+    .jdgm-rev__reply,
+    .jdgm-reply,
+    .jdgm-rev__reply-content,
+    .jdgm-rev__reply-header {
+        display: none !important;
+        height: 0 !important;
+    }
+
+    /* 4. Fix Stars to Titli Antique Brass everywhere */
+    .jdgm-star,
+    .jdgm-star.jdgm--on,
+    .jdgm-star.jdgm--off,
+    .jdgm-star.jdgm--half,
+    .jdgm-preview-badge .jdgm-star,
+    .jdgm-rev-widg .jdgm-star {
+        color: #712423 !important;
+    }
+
+    /* Scroll Animations CSS */
+    .scroll-animate {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    .scroll-animate.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    /* Premium Global Preloader */
+    .titli-loader-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #E7DBCA; /* Warm Parchment */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999999;
+        transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .titli-loader-wrapper.loader-hidden {
+        opacity: 0;
+        visibility: hidden;
+    }
+    .titli-brand-loader {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+    .titli-flutter {
+        font-size: 42px;
+        animation: flutter-bounce 1.2s ease-in-out infinite alternate;
+        filter: drop-shadow(0 4px 6px rgba(179, 32, 37, 0.2));
+    }
+    .titli-brand-text {
+        font-family: 'Quicksand', sans-serif;
+        font-size: 26px;
+        font-weight: 700;
+        color: #712423; /* Primary Red */
+        letter-spacing: 1px;
+        background: linear-gradient(135deg, #712423 0%, #B7684C 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: pulse-fade 1.2s ease-in-out infinite alternate;
+    }
+    @keyframes flutter-bounce {
+        0% { transform: translateY(5px) rotate(-8deg) scale(0.95); }
+        100% { transform: translateY(-12px) rotate(8deg) scale(1.05); }
+    }
+    @keyframes pulse-fade {
+        0% { opacity: 0.6; filter: drop-shadow(0 0 2px rgba(179, 32, 37, 0.3)); }
+        100% { opacity: 1; filter: drop-shadow(0 0 10px rgba(179, 32, 37, 0.6)); }
+    }
+    </style>
+</head>
+
+<body class="template-{{ template | replace: '.', '-' | handle }}">
+
+    <!-- Global Preloader -->
+    <div id="titli-global-loader" class="titli-loader-wrapper">
+        <div class="titli-brand-loader">
+            <div class="titli-flutter">🦋</div>
+            <div class="titli-brand-text">Crafts Titli</div>
+        </div>
+    </div>
+    <script>
+      // Hide loader as soon as the page is fully loaded
+      window.addEventListener('load', function() {
+          const loader = document.getElementById('titli-global-loader');
+          if (loader) {
+              loader.classList.add('loader-hidden');
+              setTimeout(() => { loader.style.display = 'none'; }, 700);
+          }
+      });
+      // Fallback: in case window load hangs
+      setTimeout(function() {
+          const loader = document.getElementById('titli-global-loader');
+          if (loader && !loader.classList.contains('loader-hidden')) {
+              loader.classList.add('loader-hidden');
+              setTimeout(() => { loader.style.display = 'none'; }, 700);
+          }
+      }, 5000);
+    </script>
+
+    {% section 'announcement-bar' %}
+    {% section 'header' %}
+
+    <main id="MainContent" role="main">
+        {{ content_for_layout }}
+    </main>
+
+    {% section 'footer-titli' %}
+    {% render 'cart-drawer' %}
+
+    <script src="{{ 'customizer.js' | asset_url }}" defer></script>
+   <script>
+  (function() {
+    function purgeJdgmClutter() {
+      // 1. Remove by class selectors
+      var selectors = [
+        '.jdgm-write-rev-btn',
+        '.jdgm-widget-actions-wrapper',
+        '.jdgm-rev-widg__header-actions',
+        '.jdgm-rev-widg__summary-actions',
+        '.jdgm-btn-filter',
+        '.jdgm-btn-sort',
+        '.jdgm-sort-dropdown-wrapper',
+        '.jdgm-filter-tags-wrapper',
+        '.jdgm-rev-widg__sort',
+        '.jdgm-rev-widg__filter',
+        '.jdgm-subtab',
+        '.jdgm-rev__avatar',
+        '.jdgm-rev__icon',
+        '.jdgm-rev__reply',
+        '.jdgm-reply'
+      ];
+      
+      document.querySelectorAll(selectors.join(',')).forEach(function(el) {
+        el.remove();
+      });
+
+      // 2. Remove by button text content fallback
+      var allButtons = document.querySelectorAll('#judgeme_product_reviews button, #judgeme_product_reviews a');
+      allButtons.forEach(function(btn) {
+        var txt = (btn.textContent || '').trim().toLowerCase();
+        if (txt.includes('write a review') || txt.includes('write review')) {
+          if (btn.parentElement && btn.parentElement.classList.contains('jdgm-widget-actions-wrapper')) {
+            btn.parentElement.remove();
+          } else {
+            btn.remove();
+          }
+        }
+      });
+    }
+
+    // Run immediately and continuous poll for 6 seconds
+    var timer = setInterval(purgeJdgmClutter, 60);
+    setTimeout(function() { clearInterval(timer); }, 6000);
+
+    // Watch dynamic insertions inside body
+    var observer = new MutationObserver(purgeJdgmClutter);
+    observer.observe(document.body, { childList: true, subtree: true });
+  })();
+
+  // Premium Scroll Animations
+  document.addEventListener("DOMContentLoaded", function() {
+    const scrollObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          scrollObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+    // Target elements to animate
+    const elementsToAnimate = document.querySelectorAll(
+      '.titli-product-card, .catalog-list-item, .hero-headline, .hero-desc, .hero-actions, .catalog-header, .prop-card, .review-card, .gallery-item, .faq-item, .newsletter-aesthetic-card, .teaser-content-col, .teaser-interactive-col'
+    );
+    
+    elementsToAnimate.forEach((el, index) => {
+      el.classList.add('scroll-animate');
+      // Stagger animations slightly for sibling elements
+      el.style.transitionDelay = (index % 4) * 0.1 + 's';
+      scrollObserver.observe(el);
+    });
+  });
+</script>
+</body>
+</html>

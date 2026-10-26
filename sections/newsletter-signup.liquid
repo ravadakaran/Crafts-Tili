@@ -1,0 +1,226 @@
+<section class="titli-newsletter-section">
+  <div class="newsletter-container">
+    
+    <div class="newsletter-aesthetic-card">
+      <div class="newsletter-ambient-butterfly" aria-hidden="true">🦋</div>
+
+      <div class="newsletter-inner-content">
+        <span class="newsletter-eyebrow">VIP ATELIER ACCESS</span>
+        <h2 class="newsletter-title">Join The Titli Charm Club</h2>
+        <p class="newsletter-desc">
+          Enjoy <strong style="color: #712423;">10% off</strong> your first order, first access to limited artisan bead drops, and secret VIP holiday giveaways.
+        </p>
+
+        {% form 'customer', class: 'newsletter-form-styled' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          
+          {% if form.posted_successfully? %}
+            <div class="newsletter-success-msg">
+              <span>🌸 Welcome to the club! Check your inbox for your 10% welcome code.</span>
+            </div>
+          {% else %}
+            <div class="newsletter-input-group">
+              <input 
+                type="email" 
+                name="contact[email]" 
+                class="newsletter-input" 
+                placeholder="Enter your email address..." 
+                required 
+                autocomplete="email"
+                aria-label="Email address for newsletter"
+              >
+              <button type="submit" class="newsletter-submit-btn">
+                <span>Join &amp; Get 10% Off</span>
+                <span class="btn-arrow">✨</span>
+              </button>
+            </div>
+          {% endif %}
+        {% endform %}
+
+        <span class="newsletter-trust-text">🔒 We respect your privacy. No spam, only sparkle. Unsubscribe anytime.</span>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+.titli-newsletter-section {
+  padding: 60px 20px 80px 20px;
+  background: transparent;
+  position: relative;
+}
+
+.newsletter-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.newsletter-aesthetic-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(250, 245, 238, 0.95) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid #E5DACB;
+  border-radius: 28px;
+  padding: 50px 36px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(113, 36, 35, 0.06);
+}
+
+.newsletter-ambient-butterfly {
+  position: absolute;
+  top: -15px;
+  right: -10px;
+  font-size: 110px;
+  opacity: 0.08;
+  pointer-events: none;
+  transform: rotate(15deg);
+}
+
+.newsletter-inner-content {
+  position: relative;
+  z-index: 2;
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+.newsletter-eyebrow {
+  display: inline-block;
+  font-family: var(--font-body, 'Quicksand', sans-serif);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #607353;
+  margin-bottom: 8px;
+}
+
+.newsletter-title {
+  margin: 0 0 12px 0;
+  font-family: var(--font-heading, 'Quicksand', sans-serif);
+  font-size: 34px;
+  font-weight: 700;
+  color: #712423;
+  letter-spacing: -0.5px;
+}
+
+.newsletter-desc {
+  font-family: var(--font-body, 'Quicksand', sans-serif);
+  font-size: 15px;
+  line-height: 1.6;
+  color: #554D48;
+  margin: 0 0 28px 0;
+}
+
+.newsletter-form-styled {
+  width: 100%;
+}
+
+.newsletter-input-group {
+  display: flex;
+  gap: 10px;
+  background: #ffffff;
+  border: 1.5px solid #E2D7C8;
+  border-radius: 40px;
+  padding: 6px 8px 6px 20px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.newsletter-input-group:focus-within {
+  border-color: #712423;
+  box-shadow: 0 6px 18px rgba(113, 36, 35, 0.12);
+}
+
+.newsletter-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: var(--font-body, 'Quicksand', sans-serif);
+  font-size: 14.5px;
+  color: #241D26;
+  outline: none;
+}
+
+.newsletter-input::placeholder {
+  color: #9C9389;
+}
+
+.newsletter-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #712423 0%, #8D302F 100%);
+  color: #FAF5EE;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 24px;
+  font-family: var(--font-body, 'Quicksand', sans-serif);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.newsletter-submit-btn:hover {
+  background: linear-gradient(135deg, #8D302F 0%, #B7684C 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(113, 36, 35, 0.25);
+}
+
+.newsletter-trust-text {
+  display: block;
+  font-size: 11.5px;
+  color: #8C847B;
+  margin-top: 14px;
+}
+
+.newsletter-success-msg {
+  background: #EFF6EE;
+  border: 1px solid #C4DFC2;
+  color: #2D5A27;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  .newsletter-aesthetic-card {
+    padding: 36px 20px;
+    border-radius: 20px;
+  }
+  .newsletter-title {
+    font-size: 26px;
+  }
+  .newsletter-input-group {
+    flex-direction: column;
+    padding: 12px;
+    border-radius: 18px;
+    gap: 12px;
+  }
+  .newsletter-input {
+    padding: 4px 6px;
+  }
+  .newsletter-submit-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 18px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Newsletter Signup",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Newsletter Signup"
+    }
+  ]
+}
+{% endschema %}

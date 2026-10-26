@@ -1,0 +1,48 @@
+{% comment %}
+This file contains reusable Liquid snippets for rendering customizable options in the charm builder, such as color choices and charm categories.
+{% endcomment %}
+
+<div class="customizer-options">
+  <h3>Select Your Charm Options</h3>
+  
+  <div class="charm-category">
+    <label for="charm-category">Charm Category:</label>
+    <select id="charm-category" name="charm-category">
+      <option value="animals">Animals</option>
+      <option value="nature">Nature</option>
+      <option value="symbols">Symbols</option>
+      <option value="letters">Letters</option>
+    </select>
+  </div>
+
+  <div class="color-options">
+    <h4>Choose Your Colors:</h4>
+    <div class="color-option">
+      <input type="radio" id="color-red" name="charm-color" value="red">
+      <label for="color-red" style="background-color: red;"></label>
+    </div>
+    <div class="color-option">
+      <input type="radio" id="color-blue" name="charm-color" value="blue">
+      <label for="color-blue" style="background-color: blue;"></label>
+    </div>
+    <div class="color-option">
+      <input type="radio" id="color-green" name="charm-color" value="green">
+      <label for="color-green" style="background-color: green;"></label>
+    </div>
+    <div class="color-option">
+      <input type="radio" id="color-yellow" name="charm-color" value="yellow">
+      <label for="color-yellow" style="background-color: yellow;"></label>
+    </div>
+  </div>
+
+  <div class="additional-options">
+    <h4>Additional Options:</h4>
+    <label for="add-ons">Add-ons:</label>
+    <select id="add-ons" name="add-ons">
+      <option value="none">None</option>
+      <option value="beads">Beads</option>
+      <option value="strings">Strings</option>
+      <option value="charms">Extra Charms</option>
+    </select>
+  </div>
+</div>

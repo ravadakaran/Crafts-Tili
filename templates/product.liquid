@@ -1,0 +1,633 @@
+<div class="titli-product-page">
+  <div class="product-showcase-container">
+    
+    <!-- Left Column: Product Gallery (Images & Video Reels Support) -->
+    <div class="product-gallery-card">
+      <div class="main-image-frame">
+        {% assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media %}
+        {% if featured_media.media_type == 'video' %}
+          <div class="main-media-video-container" id="featured-product-video-wrap">
+            {{ featured_media | video_tag: autoplay: true, loop: true, muted: true, controls: true, playsinline: true, class: 'product-featured-video' }}
+          </div>
+          <img 
+            src="" 
+            alt="{{ product.title | escape }}" 
+            id="featured-product-image"
+            class="product-featured-img"
+            width="800" height="800"
+            style="display: none;"
+          >
+        {% elsif featured_media %}
+          <img 
+            src="{{ featured_media | image_url: width: 800 }}" 
+            alt="{{ product.title | escape }}" 
+            id="featured-product-image"
+            class="product-featured-img"
+            width="800" height="800"
+          >
+          <div class="main-media-video-container" id="featured-product-video-wrap" style="display: none;"></div>
+        {% else %}
+          <div class="product-no-img">✨</div>
+        {% endif %}
+      </div>
+
+      {% if product.media.size > 1 %}
+        <div class="product-thumbnails">
+          {% for media in product.media %}
+            {% if media.media_type == 'video' %}
+              <button 
+                type="button" 
+                class="thumb-btn thumb-video-btn {% if forloop.first %}active{% endif %}" 
+                onclick="showVideoMedia('{{ media.sources[1].url | default: media.sources[0].url }}', this)"
+              >
+                <img src="{{ media.preview_image | image_url: width: 140 }}" alt="{{ product.title | escape }}" width="140" height="140">
+                <span class="video-play-indicator">▶</span>
+              </button>
+            {% else %}
+              <button 
+                type="button" 
+                class="thumb-btn {% if forloop.first %}active{% endif %}" 
+                onclick="showImageMedia('{{ media | image_url: width: 800 }}', this)"
+              >
+                <img src="{{ media | image_url: width: 140 }}" alt="{{ product.title | escape }}" width="140" height="140">
+              </button>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Right Column: Product Purchasing Details -->
+    <div class="product-details-card">
+      <span class="product-atelier-tag">Handmade Atelier Edition</span>
+      <h1 class="product-detail-title">{{ product.title }}</h1>
+
+      <!-- Judge.me Review Stars Badge -->
+      <div class="titli-product-rating-badge">
+        <div class="jdgm-widget jdgm-preview-badge" data-id="{{ product.id }}">
+          {{ product.metafields.judgeme.badge }}
+        </div>
+      </div>
+
+      <div class="product-price-row">
+        <span class="price-current-large">{{ product.price | money }}</span>
+        {% if product.compare_at_price > product.price %}
+          <span class="price-compare-large">{{ product.compare_at_price | money }}</span>
+          <span class="discount-badge">Save {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%</span>
+        {% endif %}
+      </div>
+
+      {% if product.description != blank %}
+        <div class="product-description-body">
+          {{ product.description }}
+        </div>
+      {% endif %}
+
+      <!-- Purchase Form with Visual Variant Swatches -->
+      <form method="post" action="{{ routes.cart_add_url }}" class="product-buy-form" id="titliProductForm">
+        {% assign current_variant = product.selected_or_first_available_variant %}
+        <input type="hidden" name="id" id="selected-variant-id" value="{{ current_variant.id }}">
+        
+        {% if product.variants.size > 1 %}
+          <div class="variant-swatch-section">
+            <label class="swatch-section-label">Select Style / Option:</label>
+            <div class="titli-swatch-list">
+              {% for variant in product.variants %}
+                <button 
+                  type="button" 
+                  class="titli-swatch-btn {% if variant == current_variant %}active{% endif %} {% unless variant.available %}disabled{% endunless %}" 
+                  data-variant-id="{{ variant.id }}" 
+                  data-price="{{ variant.price | money }}" 
+                  data-available="{{ variant.available }}" 
+                  {% if variant.featured_media %}data-media-url="{{ variant.featured_media | image_url: width: 800 }}"{% endif %} 
+                  onclick="selectVariantSwatch(this)" 
+                  {% unless variant.available %}disabled{% endunless %}
+                >
+                  {% if variant.featured_media %}
+                    <img src="{{ variant.featured_media | image_url: width: 40, height: 40, crop: 'center' }}" alt="{{ variant.title | escape }}" class="swatch-btn-thumb" width="40" height="40">
+                  {% endif %}
+                  <span class="swatch-btn-title">{{ variant.title }}</span>
+                  {% unless variant.available %}
+                    <span class="swatch-soldout-badge">(Sold Out)</span>
+                  {% endunless %}
+                </button>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        <div class="quantity-add-row">
+          <div class="qty-stepper">
+            <label for="product-quantity" class="visually-hidden">Quantity</label>
+            <input type="number" id="product-quantity" name="quantity" value="1" min="1" class="qty-input">
+          </div>
+
+          <button type="submit" id="mainAddToCartBtn" class="product-add-to-bag-btn" {% unless product.available %}disabled{% endunless %}>
+            {% if product.available %}
+              <span>🛍️ Add to Bag</span>
+            {% else %}
+              <span>Sold Out</span>
+            {% endif %}
+          </button>
+        </div>
+      </form>
+
+      <!-- Trust Badges -->
+      <div class="titli-trust-badges">
+        <div class="badge-item">
+          <span class="badge-icon">🔒</span>
+          <span>100% Encrypted Checkout</span>
+        </div>
+        <div class="badge-item">
+          <span class="badge-icon">⚡</span>
+          <span>UPI &amp; Cards Protected</span>
+        </div>
+        <div class="badge-item">
+          <span class="badge-icon">📦</span>
+          <span>₹100 Flat India Shipping</span>
+        </div>
+      </div>
+
+      <div class="product-perks-list">
+        <div class="perk-item">
+          <span class="perk-icon">🌸</span>
+          <div>
+            <strong>100% Handcrafted</strong>
+            <p>Poured, assembled, and strung in small artisan batches</p>
+          </div>
+        </div>
+        <div class="perk-item">
+          <span class="perk-icon">📦</span>
+          <div>
+            <strong>Gift-Ready Packaging</strong>
+            <p>Shipped in signature blush boxes with keepsake backing cards</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Mobile Sticky "Add to Bag" Bar -->
+<div class="titli-mobile-sticky-bar" id="titliMobileStickyBar">
+  <div class="sticky-bar-content">
+    <div class="sticky-meta">
+      <span class="sticky-title">{{ product.title | truncate: 20 }}</span>
+      <span class="sticky-price" id="stickyPriceText">{{ product.price | money }}</span>
+    </div>
+    <button type="button" class="sticky-action-btn" onclick="document.getElementById('mainAddToCartBtn').click();">
+      Add to Bag &rarr;
+    </button>
+  </div>
+</div>
+
+
+<!-- Related Products by Collection -->
+{% assign related_collection = blank %}
+
+{%- comment -%}
+  Choose the most relevant store section when a product belongs to
+  more than one collection. These handles match the store's catalog:
+  customizer-charms/phone-charms, bag-charms, sun-catchers,
+  keychains-clips/keychains.
+{%- endcomment -%}
+{% for product_collection in product.collections %}
+  {% if related_collection == blank %}
+    {% if product_collection.handle == 'customizer-charms' or product_collection.handle == 'phone-charms' %}
+      {% assign related_collection = product_collection %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% if related_collection == blank %}
+  {% for product_collection in product.collections %}
+    {% if related_collection == blank %}
+      {% if product_collection.handle == 'bag-charms' %}
+        {% assign related_collection = product_collection %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if related_collection == blank %}
+  {% for product_collection in product.collections %}
+    {% if related_collection == blank %}
+      {% if product_collection.handle == 'sun-catchers' %}
+        {% assign related_collection = product_collection %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if related_collection == blank %}
+  {% for product_collection in product.collections %}
+    {% if related_collection == blank %}
+      {% if product_collection.handle == 'keychains-clips' or product_collection.handle == 'keychains' %}
+        {% assign related_collection = product_collection %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{%- comment -%} Fallback: use the first custom collection on the product. {%- endcomment -%}
+{% if related_collection == blank %}
+  {% for product_collection in product.collections %}
+    {% if related_collection == blank and product_collection.handle != 'all' %}
+      {% assign related_collection = product_collection %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if related_collection != blank %}
+  {% assign related_count = 0 %}
+  <section class="titli-related-products" aria-label="Related products">
+    <div class="titli-related-header">
+      <div>
+        <span class="titli-related-eyebrow">HANDCRAFTED TREASURES</span>
+        <h2 class="titli-related-title">More from {{ related_collection.title }}</h2>
+      </div>
+      <a href="{{ related_collection.url }}" class="titli-related-view-all">View all →</a>
+    </div>
+
+    <div class="titli-related-grid">
+      {% for related_product in related_collection.products %}
+        {% if related_product.id != product.id and related_count < 4 %}
+          {% assign related_count = related_count | plus: 1 %}
+          <article class="titli-related-card">
+            <a href="{{ related_product.url }}" class="titli-related-media" aria-label="{{ related_product.title | escape }}">
+              {% if related_product.featured_image %}
+                <img
+                  src="{{ related_product.featured_image | image_url: width: 500 }}"
+                  alt="{{ related_product.featured_image.alt | default: related_product.title | escape }}"
+                  loading="lazy"
+                  width="500"
+                  height="500"
+                >
+              {% else %}
+                <div class="titli-related-fallback">✨</div>
+              {% endif %}
+            </a>
+
+            <div class="titli-related-info">
+              <h3 class="titli-related-product-title">
+                <a href="{{ related_product.url }}">{{ related_product.title }}</a>
+              </h3>
+
+              <div class="titli-related-price">
+                {% if related_product.compare_at_price > related_product.price %}
+                  <span>{{ related_product.price | money }}</span>
+                  <s>{{ related_product.compare_at_price | money }}</s>
+                {% else %}
+                  <span>{{ related_product.price | money }}</span>
+                {% endif %}
+              </div>
+
+              {% if related_product.available %}
+                <form method="post" action="{{ routes.cart_add_url }}" class="titli-related-add-form">
+                  <input type="hidden" name="id" value="{{ related_product.selected_or_first_available_variant.id }}">
+                  <input type="hidden" name="quantity" value="1">
+                  <button type="submit" class="titli-related-add-btn">+ Add to Bag</button>
+                </form>
+              {% else %}
+                <button type="button" class="titli-related-add-btn is-sold-out" disabled>Out of Stock</button>
+              {% endif %}
+            </div>
+          </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}
+
+<style>
+  .titli-related-products {
+    max-width: 1100px;
+    margin: 56px auto 20px;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+
+  .titli-related-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 22px;
+  }
+
+  .titli-related-eyebrow {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--titli-brass, #607353);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+
+  .titli-related-title {
+    margin: 0;
+    color: var(--titli-primary-dark, #B7684C);
+    font-family: 'Quicksand', sans-serif;
+    font-size: 28px;
+    line-height: 1.2;
+    font-weight: 800;
+  }
+
+  .titli-related-view-all {
+    flex: 0 0 auto;
+    color: var(--titli-primary, #712423);
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .titli-related-view-all:hover {
+    text-decoration: underline;
+  }
+
+  .titli-related-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .titli-related-card {
+    min-width: 0;
+    overflow: hidden;
+    background: #FFFFFF;
+    border: 1.5px solid var(--titli-border, #607353);
+    border-radius: 18px;
+    box-shadow: 0 6px 18px rgba(36, 26, 24, 0.05);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+
+  .titli-related-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(36, 26, 24, 0.09);
+  }
+
+  .titli-related-media {
+    display: block;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #FAF6F1;
+    text-decoration: none;
+  }
+
+  .titli-related-media img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform .25s ease;
+  }
+
+  .titli-related-card:hover .titli-related-media img {
+    transform: scale(1.03);
+  }
+
+  .titli-related-fallback {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    font-size: 34px;
+  }
+
+  .titli-related-info {
+    padding: 13px 13px 14px;
+  }
+
+  .titli-related-product-title {
+    margin: 0 0 7px;
+    min-height: 36px;
+    font-size: 14px;
+    line-height: 1.3;
+    font-weight: 700;
+  }
+
+  .titli-related-product-title a {
+    color: var(--titli-text-main, #712423);
+    text-decoration: none;
+  }
+
+  .titli-related-product-title a:hover {
+    color: var(--titli-primary, #712423);
+  }
+
+  .titli-related-price {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 11px;
+    color: var(--titli-primary, #712423);
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .titli-related-price s {
+    color: var(--titli-text-muted, #607353);
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .titli-related-add-form {
+    margin: 0;
+  }
+
+  .titli-related-add-btn {
+    width: 100%;
+    min-height: 40px;
+    padding: 9px 10px;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--titli-primary, #712423) 0%, var(--titli-primary-dark, #B7684C) 100%);
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .2s ease, opacity .2s ease;
+  }
+
+  .titli-related-add-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .titli-related-add-btn.is-sold-out {
+    background: #EAE5DF;
+    color: #8C827D;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 900px) {
+    .titli-related-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 600px) {
+    .titli-related-products {
+      margin-top: 38px;
+      padding: 0 14px;
+    }
+
+    .titli-related-header {
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .titli-related-title {
+      font-size: 22px;
+    }
+
+    .titli-related-view-all {
+      font-size: 12px;
+    }
+
+    .titli-related-grid {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 2px 2px 12px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .titli-related-grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .titli-related-card {
+      flex: 0 0 68%;
+      max-width: 250px;
+      scroll-snap-align: start;
+    }
+
+    .titli-related-info {
+      padding: 11px;
+    }
+
+    .titli-related-product-title {
+      font-size: 13px;
+      min-height: 34px;
+    }
+  }
+</style>
+
+
+<script>
+  // Media Gallery Functions
+  function showImageMedia(src, btn) {
+    var img = document.getElementById('featured-product-image');
+    var vidWrap = document.getElementById('featured-product-video-wrap');
+    if (vidWrap) {
+      vidWrap.style.display = 'none';
+      vidWrap.innerHTML = '';
+    }
+    if (img) {
+      img.src = src;
+      img.style.display = 'block';
+    }
+    updateThumbState(btn);
+  }
+
+  function showVideoMedia(videoUrl, btn) {
+    var img = document.getElementById('featured-product-image');
+    var vidWrap = document.getElementById('featured-product-video-wrap');
+    if (img) img.style.display = 'none';
+    if (vidWrap) {
+      vidWrap.innerHTML = '<video src="' + videoUrl + '" autoplay loop muted playsinline controls class="product-featured-video"></video>';
+      vidWrap.style.display = 'block';
+    }
+    updateThumbState(btn);
+  }
+
+  function updateThumbState(activeBtn) {
+    var all = document.querySelectorAll('.product-thumbnails .thumb-btn');
+    all.forEach(function(el) { el.classList.remove('active'); });
+    if (activeBtn) activeBtn.classList.add('active');
+  }
+
+  // Variant Swatch Selector
+  function selectVariantSwatch(btn) {
+    var variantId = btn.getAttribute('data-variant-id');
+    var price = btn.getAttribute('data-price');
+    var available = btn.getAttribute('data-available') === 'true';
+    var mediaUrl = btn.getAttribute('data-media-url');
+
+    document.getElementById('selected-variant-id').value = variantId;
+
+    document.querySelectorAll('.titli-swatch-btn').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    btn.classList.add('active');
+
+    var priceEl = document.querySelector('.price-current-large');
+    var stickyPrice = document.getElementById('stickyPriceText');
+    if (priceEl) priceEl.textContent = price;
+    if (stickyPrice) stickyPrice.textContent = price;
+
+    if (mediaUrl) {
+      var img = document.getElementById('featured-product-image');
+      if (img) {
+        img.src = mediaUrl;
+        img.style.display = 'block';
+      }
+      var vidWrap = document.getElementById('featured-product-video-wrap');
+      if (vidWrap) vidWrap.style.display = 'none';
+    }
+
+    var mainBtn = document.getElementById('mainAddToCartBtn');
+    if (mainBtn) {
+      if (available) {
+        mainBtn.disabled = false;
+        mainBtn.innerHTML = '<span>🛍️ Add to Bag</span>';
+      } else {
+        mainBtn.disabled = true;
+        mainBtn.innerHTML = '<span>Sold Out</span>';
+      }
+    }
+  }
+
+  // Hard Scrubber for Judge.me elements
+  (function enforceCleanReviews() {
+    var unwantedSelectors = [
+      '.jdgm-write-rev-btn',
+      '.jdgm-widget-actions-wrapper',
+      '.jdgm-rev-widg__header-actions',
+      '.jdgm-btn-filter',
+      '.jdgm-btn-sort',
+      '.jdgm-sort-dropdown-wrapper',
+      '.jdgm-filter-tags-wrapper',
+      '.jdgm-rev-widg__sort',
+      '.jdgm-rev-widg__filter',
+      '.jdgm-subtab',
+      '.jdgm-rev__avatar',
+      '.jdgm-rev__icon',
+      '.jdgm-rev__reply',
+      '.jdgm-reply'
+    ];
+
+    function stripUnwanted() {
+      unwantedSelectors.forEach(function(sel) {
+        var elements = document.querySelectorAll(sel);
+        for (var i = 0; i < elements.length; i++) {
+          elements[i].remove();
+        }
+      });
+    }
+
+    // Run repeatedly while Judge.me script finishes its async rendering
+    var timer = setInterval(stripUnwanted, 100);
+    setTimeout(function() { clearInterval(timer); }, 5000);
+
+    // Watch DOM insertions
+    if (window.MutationObserver) {
+      var observer = new MutationObserver(stripUnwanted);
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+    }
+  })();
+</script>

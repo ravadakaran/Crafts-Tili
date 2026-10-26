@@ -1,0 +1,71 @@
+<section class="titli-catalog-section" id="product-catalog">
+  <div class="catalog-container">
+    
+    <!-- Editorial Header -->
+    <div class="catalog-header">
+      <span class="catalog-eyebrow">HANDCRAFTED TREASURES</span>
+      <h2 class="catalog-title">Product Catalog</h2>
+    </div>
+
+
+    <!-- Products Grid -->
+    <div class="titli-product-grid" id="catalog-products-grid">
+      {% assign featured_collection = collections[section.settings.collection] | default: collections.all %}
+      {% for product in featured_collection.products limit: 12 %}
+        <div class="titli-product-card" data-title="{{ product.title | downcase }}" data-type="{{ product.type | handleize }}" data-price="{{ product.price }}">
+          <a href="{{ product.url }}" class="product-card-media">
+            {% if product.featured_image %}
+              <img src="{{ product.featured_image | image_url: width: 450 }}" alt="{{ product.title | escape }}" class="product-card-img" width="450" height="450" loading="lazy">
+            {% else %}
+              <div class="product-card-fallback">✨</div>
+            {% endif %}
+            {% unless product.available %}
+              <span class="product-status-tag">Sold Out</span>
+            {% endunless %}
+          </a>
+
+          <div class="product-card-body">
+            <span class="product-tag-handmade">Artisan Craft</span>
+            <h3 class="product-card-title">
+              <a href="{{ product.url }}">{{ product.title }}</a>
+            </h3>
+
+            <div class="product-card-pricing">
+              <span>{{ product.price | money }}</span>
+            </div>
+
+            {% if product.available %}
+              <form method="post" action="{{ routes.cart_add_url }}" class="quick-add-form">
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <button type="submit" class="quick-add-btn">+ Add to Bag</button>
+              </form>
+            {% else %}
+              <button type="button" class="quick-add-btn is-sold-out" disabled>Out of Stock</button>
+            {% endif %}
+          </div>
+        </div>
+      {% else %}
+        <p class="catalog-empty-msg">No products found.</p>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Catalog",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Catalog"
+    }
+  ]
+}
+{% endschema %}

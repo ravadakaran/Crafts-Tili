@@ -1,0 +1,967 @@
+{% comment %}
+  Slide-out Drawer Cart for Crafts Titli
+  Features:
+  - Free Shipping Progress Bar (₹499)
+  - Full bundle and customizer item handling
+  - Live quantity adjustment & item removal via Ajax (/cart/change.js)
+  - Curated Add-on / Upsells Carousel
+  - Smooth side drawer animation with backdrop
+  - Automatic open on 'Add to Bag' from any page
+{% endcomment %}
+
+<div id="titli-cart-drawer" class="titli-drawer-wrapper" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Your Shopping Bag">
+  <div class="titli-drawer-backdrop" id="titli-drawer-backdrop-btn"></div>
+  
+  <div class="titli-drawer-panel">
+    <!-- Header -->
+    <div class="titli-drawer-header">
+      <div class="drawer-header-left">
+        <span class="drawer-butterfly-icon">🦋</span>
+        <h2 class="drawer-header-title">Your Bag</h2>
+        <span class="drawer-count-badge" id="titli-drawer-count">({{ cart.item_count }})</span>
+      </div>
+      <button type="button" class="drawer-close-btn" id="titli-drawer-close-btn" aria-label="Close bag drawer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Free Shipping Progress Bar -->
+    <div class="titli-shipping-meter-wrap" id="titli-shipping-meter">
+      <div class="shipping-meter-message" id="titli-shipping-msg">
+        <!-- Will be dynamically populated by JS -->
+        <span>✨ Calculating free shipping...</span>
+      </div>
+      <div class="shipping-meter-track">
+        <div class="shipping-meter-fill" id="titli-shipping-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <!-- Scrollable Items Area -->
+    <div class="titli-drawer-body" id="titli-drawer-body">
+      <!-- Loading Spinner (shown during cart updates) -->
+      <div class="titli-drawer-loader" id="titli-drawer-loader" style="display: none;">
+        <span class="drawer-spinner"></span>
+      </div>
+
+      <!-- Items Container -->
+      <div class="titli-drawer-items-list" id="titli-drawer-items-container">
+        <!-- Injected dynamically via JS or SSR initial fallback -->
+      </div>
+
+      <!-- Empty State -->
+      <div class="titli-drawer-empty" id="titli-drawer-empty" style="display: none;">
+        <div class="empty-icon-wrap">🪄</div>
+        <h3 class="empty-title">Your bag is empty</h3>
+        <p class="empty-desc">Discover our handcrafted phone charms, bag tags, and crystal sun catchers.</p>
+        <a href="{{ routes.all_products_collection_url }}" class="empty-shop-btn" id="titli-empty-continue-btn">
+          ✨ Explore Handcrafted Pieces
+        </a>
+      </div>
+
+      <!-- In-Drawer Curated Upsells -->
+      <div class="titli-drawer-upsells" id="titli-drawer-upsells">
+        <div class="upsell-heading-row">
+          <span class="upsell-eyebrow">POPULAR ATELIER ADD-ONS</span>
+          <span class="upsell-title">Pair With Your Piece</span>
+        </div>
+        <div class="upsell-products-track" id="titli-upsell-track">
+          {% assign upsell_collection = collections['bag-charms'] | default: collections.all %}
+          {% assign upsell_count = 0 %}
+          {% for product in upsell_collection.products limit: 6 %}
+            {% if product.available %}
+              {% assign upsell_count = upsell_count | plus: 1 %}
+              <div class="drawer-upsell-card" data-product-id="{{ product.id }}">
+                <div class="upsell-img-box">
+                  {% if product.featured_image %}
+                    <img src="{{ product.featured_image | image_url: width: 140, height: 140, crop: 'center' }}" alt="{{ product.title | escape }}" loading="lazy" width="70" height="70">
+                  {% else %}
+                    <span class="upsell-img-placeholder">🌸</span>
+                  {% endif %}
+                </div>
+                <div class="upsell-details">
+                  <span class="upsell-item-title">{{ product.title | truncate: 26 }}</span>
+                  <span class="upsell-item-price">{{ product.price | money }}</span>
+                  <button type="button" class="drawer-quick-add-upsell-btn" data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+                    + Add
+                  </button>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Sticky Drawer Footer (Summary & Checkout) -->
+    <div class="titli-drawer-footer" id="titli-drawer-footer">
+      <div class="drawer-subtotal-row">
+        <span class="subtotal-label">Subtotal</span>
+        <span class="subtotal-value" id="titli-drawer-subtotal">{{ cart.total_price | money }}</span>
+      </div>
+      <p class="drawer-shipping-note">Taxes and shipping calculated at checkout.</p>
+      
+      <div class="drawer-action-btns">
+        <a href="/checkout" class="drawer-checkout-btn">
+          <span>Checkout &rarr;</span>
+        </a>
+        <a href="{{ routes.cart_url }}" class="drawer-view-bag-link">
+          View Full Bag Details
+        </a>
+      </div>
+
+      <!-- Trust Badges -->
+      <div class="drawer-trust-row">
+        <span>🔒 100% Secure Checkout</span>
+        <span>•</span>
+        <span>✨ Handcrafted with Care</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Drawer Backdrop & Shell */
+.titli-drawer-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+  visibility: hidden;
+  transition: visibility 0.35s ease;
+}
+
+.titli-drawer-wrapper.is-open {
+  visibility: visible;
+}
+
+.titli-drawer-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(43, 27, 23, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.titli-drawer-wrapper.is-open .titli-drawer-backdrop {
+  opacity: 1;
+}
+
+.titli-drawer-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 440px;
+  height: 100%;
+  background: #FCF9F5;
+  box-shadow: -10px 0 35px rgba(113, 36, 35, 0.12);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.titli-drawer-wrapper.is-open .titli-drawer-panel {
+  transform: translateX(0);
+}
+
+/* Header */
+.titli-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  background: #FFFFFF;
+  border-bottom: 1px solid rgba(231, 219, 202, 0.7);
+}
+
+.drawer-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.drawer-butterfly-icon {
+  font-size: 20px;
+  animation: flutter-subtle 2s ease-in-out infinite alternate;
+}
+
+@keyframes flutter-subtle {
+  0% { transform: translateY(0) rotate(-4deg); }
+  100% { transform: translateY(-3px) rotate(4deg); }
+}
+
+.drawer-header-title {
+  margin: 0;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  color: #712423;
+  letter-spacing: -0.2px;
+}
+
+.drawer-count-badge {
+  font-size: 13px;
+  font-weight: 600;
+  color: #A05248;
+}
+
+.drawer-close-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #712423;
+  padding: 6px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.drawer-close-btn:hover {
+  background: rgba(113, 36, 35, 0.08);
+  transform: rotate(90deg);
+}
+
+/* Shipping Meter */
+.titli-shipping-meter-wrap {
+  padding: 12px 24px;
+  background: #F8F3ED;
+  border-bottom: 1px solid rgba(231, 219, 202, 0.8);
+}
+
+.shipping-meter-message {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #712423;
+  margin-bottom: 8px;
+  text-align: center;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.shipping-meter-track {
+  width: 100%;
+  height: 6px;
+  background: #E8DDCE;
+  border-radius: 99px;
+  overflow: hidden;
+  position: relative;
+}
+
+.shipping-meter-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #B32025 0%, #D86358 100%);
+  border-radius: 99px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Scrollable Body */
+.titli-drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Loading Overlay */
+.titli-drawer-loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(252, 249, 245, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.drawer-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(113, 36, 35, 0.2);
+  border-top-color: #712423;
+  border-radius: 50%;
+  animation: drawer-spin 0.7s linear infinite;
+}
+
+@keyframes drawer-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Items List */
+.titli-drawer-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.drawer-item-card {
+  display: flex;
+  gap: 14px;
+  padding: 14px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  border: 1px solid rgba(231, 219, 202, 0.75);
+  box-shadow: 0 2px 8px rgba(113, 36, 35, 0.03);
+  position: relative;
+}
+
+.drawer-item-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #F8F3ED;
+  flex-shrink: 0;
+}
+
+.drawer-item-meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.drawer-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.drawer-item-title {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #2B1B17;
+  text-decoration: none;
+  line-height: 1.3;
+}
+
+.drawer-item-title:hover {
+  color: #712423;
+}
+
+.drawer-item-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  color: #712423;
+  background: #F8EAE8;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+.drawer-item-variant {
+  font-size: 11.5px;
+  color: #8C7B75;
+  margin-top: 2px;
+}
+
+.drawer-item-remove-btn {
+  background: transparent;
+  border: none;
+  color: #9C8E89;
+  cursor: pointer;
+  padding: 2px;
+  font-size: 16px;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.drawer-item-remove-btn:hover {
+  color: #B32025;
+}
+
+.drawer-item-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.drawer-qty-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #E4D7C8;
+  border-radius: 20px;
+  background: #FAF6F0;
+  overflow: hidden;
+}
+
+.drawer-qty-btn {
+  background: transparent;
+  border: none;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #712423;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: background 0.15s;
+}
+
+.drawer-qty-btn:hover {
+  background: #EFE4D6;
+}
+
+.drawer-qty-val {
+  min-width: 24px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #2B1B17;
+}
+
+.drawer-item-price {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #712423;
+}
+
+/* Empty State */
+.titli-drawer-empty {
+  text-align: center;
+  padding: 40px 16px;
+  margin: auto 0;
+}
+
+.empty-icon-wrap {
+  font-size: 46px;
+  margin-bottom: 12px;
+}
+
+.empty-title {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #712423;
+  margin: 0 0 6px 0;
+}
+
+.empty-desc {
+  font-size: 13px;
+  color: #8C7B75;
+  margin: 0 0 20px 0;
+  line-height: 1.5;
+}
+
+.empty-shop-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #712423 0%, #8D302F 100%);
+  color: #FFFFFF;
+  text-decoration: none;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 12px 22px;
+  border-radius: 30px;
+  box-shadow: 0 4px 12px rgba(113, 36, 35, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.empty-shop-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(113, 36, 35, 0.3);
+}
+
+/* Upsells Carousel Area */
+.titli-drawer-upsells {
+  margin-top: 10px;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(231, 219, 202, 0.9);
+}
+
+.upsell-heading-row {
+  margin-bottom: 10px;
+}
+
+.upsell-eyebrow {
+  display: block;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #A05248;
+}
+
+.upsell-title {
+  display: block;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #712423;
+}
+
+.upsell-products-track {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: thin;
+}
+
+.drawer-upsell-card {
+  min-width: 170px;
+  max-width: 170px;
+  background: #FFFFFF;
+  border: 1px solid rgba(231, 219, 202, 0.8);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.upsell-img-box {
+  width: 100%;
+  height: 90px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #F8F3ED;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upsell-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.upsell-img-placeholder {
+  font-size: 26px;
+}
+
+.upsell-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.upsell-item-title {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #2B1B17;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.upsell-item-price {
+  font-size: 12px;
+  font-weight: 700;
+  color: #712423;
+}
+
+.drawer-quick-add-upsell-btn {
+  margin-top: 4px;
+  background: #F6EDE4;
+  border: 1px solid #DFC9B4;
+  color: #712423;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.drawer-quick-add-upsell-btn:hover {
+  background: #712423;
+  color: #FFFFFF;
+  border-color: #712423;
+}
+
+/* Footer & Checkout */
+.titli-drawer-footer {
+  padding: 18px 24px 22px;
+  background: #FFFFFF;
+  border-top: 1px solid rgba(231, 219, 202, 0.75);
+  box-shadow: 0 -4px 16px rgba(113, 36, 35, 0.04);
+}
+
+.drawer-subtotal-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.subtotal-label {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #2B1B17;
+}
+
+.subtotal-value {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #712423;
+}
+
+.drawer-shipping-note {
+  font-size: 11px;
+  color: #8C7B75;
+  margin: 0 0 14px 0;
+}
+
+.drawer-action-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.drawer-checkout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #712423 0%, #8D302F 100%);
+  color: #FFFFFF;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 13px;
+  border-radius: 30px;
+  box-shadow: 0 4px 14px rgba(113, 36, 35, 0.25);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.drawer-checkout-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(113, 36, 35, 0.35);
+}
+
+.drawer-view-bag-link {
+  text-align: center;
+  font-size: 12px;
+  color: #712423;
+  text-decoration: underline;
+  font-weight: 600;
+  padding: 4px;
+}
+
+.drawer-view-bag-link:hover {
+  color: #B32025;
+}
+
+.drawer-trust-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 10.5px;
+  color: #8C7B75;
+  font-weight: 600;
+}
+</style>
+
+<script>
+window.TitliDrawer = (function() {
+  const FREE_SHIPPING_THRESHOLD_PENCE = 49900; // ₹499 in paise
+
+  function formatMoney(cents) {
+    if (typeof cents !== 'number') cents = parseInt(cents, 10) || 0;
+    const rupees = (cents / 100).toFixed(2);
+    // Format without trailing decimals if whole number
+    return '₹' + rupees.replace(/\.00$/, '');
+  }
+
+  function getDrawer() {
+    return document.getElementById('titli-cart-drawer');
+  }
+
+  function openDrawer() {
+    const drawer = getDrawer();
+    if (drawer) {
+      drawer.classList.add('is-open');
+      drawer.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      refreshDrawer();
+    }
+  }
+
+  function closeDrawer() {
+    const drawer = getDrawer();
+    if (drawer) {
+      drawer.classList.remove('is-open');
+      drawer.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+  }
+
+  function showLoading(show) {
+    const loader = document.getElementById('titli-drawer-loader');
+    if (loader) loader.style.display = show ? 'flex' : 'none';
+  }
+
+  // Fetch current cart JSON and render
+  async function refreshDrawer() {
+    showLoading(true);
+    try {
+      const res = await fetch('/cart.js');
+      const cart = await res.json();
+      renderCart(cart);
+    } catch (err) {
+      console.error('Failed to load cart', err);
+    } finally {
+      showLoading(false);
+    }
+  }
+
+  function updateHeaderBadge(count) {
+    const headerBadges = document.querySelectorAll('.header-cart-badge');
+    headerBadges.forEach(badge => {
+      badge.textContent = count;
+      badge.style.display = count > 0 ? 'inline-block' : 'none';
+    });
+    const drawerCount = document.getElementById('titli-drawer-count');
+    if (drawerCount) drawerCount.textContent = `(${count})`;
+  }
+
+  function renderCart(cart) {
+    const container = document.getElementById('titli-drawer-items-container');
+    const emptyState = document.getElementById('titli-drawer-empty');
+    const footer = document.getElementById('titli-drawer-footer');
+    const subtotalEl = document.getElementById('titli-drawer-subtotal');
+    const shippingMsg = document.getElementById('titli-shipping-msg');
+    const shippingFill = document.getElementById('titli-shipping-fill');
+
+    if (!container) return;
+
+    // Filter out internal child items for display count
+    let visibleCount = 0;
+    const parentItems = [];
+
+    // Map items
+    cart.items.forEach(item => {
+      if (!item.properties || item.properties._bundle_child !== 'true') {
+        visibleCount += item.quantity;
+        parentItems.push(item);
+      }
+    });
+
+    updateHeaderBadge(visibleCount);
+
+    // Free shipping progress logic
+    const remaining = FREE_SHIPPING_THRESHOLD_PENCE - cart.total_price;
+    if (remaining <= 0) {
+      shippingMsg.innerHTML = '🎉 <strong>Congratulations!</strong> You have unlocked <strong>FREE Shipping</strong>!';
+      shippingFill.style.width = '100%';
+    } else {
+      const pct = Math.min(100, Math.max(8, (cart.total_price / FREE_SHIPPING_THRESHOLD_PENCE) * 100));
+      shippingMsg.innerHTML = `Add <strong>${formatMoney(remaining)}</strong> more to get <strong>FREE SHIPPING!</strong>`;
+      shippingFill.style.width = `${pct}%`;
+    }
+
+    // Toggle Empty vs Filled
+    if (parentItems.length === 0) {
+      container.innerHTML = '';
+      emptyState.style.display = 'block';
+      footer.style.display = 'none';
+      return;
+    }
+
+    emptyState.style.display = 'none';
+    footer.style.display = 'block';
+    subtotalEl.textContent = formatMoney(cart.total_price);
+
+    // Render items
+    let html = '';
+    parentItems.forEach(item => {
+      const isBundle = item.properties && item.properties._bundle_id;
+      const isCustomizer = isBundle || (item.properties && item.properties._customizer === 'true');
+      const imgUrl = item.image || item.featured_image ? (item.image || item.featured_image) : '';
+      const thumb = imgUrl ? `<img src="${imgUrl}" alt="${item.title}" class="drawer-item-thumb">` : `<div class="drawer-item-thumb" style="display:flex;align-items:center;justify-content:center;font-size:20px;">✨</div>`;
+      
+      const variantHtml = item.variant_title && item.variant_title !== 'Default Title' 
+        ? `<div class="drawer-item-variant">${item.variant_title}</div>` : '';
+
+      const badgeHtml = isCustomizer ? `<span class="drawer-item-badge">✨ Custom Atelier Piece</span>` : '';
+
+      html += `
+        <div class="drawer-item-card" data-key="${item.key}">
+          ${thumb}
+          <div class="drawer-item-meta">
+            <div class="drawer-item-top">
+              <div>
+                <a href="${item.url}" class="drawer-item-title">${item.product_title}</a>
+                ${badgeHtml}
+                ${variantHtml}
+              </div>
+              <button type="button" class="drawer-item-remove-btn" onclick="window.TitliDrawer.removeItem('${item.key}')" title="Remove">✕</button>
+            </div>
+            
+            <div class="drawer-item-bottom">
+              <div class="drawer-qty-stepper">
+                <button type="button" class="drawer-qty-btn" onclick="window.TitliDrawer.updateQty('${item.key}', ${item.quantity - 1})">−</button>
+                <span class="drawer-qty-val">${item.quantity}</span>
+                <button type="button" class="drawer-qty-btn" onclick="window.TitliDrawer.updateQty('${item.key}', ${item.quantity + 1})">+</button>
+              </div>
+              <span class="drawer-item-price">${formatMoney(item.final_line_price)}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    container.innerHTML = html;
+  }
+
+  // Update item quantity
+  async function updateQty(key, newQty) {
+    showLoading(true);
+    try {
+      const res = await fetch('/cart/change.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: key, quantity: newQty })
+      });
+      const updatedCart = await res.json();
+      renderCart(updatedCart);
+    } catch (err) {
+      console.error('Failed to update quantity', err);
+    } finally {
+      showLoading(false);
+    }
+  }
+
+  // Remove item
+  async function removeItem(key) {
+    return updateQty(key, 0);
+  }
+
+  // Add item via Ajax (from product page or upsell button)
+  async function addItem(variantId, quantity = 1, properties = {}) {
+    showLoading(true);
+    try {
+      const res = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: variantId,
+          quantity: quantity,
+          properties: properties
+        })
+      });
+      if (res.ok) {
+        openDrawer();
+      } else {
+        const error = await res.json();
+        alert(error.description || 'Could not add item to bag.');
+      }
+    } catch (err) {
+      console.error('Add to cart failed', err);
+    } finally {
+      showLoading(false);
+    }
+  }
+
+  // Init event bindings
+  function init() {
+    // Backdrop click
+    const backdrop = document.getElementById('titli-drawer-backdrop-btn');
+    if (backdrop) backdrop.addEventListener('click', closeDrawer);
+
+    // Close button click
+    const closeBtn = document.getElementById('titli-drawer-close-btn');
+    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+
+    // Intercept Header Cart Icon Click
+    document.querySelectorAll('.header-cart-wrap').forEach(link => {
+      link.addEventListener('click', function(e) {
+        // Prevent default navigation to /cart and open drawer instead
+        e.preventDefault();
+        openDrawer();
+      });
+    });
+
+    // Intercept Quick-Add forms across the site (e.g. Featured Products)
+    document.addEventListener('submit', function(e) {
+      const form = e.target;
+      if (form.matches('.quick-add-form, #titliProductForm')) {
+        e.preventDefault();
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (submitBtn) submitBtn.disabled = true;
+
+        const formData = new FormData(form);
+        fetch('/cart/add.js', {
+          method: 'POST',
+          body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status && data.status !== 200) {
+            alert(data.description || 'Could not add to bag');
+          } else {
+            openDrawer();
+          }
+        })
+        .catch(err => console.error(err))
+        .finally(() => {
+          if (submitBtn) submitBtn.disabled = false;
+        });
+      }
+    });
+
+    // In-Drawer Upsell Quick Add Buttons
+    document.addEventListener('click', function(e) {
+      const upsellBtn = e.target.closest('.drawer-quick-add-upsell-btn');
+      if (upsellBtn) {
+        const variantId = upsellBtn.getAttribute('data-variant-id');
+        if (variantId) {
+          upsellBtn.textContent = 'Adding...';
+          addItem(variantId, 1).then(() => {
+            upsellBtn.textContent = '✓ Added';
+            setTimeout(() => { upsellBtn.textContent = '+ Add'; }, 2000);
+          });
+        }
+      }
+    });
+
+    // ESC key closes drawer
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeDrawer();
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+
+  return {
+    open: openDrawer,
+    close: closeDrawer,
+    refresh: refreshDrawer,
+    addItem: addItem,
+    updateQty: updateQty,
+    removeItem: removeItem
+  };
+})();
+</script>

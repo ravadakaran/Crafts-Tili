@@ -1,0 +1,39 @@
+{
+  "name": "Crafts Titli",
+  "settings": {
+    "title": "Welcome to Crafts Titli",
+    "description": "Create your own unique phone charms with our customizer!",
+    "hero_banner": {
+      "heading": "Build Your Own Phone Charm",
+      "subheading": "Personalize your charm with our easy-to-use customizer.",
+      "cta_button": "Start Customizing"
+    },
+    "featured_products": {
+      "title": "Featured Products",
+      "description": "Explore our most popular items."
+    },
+    "testimonials": {
+      "title": "What Our Customers Say",
+      "description": "Hear from our happy customers."
+    },
+    "newsletter_signup": {
+      "title": "Stay Updated",
+      "description": "Sign up for our newsletter to receive the latest updates and offers."
+    }
+  },
+  "errors": {
+    "general": "Something went wrong. Please try again.",
+    "customizer": {
+      "missing_options": "Please select at least one option to build your charm."
+    }
+  },
+  "buttons": {
+    "add_to_cart": "Add to Cart",
+    "customize": "Customize Your Charm",
+    "subscribe": "Subscribe"
+  },
+  "messages": {
+    "success": "Your charm has been added to the cart!",
+    "newsletter_success": "Thank you for subscribing!"
+  }
+}

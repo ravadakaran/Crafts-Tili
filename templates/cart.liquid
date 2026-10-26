@@ -1,0 +1,1130 @@
+<div class="titli-cart-page">
+  <div class="cart-inner-container">
+    
+    <!-- Page Header -->
+    <header class="cart-header-section">
+      <h1 class="cart-main-title">Your Shopping Bag</h1>
+      <p class="cart-subtitle">Every piece is handcrafted with love in our atelier studio.</p>
+    </header>
+
+    {% comment %} Calculate visible parent items (excluding bundled child charms) {% endcomment %}
+    {% assign visible_items_count = 0 %}
+    {% for item in cart.items %}
+      {% unless item.properties._bundle_child == 'true' %}
+        {% assign visible_items_count = visible_items_count | plus: item.quantity %}
+      {% endunless %}
+    {% endfor %}
+
+    {% if visible_items_count > 0 %}
+      <form action="{{ routes.cart_url }}" method="post" novalidate id="titli-cart-form" class="cart-form-layout">
+        
+        <!-- Left Column: Bag Items List -->
+        <div class="cart-items-column">
+          <div class="cart-items-card">
+            
+            <div class="cart-table-head">
+              <span class="col-product">Product</span>
+              <span class="col-qty">Quantity</span>
+              <span class="col-total">Total</span>
+            </div>
+
+            <div class="cart-items-list">
+              {% for item in cart.items %}
+                {% comment %} Skip child charms so they don't render as independent items {% endcomment %}
+                {% if item.properties._bundle_child == 'true' %}
+                  {% continue %}
+                {% endif %}
+
+                {% comment %} Check for bundle association & aggregate child prices {% endcomment %}
+                {% assign is_bundle = false %}
+                {% assign bundle_id = item.properties._bundle_id %}
+                {% assign bundle_total_line_price = item.final_line_price %}
+                {% assign child_charms_count = 0 %}
+
+                {% if bundle_id != blank %}
+                  {% assign is_bundle = true %}
+                  {% for child in cart.items %}
+                    {% if child.properties._bundle_id == bundle_id and child.properties._bundle_child == 'true' %}
+                      {% assign bundle_total_line_price = bundle_total_line_price | plus: child.final_line_price %}
+                      {% assign child_charms_count = child_charms_count | plus: 1 %}
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+
+                {% assign bundle_unit_price = bundle_total_line_price | divided_by: item.quantity %}
+
+                <div class="cart-item-row" data-item-key="{{ item.key }}" {% if is_bundle %}data-bundle-id="{{ bundle_id }}"{% endif %}>
+                  
+                  <!-- Left: Thumbnail Image -->
+                  <div class="item-media-box">
+                    <a href="{{ item.url }}" class="item-img-link">
+                      {% if item.image %}
+                        <img src="{{ item.image | image_url: width: 220 }}" alt="{{ item.title | escape }}" width="90" height="90" class="item-thumb-img" loading="lazy">
+                      {% else %}
+                        <div class="item-img-placeholder">✨</div>
+                      {% endif %}
+                    </a>
+                  </div>
+
+                  <!-- Center: Product Info & Customizer Properties -->
+                  <div class="item-info-box">
+                    <div class="item-title-row">
+                      <h2 class="item-title">
+                        <a href="{{ item.url }}">{{ item.product.title }}</a>
+                      </h2>
+                      {% if is_bundle %}
+                        <span class="custom-piece-pill">✨ Custom Atelier Piece</span>
+                      {% endif %}
+                    </div>
+
+                    {% unless item.product.has_only_default_variant %}
+                      <div class="item-variant-label">{{ item.variant.title }}</div>
+                    {% endunless %}
+
+                    <!-- Unit Price -->
+                    <div class="item-unit-price-line">
+                      <span class="unit-price-tag">{{ bundle_unit_price | money }}</span>
+                      {% if item.quantity > 1 %}
+                        <span class="unit-price-note">({{ bundle_unit_price | money }} each)</span>
+                      {% endif %}
+                    </div>
+
+                    <!-- Customizer Properties (Filtering hidden '_' properties) -->
+                    {% assign prop_size = item.properties | size %}
+                    {% if prop_size > 0 %}
+                      <div class="custom-specs-panel">
+                        {% for p in item.properties %}
+                          {% assign first_char = p.first | slice: 0 %}
+                          {% unless p.last == blank or first_char == '_' %}
+                            <div class="spec-row">
+                              <span class="spec-label">{{ p.first }}:</span>
+                              <span class="spec-val">{{ p.last }}</span>
+                            </div>
+                          {% endunless %}
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+
+                    <!-- Included Bundled Child Charms -->
+                    {% if is_bundle and child_charms_count > 0 %}
+                      <div class="included-charms-box">
+                        <span class="included-charms-heading">Attached Atelier Charms:</span>
+                        <div class="included-charms-tags">
+                          {% for child in cart.items %}
+                            {% if child.properties._bundle_id == bundle_id and child.properties._bundle_child == 'true' %}
+                              <span class="charm-chip">
+                                {% if child.image %}
+                                  <img src="{{ child.image | image_url: width: 36 }}" alt="{{ child.title | escape }}" width="16" height="16" class="charm-chip-thumb">
+                                {% endif %}
+                                <span class="charm-chip-name">{{ child.product.title }}</span>
+                                {% if child.final_price > 0 %}
+                                  <span class="charm-chip-price">+{{ child.final_price | money }}</span>
+                                {% endif %}
+                              </span>
+                            {% endif %}
+                          {% endfor %}
+                        </div>
+                      </div>
+                    {% endif %}
+
+                    <!-- Mobile-Only Quantity & Remove Bar -->
+                    <div class="mobile-actions-bar">
+                      <div class="cart-qty-stepper">
+                        {% if is_bundle %}
+                          <button type="button" class="qty-btn minus" onclick="updateBundleQty('{{ bundle_id }}', {{ item.quantity | minus: 1 }})" aria-label="Decrease quantity">−</button>
+                          <span class="qty-display">{{ item.quantity }}</span>
+                          <button type="button" class="qty-btn plus" onclick="updateBundleQty('{{ bundle_id }}', {{ item.quantity | plus: 1 }})" aria-label="Increase quantity">+</button>
+                        {% else %}
+                          <button type="button" class="qty-btn minus" onclick="updateItemQty('{{ item.key }}', {{ item.quantity | minus: 1 }})" aria-label="Decrease quantity">−</button>
+                          <span class="qty-display">{{ item.quantity }}</span>
+                          <button type="button" class="qty-btn plus" onclick="updateItemQty('{{ item.key }}', {{ item.quantity | plus: 1 }})" aria-label="Increase quantity">+</button>
+                        {% endif %}
+                      </div>
+
+                      {% if is_bundle %}
+                        <button type="button" class="item-remove-btn" onclick="removeBundle('{{ bundle_id }}')">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                          Remove
+                        </button>
+                      {% else %}
+                        <button type="button" class="item-remove-btn" onclick="updateItemQty('{{ item.key }}', 0)">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                          Remove
+                        </button>
+                      {% endif %}
+                    </div>
+
+                  </div>
+
+                  <!-- Right: Desktop Quantity Stepper -->
+                  <div class="item-qty-col desktop-only">
+                    <div class="cart-qty-stepper">
+                      {% if is_bundle %}
+                        <button type="button" class="qty-btn minus" onclick="updateBundleQty('{{ bundle_id }}', {{ item.quantity | minus: 1 }})" aria-label="Decrease quantity">−</button>
+                        <span class="qty-display">{{ item.quantity }}</span>
+                        <button type="button" class="qty-btn plus" onclick="updateBundleQty('{{ bundle_id }}', {{ item.quantity | plus: 1 }})" aria-label="Increase quantity">+</button>
+                      {% else %}
+                        <button type="button" class="qty-btn minus" onclick="updateItemQty('{{ item.key }}', {{ item.quantity | minus: 1 }})" aria-label="Decrease quantity">−</button>
+                        <span class="qty-display">{{ item.quantity }}</span>
+                        <button type="button" class="qty-btn plus" onclick="updateItemQty('{{ item.key }}', {{ item.quantity | plus: 1 }})" aria-label="Increase quantity">+</button>
+                      {% endif %}
+                    </div>
+
+                    {% if is_bundle %}
+                      <button type="button" class="item-remove-link" onclick="removeBundle('{{ bundle_id }}')">
+                        Remove
+                      </button>
+                    {% else %}
+                      <button type="button" class="item-remove-link" onclick="updateItemQty('{{ item.key }}', 0)">
+                        Remove
+                      </button>
+                    {% endif %}
+                  </div>
+
+                  <!-- Right: Desktop Total Line Price -->
+                  <div class="item-total-col desktop-only">
+                    <span class="line-total-price">{{ bundle_total_line_price | money }}</span>
+                  </div>
+
+                </div>
+              {% endfor %}
+            </div>
+
+            <!-- Bag Bottom Note / Gift Message -->
+            <div class="cart-note-wrapper">
+              <label for="cart-special-note" class="cart-note-label">
+                <span>💌</span> Add a Gift Message or Atelier Note (Optional):
+              </label>
+              <textarea 
+                name="note" 
+                id="cart-special-note" 
+                rows="2" 
+                placeholder="Mention custom sizing preferences, gift note text, or special delivery instructions..."
+                class="cart-note-input"
+              >{{ cart.note }}</textarea>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right Column: Cart Summary Card -->
+        <aside class="cart-summary-column">
+          <div class="cart-summary-card">
+            <h2 class="summary-card-title">Order Summary</h2>
+
+            <div class="summary-line-row">
+              <span>Items Total ({{ visible_items_count }})</span>
+              <span class="summary-num">{{ cart.total_price | money }}</span>
+            </div>
+
+            <div class="summary-line-row">
+              <span>Standard Shipping</span>
+              <span class="summary-highlight">Calculated at Checkout</span>
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <div class="summary-total-row">
+              <span class="total-label">Subtotal</span>
+              <span class="total-amount">{{ cart.total_price | money }}</span>
+            </div>
+            <p class="tax-shipping-hint">Taxes and shipping calculated at checkout</p>
+
+            <button type="submit" name="checkout" id="cart-checkout-btn" class="checkout-submit-btn">
+              Proceed to Checkout →
+            </button>
+
+            <a href="{{ routes.all_products_collection_url }}" class="continue-shopping-btn">
+              ← Continue Shopping
+            </a>
+
+            <!-- Studio Trust Badges -->
+            <div class="studio-guarantees">
+              <div class="guarantee-item">
+                <span class="g-icon">🌸</span>
+                <div>
+                  <strong>100% Handcrafted</strong>
+                  <p>Assembled individually with genuine care.</p>
+                </div>
+              </div>
+              <div class="guarantee-item">
+                <span class="g-icon">🔒</span>
+                <div>
+                  <strong>Secure Checkout</strong>
+                  <p>UPI, cards, and netbanking encrypted.</p>
+                </div>
+              </div>
+              <div class="guarantee-item">
+                <span class="g-icon">📦</span>
+                <div>
+                  <strong>Careful Packaging</strong>
+                  <p>Dispatched in lovely keepsake boxes.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </aside>
+
+      </form>
+    {% else %}
+      <!-- Empty Bag State -->
+      <div class="empty-bag-card">
+        <div class="empty-icon-wrap">🛍️</div>
+        <h2 class="empty-title">Your shopping bag is empty</h2>
+        <p class="empty-desc">
+          Ready to design a one-of-a-kind piece or explore our handcrafted studio collection?
+        </p>
+        <div class="empty-cta-row">
+          <a href="/pages/design-custom-piece" class="empty-primary-btn">
+            ✨ Design a Custom Piece
+          </a>
+          <a href="{{ routes.all_products_collection_url }}" class="empty-secondary-btn">
+            Explore All Products
+          </a>
+        </div>
+      </div>
+    {% endif %}
+
+  </div>
+
+  <!-- Loading State Overlay -->
+  <div id="cart-loading-overlay" class="cart-loading-backdrop" style="display: none;">
+    <div class="loading-spinner-box">
+      <div class="spinner-ring"></div>
+      <span>Updating shopping bag...</span>
+    </div>
+  </div>
+</div>
+
+<style>
+/* ------------------------------------------------------------- */
+/* Crafts_Titli Atelier Cart Styles                              */
+/* ------------------------------------------------------------- */
+.titli-cart-page {
+  background: #FAF7F2;
+  min-height: 80vh;
+  padding: 40px 16px 80px;
+  font-family: var(--font-body, 'Quicksand', -apple-system, sans-serif);
+  color: #241D26;
+}
+
+.cart-inner-container {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.cart-header-section {
+  text-align: center;
+  margin-bottom: 34px;
+}
+
+.cart-main-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #712423;
+  margin: 0 0 8px;
+}
+
+.cart-subtitle {
+  font-size: 14.5px;
+  color: #7A6B67;
+  margin: 0;
+}
+
+/* Two-column layout */
+.cart-form-layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 30px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .cart-form-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+/* Items Column */
+.cart-items-card {
+  background: #FFFFFF;
+  border: 1.5px solid #ECE5DC;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(113, 36, 35, 0.04);
+}
+
+.cart-table-head {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #F0ECE6;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8C7B76;
+}
+
+.cart-table-head .col-product { flex: 1; }
+.cart-table-head .col-qty { width: 130px; text-align: center; }
+.cart-table-head .col-total { width: 90px; text-align: right; }
+
+@media (max-width: 720px) {
+  .cart-table-head {
+    display: none;
+  }
+}
+
+/* Cart Item Row */
+.cart-item-row {
+  display: flex;
+  gap: 20px;
+  padding: 24px 0;
+  border-bottom: 1px solid #F0ECE6;
+  align-items: flex-start;
+}
+
+.item-media-box {
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0;
+}
+
+.item-img-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #FAF7F2;
+  border: 1px solid #ECE5DC;
+}
+
+.item-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.item-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+}
+
+.item-info-box {
+  flex-grow: 1;
+}
+
+.item-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.item-title {
+  font-size: 16.5px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.item-title a {
+  color: #241D26;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.item-title a:hover {
+  color: #712423;
+}
+
+.custom-piece-pill {
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(113, 36, 35, 0.08);
+  color: #712423;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(113, 36, 35, 0.18);
+}
+
+.item-variant-label {
+  font-size: 12.5px;
+  color: #7A6B67;
+  margin-bottom: 6px;
+}
+
+.item-unit-price-line {
+  margin-bottom: 10px;
+}
+
+.unit-price-tag {
+  font-size: 15px;
+  font-weight: 800;
+  color: #712423;
+}
+
+.unit-price-note {
+  font-size: 12px;
+  color: #8C7B76;
+  margin-left: 4px;
+}
+
+/* Customizer Specifications Panel */
+.custom-specs-panel {
+  background: #FCFAF7;
+  border: 1px solid #EFE4D6;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  max-width: 480px;
+  margin-bottom: 12px;
+}
+
+.spec-row {
+  display: flex;
+  gap: 6px;
+}
+
+.spec-label {
+  font-weight: 700;
+  color: #712423;
+  min-width: 120px;
+}
+
+.spec-val {
+  color: #4A4A4A;
+}
+
+/* Included Charms Breakdown */
+.included-charms-box {
+  margin-top: 10px;
+  margin-bottom: 12px;
+}
+
+.included-charms-heading {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #712423;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.included-charms-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.charm-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #FAF5EE;
+  border: 1px solid #ECE5DC;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #3B2E2B;
+}
+
+.charm-chip-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.charm-chip-price {
+  color: #712423;
+  font-weight: 700;
+}
+
+/* Quantity Stepper */
+.cart-qty-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1.5px solid #E2D7CC;
+  border-radius: 25px;
+  background: #FFFFFF;
+  overflow: hidden;
+  height: 36px;
+}
+
+.qty-btn {
+  background: none;
+  border: none;
+  width: 34px;
+  height: 100%;
+  font-size: 16px;
+  font-weight: 700;
+  color: #712423;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+
+.qty-btn:hover {
+  background: #FAF5EE;
+}
+
+.qty-display {
+  width: 32px;
+  text-align: center;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #241D26;
+}
+
+/* Desktop Columns */
+.item-qty-col {
+  width: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.item-total-col {
+  width: 90px;
+  text-align: right;
+}
+
+.line-total-price {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #712423;
+}
+
+.item-remove-link {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: #B32025;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 2px 4px;
+}
+
+.item-remove-link:hover {
+  color: #712423;
+}
+
+/* Mobile Actions */
+.mobile-actions-bar {
+  display: none;
+  align-items: center;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.item-remove-btn {
+  background: none;
+  border: none;
+  color: #B32025;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 0;
+}
+
+@media (max-width: 720px) {
+  .desktop-only {
+    display: none !important;
+  }
+  .mobile-actions-bar {
+    display: flex;
+  }
+  .cart-item-row {
+    gap: 14px;
+  }
+  .item-media-box {
+    width: 76px;
+    height: 76px;
+  }
+  .spec-label {
+    min-width: 95px;
+  }
+}
+
+/* Cart Note */
+.cart-note-wrapper {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px dashed #E2D7CC;
+}
+
+.cart-note-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #712423;
+  margin-bottom: 8px;
+}
+
+.cart-note-input {
+  width: 100%;
+  box-sizing: border-box;
+  background: #FAF7F2;
+  border: 1px solid #ECE5DC;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-family: inherit;
+  font-size: 13px;
+  color: #241D26;
+  resize: vertical;
+  transition: border-color 0.2s ease;
+}
+
+.cart-note-input:focus {
+  outline: none;
+  border-color: #712423;
+  background: #FFFFFF;
+}
+
+/* Cart Summary Card */
+.cart-summary-card {
+  background: #FFFFFF;
+  border: 1.5px solid #ECE5DC;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(113, 36, 35, 0.04);
+  position: sticky;
+  top: 30px;
+}
+
+.summary-card-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #712423;
+  margin: 0 0 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #F0ECE6;
+}
+
+.summary-line-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13.5px;
+  color: #665955;
+  margin-bottom: 10px;
+}
+
+.summary-num {
+  font-weight: 700;
+  color: #241D26;
+}
+
+.summary-highlight {
+  font-size: 12px;
+  font-weight: 600;
+  color: #712423;
+  background: rgba(113, 36, 35, 0.07);
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.summary-divider {
+  height: 1px;
+  background: #F0ECE6;
+  margin: 14px 0;
+}
+
+.summary-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+.total-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: #241D26;
+}
+
+.total-amount {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 24px;
+  font-weight: 800;
+  color: #712423;
+}
+
+.tax-shipping-hint {
+  font-size: 11.5px;
+  color: #8C7B76;
+  margin: 0 0 20px;
+}
+
+.checkout-submit-btn {
+  width: 100%;
+  display: block;
+  background: linear-gradient(180deg, #8A2222 0%, #6E1A1A 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 30px;
+  padding: 15px 24px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(113, 36, 35, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.checkout-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(113, 36, 35, 0.35);
+}
+
+.continue-shopping-btn {
+  display: block;
+  text-align: center;
+  margin-top: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #712423;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.continue-shopping-btn:hover {
+  text-decoration: underline;
+}
+
+/* Studio Trust Badges */
+.studio-guarantees {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid #F0ECE6;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.guarantee-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.guarantee-item .g-icon {
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.guarantee-item strong {
+  display: block;
+  font-size: 12px;
+  color: #241D26;
+}
+
+.guarantee-item p {
+  margin: 1px 0 0;
+  font-size: 11px;
+  color: #7A6B67;
+  line-height: 1.35;
+}
+
+/* Empty Bag Styles */
+.empty-bag-card {
+  background: #FFFFFF;
+  border: 1.5px solid #ECE5DC;
+  border-radius: 24px;
+  padding: 60px 24px;
+  text-align: center;
+  max-width: 580px;
+  margin: 30px auto;
+  box-shadow: 0 6px 24px rgba(113, 36, 35, 0.04);
+}
+
+.empty-icon-wrap {
+  font-size: 54px;
+  margin-bottom: 16px;
+}
+
+.empty-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 26px;
+  color: #712423;
+  margin: 0 0 10px;
+}
+
+.empty-desc {
+  font-size: 14.5px;
+  color: #7A6B67;
+  line-height: 1.6;
+  margin: 0 0 28px;
+}
+
+.empty-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.empty-primary-btn {
+  background: #712423;
+  color: #FFFFFF;
+  padding: 13px 26px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.empty-primary-btn:hover {
+  background: #8A2222;
+  transform: translateY(-2px);
+}
+
+.empty-secondary-btn {
+  background: #FAF5EE;
+  color: #712423;
+  border: 1.5px solid #E2D7CC;
+  padding: 13px 24px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.empty-secondary-btn:hover {
+  background: #FFFFFF;
+  border-color: #712423;
+}
+
+/* Loading Backdrop */
+.cart-loading-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(36, 26, 24, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-spinner-box {
+  background: #FFFFFF;
+  padding: 24px 32px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-weight: 700;
+  color: #712423;
+  font-size: 14px;
+}
+
+.spinner-ring {
+  width: 22px;
+  height: 22px;
+  border: 3px solid rgba(113, 36, 35, 0.2);
+  border-top-color: #712423;
+  border-radius: 50%;
+  animation: spinRing 0.8s linear infinite;
+}
+
+@keyframes spinRing {
+  to { transform: rotate(360deg); }
+}
+</style>
+
+<script>
+(function() {
+  function setCartLoading(loading) {
+    var overlay = document.getElementById('cart-loading-overlay');
+    if (overlay) {
+      overlay.style.display = loading ? 'flex' : 'none';
+    }
+  }
+
+  // 1. Update standalone item quantity
+  window.updateItemQty = async function(itemKey, newQty) {
+    newQty = parseInt(newQty, 10);
+    if (isNaN(newQty) || newQty < 0) newQty = 0;
+
+    setCartLoading(true);
+    try {
+      var res = await fetch('/cart/change.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ id: itemKey, quantity: newQty })
+      });
+
+      if (!res.ok) throw new Error('Quantity update failed');
+      window.location.reload();
+    } catch (err) {
+      console.error('Error updating item quantity:', err);
+      alert('Could not update quantity. Please try again.');
+      setCartLoading(false);
+    }
+  };
+
+  // 2. Remove bundle (parent + child charms)
+  window.removeBundle = async function(bundleId) {
+    if (!bundleId) return;
+    setCartLoading(true);
+    try {
+      var res = await fetch('/cart.js');
+      var cart = await res.json();
+      var updates = {};
+
+      cart.items.forEach(function(item) {
+        if (item.properties && item.properties._bundle_id === bundleId) {
+          updates[item.key] = 0;
+        }
+      });
+
+      await fetch('/cart/update.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ updates: updates })
+      });
+
+      window.location.reload();
+    } catch (err) {
+      console.error('Error removing bundle:', err);
+      alert('Could not remove custom piece. Please try again.');
+      setCartLoading(false);
+    }
+  };
+
+  // 3. Update quantity of a custom bundle proportionally
+  window.updateBundleQty = async function(bundleId, newQty) {
+    newQty = parseInt(newQty, 10);
+    if (isNaN(newQty) || newQty <= 0) {
+      return window.removeBundle(bundleId);
+    }
+
+    setCartLoading(true);
+    try {
+      var res = await fetch('/cart.js');
+      var cart = await res.json();
+
+      var parentItem = cart.items.find(function(item) {
+        return item.properties && 
+               item.properties._bundle_id === bundleId && 
+               item.properties._bundle_child !== 'true';
+      });
+
+      if (!parentItem) {
+        return window.removeBundle(bundleId);
+      }
+
+      var currentParentQty = parentItem.quantity || 1;
+      var updates = {};
+
+      cart.items.forEach(function(item) {
+        if (item.properties && item.properties._bundle_id === bundleId) {
+          if (item.properties._bundle_child === 'true') {
+            // Scale child count based on current ratio
+            var childRatio = Math.round(item.quantity / currentParentQty) || 1;
+            updates[item.key] = childRatio * newQty;
+          } else {
+            updates[item.key] = newQty;
+          }
+        }
+      });
+
+      await fetch('/cart/update.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ updates: updates })
+      });
+
+      window.location.reload();
+    } catch (err) {
+      console.error('Error updating bundle quantity:', err);
+      alert('Could not update bundle quantity. Please try again.');
+      setCartLoading(false);
+    }
+  };
+
+  // 4. Autosave cart note on input change
+  document.addEventListener('DOMContentLoaded', function() {
+    var noteInput = document.getElementById('cart-special-note');
+    if (noteInput) {
+      var noteTimeout;
+      noteInput.addEventListener('input', function() {
+        clearTimeout(noteTimeout);
+        noteTimeout = setTimeout(function() {
+          fetch('/cart/update.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ note: noteInput.value })
+          }).catch(function(e) { console.warn('Note save error:', e); });
+        }, 800);
+      });
+    }
+
+    // 5. Purge any orphan child charms whose parent strap was deleted
+    fetch('/cart.js')
+      .then(function(res) { return res.json(); })
+      .then(function(cart) {
+        if (!cart.items || cart.items.length === 0) return;
+
+        var parentBundleIds = {};
+        cart.items.forEach(function(item) {
+          if (item.properties && item.properties._bundle_id && item.properties._bundle_child !== 'true') {
+            parentBundleIds[item.properties._bundle_id] = true;
+          }
+        });
+
+        var orphanUpdates = {};
+        var hasOrphans = false;
+
+        cart.items.forEach(function(item) {
+          if (item.properties && item.properties._bundle_child === 'true') {
+            var bId = item.properties._bundle_id;
+            if (!bId || !parentBundleIds[bId]) {
+              orphanUpdates[item.key] = 0;
+              hasOrphans = true;
+            }
+          }
+        });
+
+        if (hasOrphans) {
+          return fetch('/cart/update.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ updates: orphanUpdates })
+          }).then(function() { window.location.reload(); });
+        }
+      })
+      .catch(function(err) {
+        console.warn('Orphan check error:', err);
+      });
+  });
+})();
+</script>
