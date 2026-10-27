@@ -4,7 +4,9 @@
 <div class="titli-customizer-section" id="titliCustomizerApp" 
      data-phone-variant="50663420952773" 
      data-bag-variant="50663426982085"
-     data-bag-single-variant="50666935517381">
+     data-bag-single-variant="50666935517381"
+     data-gold-clasp-variant="50813321806021"
+     data-silver-clasp-variant="50813322592453">
 
   <!-- Floating Mini-Preview Pill (Mobile Picture-in-Picture) -->
   <div id="mobileFloatingPreviewPill" class="mobile-floating-preview-pill" role="button" aria-label="Jump to Live Strap Preview">
@@ -38,7 +40,7 @@
           <span class="zoom-price" id="zoomCharmPrice">+₹25.00</span>
           <span class="zoom-badge">Atelier Edition</span>
         </div>
-        <p class="zoom-desc" id="zoomCharmDesc">Handcrafted enamel with radiant crystals and tarnish-resistant hardware.</p>
+        
         <button type="button" class="zoom-action-btn" id="zoomAttachActionBtn">
           <span>Attach Charm to Design</span>
         </button>
@@ -54,31 +56,31 @@
       <!-- ==========================================
            VIEW 1: Phone Strap Charm
            ========================================== -->
-      <div id="stagePhoneCharmWrapper" style="width: 100%;">
+      <div id="stagePhoneCharmWrapper" style="display: none; width: 100%;">
         <div class="stage-header">
           <span class="stage-pill">LIVE PREVIEW</span>
           <h2 class="stage-title">Phone Strap</h2>
         </div>
 
         <div class="unified-preview-box">
-          <span class="phone-palette-tag" id="phonePaletteLabel">PASTEL DREAM PALETTE</span>
+          <span class="phone-palette-tag" id="phonePaletteLabel" style="display: none;">PASTEL DREAM (LILAC &amp; GREENS)</span>
 
           <div class="phone-graphic-container">
             <div class="phone-tether-svg-wrap" id="renderPhoneTether">
               <svg viewBox="0 0 40 190" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 2 C 28 2, 34 14, 34 32 C 34 48, 24 55, 20 60 C 16 55, 6 48, 6 32 C 6 14, 12 2, 20 2 Z" stroke="#241A18" stroke-width="2.5" fill="none"/>
-                <path d="M20 60 V185" stroke="#241A18" stroke-width="3" stroke-linecap="round"/>
+                <path d="M20 2 C 28 2, 34 14, 34 32 C 34 48, 24 55, 20 60 C 16 55, 6 48, 6 32 C 6 14, 12 2, 20 2 Z" stroke="#D32F2F" stroke-width="2.5" fill="none"/>
+                <path d="M20 60 V185" stroke="#D32F2F" stroke-width="3" stroke-linecap="round"/>
               </svg>
             </div>
 
             <div class="phone-name-beads-stack" id="phoneNameBeadsColumn"></div>
-            <div class="phone-floating-tooltip" id="phoneTapHint"><span>Tap charms to attach them!</span></div>
+            <div class="phone-floating-tooltip" id="phoneTapHint"><span>Tap a charm to attach it!</span></div>
             <div class="phone-attached-items" id="phoneAttachedList" role="listbox" aria-label="Phone strap charm arrangement"></div>
             <p class="charm-arrangement-hint" id="phoneArrangementHint">↔ Drag to reorder · Arrow keys supported</p>
           </div>
 
           <div class="phone-attached-counter-bar">
-            <span class="counter-text" id="phoneCharmsCounterText">Charms Attached: <strong>0/4</strong></span>
+            <span class="counter-text" id="phoneCharmsCounterText">Charms Attached: <strong>0/1</strong></span>
             <button type="button" class="reset-link-btn" id="phoneResetCharmsBtn">Reset All</button>
           </div>
         </div>
@@ -104,7 +106,7 @@
         </div>
 
         <div class="unified-preview-box">
-          <span class="phone-palette-tag" id="multiPaletteLabel">PASTEL DREAM PALETTE</span>
+          <span class="phone-palette-tag" id="multiPaletteLabel">PASTEL DREAM (LILAC &amp; GREENS)</span>
           <div class="keychain-assembly" id="multiBagClipAssembly">
             <div class="keychain-clasp-wrap" id="renderClasp">
               <svg class="clasp-svg" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
@@ -162,14 +164,14 @@
       <!-- ==========================================
            VIEW 3: Single-Strand Bag Clip (Single Cord + Clustered Charms)
            ========================================== -->
-      <div id="stageBagClipSingleWrapper" style="display: none; width: 100%;">
+      <div id="stageBagClipSingleWrapper" style="width: 100%;">
         <div class="stage-header">
           <span class="stage-pill">LIVE ATELIER PREVIEW</span>
           <h2 class="stage-title">Single-Strand Bag Clip</h2>
         </div>
 
         <div class="unified-preview-box">
-          <span class="phone-palette-tag" id="singlePaletteLabel">PASTEL DREAM PALETTE</span>
+          <span class="phone-palette-tag" id="singlePaletteLabel" style="display: none;">PASTEL DREAM (LILAC &amp; GREENS)</span>
 
           <div class="single-cord-assembly" id="singleCordAssembly">
             <div class="keychain-clasp-wrap" id="renderClaspSingle">
@@ -223,119 +225,131 @@
       <div class="customizer-type-selector">
         <label class="section-label">Select Atelier Creation Type</label>
         <div class="type-switch-row">
-          <button type="button" class="type-btn active" id="btnTypePhoneCharm" data-type="phone-charm">
-            <span class="type-icon">📱</span>
-            <span class="type-text"><strong>Phone Strap</strong><small>Wrist loop (Max 4)</small></span>
+          <button type="button" class="type-btn active" id="btnTypeBagClipSingle" data-type="bag-clip-single">
+            <span class="type-icon">🎐</span>
+            <span class="type-text"><strong>Bag Clip (Single)</strong><small>1 cord (Max 7)</small></span>
           </button>
           <button type="button" class="type-btn" id="btnTypeBagClipMulti" data-type="bag-clip-multi">
             <span class="type-icon">🗝️</span>
             <span class="type-text"><strong>Bag Clip (Multi)</strong><small>4 distinct strands</small></span>
           </button>
-          <button type="button" class="type-btn" id="btnTypeBagClipSingle" data-type="bag-clip-single">
-            <span class="type-icon">🎐</span>
-            <span class="type-text"><strong>Bag Clip (Single)</strong><small>1 cord (Max 7)</small></span>
+          <button type="button" class="type-btn" id="btnTypePhoneCharm" data-type="phone-charm">
+            <span class="type-icon">📱</span>
+            <span class="type-text"><strong>Phone Strap</strong><small>Wrist loop (1 Charm)</small></span>
           </button>
         </div>
       </div>
 
       <!-- Navigation Tabs -->
       <div class="controls-nav-tabs">
-        <button type="button" class="tab-btn active" data-tab="tab-clasp" id="tabBtnClasp">1. Tether Cord</button>
-        <button type="button" class="tab-btn" data-tab="tab-name" id="tabBtnName">2. Custom Name</button>
-        <button type="button" class="tab-btn" data-tab="tab-palette" id="tabBtnPalette">3. Color Story</button>
-        <button type="button" class="tab-btn" data-tab="tab-charms" id="tabBtnCharms">4. Charms</button>
+        <button type="button" class="tab-btn active" data-tab="tab-clasp" id="tabBtnClasp">1. Cord &amp; Clasp</button>
+        <button type="button" class="tab-btn" data-tab="tab-name" id="tabBtnName" style="display: none;">2. Custom Name</button>
+        <button type="button" class="tab-btn" data-tab="tab-palette" id="tabBtnPalette" style="display: none;">3. Color Story</button>
+        <button type="button" class="tab-btn" data-tab="tab-charms" id="tabBtnCharms">2. Charms</button>
       </div>
 
       <form id="multiStrandCustomizerForm" class="controls-form" onsubmit="return false;">
         
         <!-- Tab 1: Clasp / Cord -->
         <div class="tab-pane active" id="tab-clasp">
-          <label class="section-label" id="claspHeadingLabel">Select Tether Cord Color</label>
-          <p class="section-desc" id="claspDescText">Choose your soft durable nylon cord that loops through your phone case.</p>
+          <label class="section-label" id="claspHeadingLabel">Select Cord Color &amp; Clasp</label>
+          <p class="section-desc" id="claspDescText">Choose the central jewelry cord color and clasp for your attached charms.</p>
           
-          <!-- Option Grid 1: Phone Strap (Nylon Tether Cords) -->
-          <div class="option-grid clasp-selector-grid" id="claspSelectorPhone">
-            <button type="button" class="option-card active" data-clasp-color="#8A58B5" data-clasp-name="Lilac Purple" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #8A58B5;"></span><span class="option-title">Lilac Purple</span>
+          <!-- Option Grid 1: Phone Strap (Tether Cords) -->
+          <div class="option-grid clasp-selector-grid" id="claspSelectorPhone" style="display: none;">
+            <button type="button" class="option-card active" data-clasp-color="#D32F2F" data-clasp-name="Red" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #D32F2F;"></span><span class="option-title">Red</span>
             </button>
-            <button type="button" class="option-card" data-clasp-color="#E27396" data-clasp-name="Blush Pink" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #E27396;"></span><span class="option-title">Blush Pink</span>
+            <button type="button" class="option-card" data-clasp-color="#F06292" data-clasp-name="Pink" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #F06292;"></span><span class="option-title">Pink</span>
             </button>
-            <button type="button" class="option-card" data-clasp-color="#EADBB6" data-clasp-name="Buttercream Ivory" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #EADBB6;"></span><span class="option-title">Buttercream Ivory</span>
+            <button type="button" class="option-card" data-clasp-color="#1E88E5" data-clasp-name="Blue" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #1E88E5;"></span><span class="option-title">Blue</span>
             </button>
-            <button type="button" class="option-card" data-clasp-color="#2B2B2B" data-clasp-name="Onyx Black" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #2B2B2B;"></span><span class="option-title">Onyx Black</span>
+            <button type="button" class="option-card" data-clasp-color="#FDD835" data-clasp-name="Yellow" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #FDD835;"></span><span class="option-title">Yellow</span>
             </button>
-            <button type="button" class="option-card" data-clasp-color="#88B04B" data-clasp-name="Sage Green" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #88B04B;"></span><span class="option-title">Sage Green</span>
+            <button type="button" class="option-card" data-clasp-color="#FFFFFF" data-clasp-name="White" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #FFFFFF; border: 1.5px solid #DDD6CC;"></span><span class="option-title">White</span>
             </button>
-            <button type="button" class="option-card" data-clasp-color="#7EA7CC" data-clasp-name="Sky Blue" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #7EA7CC;"></span><span class="option-title">Sky Blue</span>
+            <button type="button" class="option-card" data-clasp-color="#212121" data-clasp-name="Black" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #212121;"></span><span class="option-title">Black</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#A0A5A3" data-clasp-name="Silver" data-clasp-price="20" data-clasp-variant="50813322592453">
+              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #E0E2E1 0%, #A0A5A3 100%); border: 1px solid #7B817F;"></span>
+              <span class="option-title">Silver (+₹20)</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#D4AF37" data-clasp-name="Gold" data-clasp-price="20" data-clasp-variant="50813321806021">
+              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #FBE082 0%, #D4AF37 100%); border: 1px solid #B89324;"></span>
+              <span class="option-title">Gold (+₹20)</span>
             </button>
           </div>
 
           <!-- Option Grid 2: Multi-Strand Bag Clip (Hardware Finishes) -->
           <div class="option-grid clasp-selector-grid" id="claspSelectorBagMulti" style="display: none;">
-            <button type="button" class="option-card active" data-clasp-color="#9B6B28" data-clasp-name="Antique Brass / Vintage Gold" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #C5A059 0%, #9B6B28 100%); border: 1px solid #7D551E;"></span>
-              <span class="option-title">Antique Brass / Gold</span>
+            <button type="button" class="option-card active" data-clasp-color="#D32F2F" data-clasp-name="Red" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #D32F2F;"></span><span class="option-title">Red</span>
             </button>
-            <button type="button" class="option-card" data-clasp-color="#A0A5A3" data-clasp-name="Silver Metallic" data-clasp-price="0">
+            <button type="button" class="option-card" data-clasp-color="#F06292" data-clasp-name="Pink" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #F06292;"></span><span class="option-title">Pink</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#1E88E5" data-clasp-name="Blue" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #1E88E5;"></span><span class="option-title">Blue</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#FDD835" data-clasp-name="Yellow" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #FDD835;"></span><span class="option-title">Yellow</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#FFFFFF" data-clasp-name="White" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #FFFFFF; border: 1.5px solid #DDD6CC;"></span><span class="option-title">White</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#212121" data-clasp-name="Black" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #212121;"></span><span class="option-title">Black</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#A0A5A3" data-clasp-name="Silver" data-clasp-price="20" data-clasp-variant="50813322592453">
               <span class="color-swatch-circle" style="background: linear-gradient(135deg, #E0E2E1 0%, #A0A5A3 100%); border: 1px solid #7B817F;"></span>
-              <span class="option-title">Silver Metallic</span>
+              <span class="option-title">Silver (+₹20)</span>
             </button>
-            <button type="button" class="option-card" data-clasp-color="#D4AF37" data-clasp-name="Polished Classic Gold" data-clasp-price="0">
+            <button type="button" class="option-card" data-clasp-color="#D4AF37" data-clasp-name="Gold" data-clasp-price="20" data-clasp-variant="50813321806021">
               <span class="color-swatch-circle" style="background: linear-gradient(135deg, #FBE082 0%, #D4AF37 100%); border: 1px solid #B89324;"></span>
-              <span class="option-title">Polished Gold</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#B76E79" data-clasp-name="Rose Gold" data-clasp-price="20">
-              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #F2B5BE 0%, #B76E79 100%); border: 1px solid #9A5661;"></span>
-              <span class="option-title">Rose Gold (+₹20)</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#2E2E2E" data-clasp-name="Gunmetal Black" data-clasp-price="20">
-              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #4A4A4A 0%, #202020 100%); border: 1px solid #111111;"></span>
-              <span class="option-title">Gunmetal Black (+₹20)</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#6A1E22" data-clasp-name="Crimson Burgundy" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #8B262B 0%, #6A1E22 100%); border: 1px solid #4D1216;"></span>
-              <span class="option-title">Crimson Burgundy</span>
+              <span class="option-title">Gold (+₹20)</span>
             </button>
           </div>
 
           <!-- Option Grid 3: Single-Strand Bag Clip (Cord & Clasp Colors) -->
-          <div class="option-grid clasp-selector-grid" id="claspSelectorBagSingle" style="display: none;">
-            <button type="button" class="option-card active" data-clasp-color="#9B6B28" data-clasp-name="Antique Brass & Gold" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #C5A059 0%, #9B6B28 100%); border: 1px solid #7D551E;"></span>
-              <span class="option-title">Antique Brass / Gold</span>
+          <div class="option-grid clasp-selector-grid" id="claspSelectorBagSingle" style="display: grid;">
+            <button type="button" class="option-card active" data-clasp-color="#D32F2F" data-clasp-name="Red" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #D32F2F;"></span><span class="option-title">Red</span>
             </button>
-            <button type="button" class="option-card" data-clasp-color="#A0A5A3" data-clasp-name="Silver Metallic" data-clasp-price="0">
+            <button type="button" class="option-card" data-clasp-color="#F06292" data-clasp-name="Pink" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #F06292;"></span><span class="option-title">Pink</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#1E88E5" data-clasp-name="Blue" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #1E88E5;"></span><span class="option-title">Blue</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#FDD835" data-clasp-name="Yellow" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #FDD835;"></span><span class="option-title">Yellow</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#FFFFFF" data-clasp-name="White" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #FFFFFF; border: 1.5px solid #DDD6CC;"></span><span class="option-title">White</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#212121" data-clasp-name="Black" data-clasp-price="0">
+              <span class="color-swatch-circle" style="background: #212121;"></span><span class="option-title">Black</span>
+            </button>
+            <button type="button" class="option-card" data-clasp-color="#A0A5A3" data-clasp-name="Silver" data-clasp-price="20" data-clasp-variant="50813322592453">
               <span class="color-swatch-circle" style="background: linear-gradient(135deg, #E0E2E1 0%, #A0A5A3 100%); border: 1px solid #7B817F;"></span>
-              <span class="option-title">Silver Metallic</span>
+              <span class="option-title">Silver (+₹20)</span>
             </button>
-            <button type="button" class="option-card" data-clasp-color="#8A58B5" data-clasp-name="Lilac Purple Cord" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #8A58B5;"></span>
-              <span class="option-title">Lilac Purple</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#E27396" data-clasp-name="Blush Pink Cord" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #E27396;"></span>
-              <span class="option-title">Blush Pink</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#EADBB6" data-clasp-name="Ivory Cream Cord" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #EADBB6;"></span>
-              <span class="option-title">Ivory Cream</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#2B2B2B" data-clasp-name="Onyx Black Cord" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #2B2B2B;"></span>
-              <span class="option-title">Onyx Black</span>
+            <button type="button" class="option-card" data-clasp-color="#D4AF37" data-clasp-name="Gold" data-clasp-price="20" data-clasp-variant="50813321806021">
+              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #FBE082 0%, #D4AF37 100%); border: 1px solid #B89324;"></span>
+              <span class="option-title">Gold (+₹20)</span>
             </button>
           </div>
 
           <!-- Stepper Footer: Tab 1 -->
           <div class="stepper-nav-row">
-            <span class="stepper-step-indicator">Phase 1 of 4: Base Canvas</span>
+            <span class="stepper-step-indicator" id="stepperIndicatorTab1">Phase 1 of 2: Cord &amp; Clasp</span>
             <button type="button" class="stepper-nav-btn stepper-next-btn" id="stepperNextFromClasp">
-              <span>Next: Personalize Name</span>
+              <span id="stepperNextFromClaspText">Next: Select Charms</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
           </div>
@@ -356,9 +370,9 @@
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
               <span>Back: Canvas</span>
             </button>
-            <span class="stepper-step-indicator">Phase 2 of 4: Name Beads</span>
+            <span class="stepper-step-indicator" id="stepperIndicatorTab2">Phase 2 of 4: Name Beads</span>
             <button type="button" class="stepper-nav-btn stepper-next-btn" id="stepperNextFromName">
-              <span>Next: Color Story</span>
+              <span id="stepperNextFromNameText">Next: Color Story</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
           </div>
@@ -368,9 +382,9 @@
         <div class="tab-pane" id="tab-palette">
           <label class="section-label">Select Color Palette Theme</label>
           <div class="palette-list" id="paletteSelector">
-            <button type="button" class="palette-row-btn active" data-palette="fairy-garden" data-palette-name="PASTEL DREAM PALETTE" data-accent="#6BB377" data-primary="#8A58B5">
-              <div class="swatch-strip"><span style="background:#8A58B5;"></span><span style="background:#6BB377;"></span><span style="background:#ECA1A6;"></span><span style="background:#FFF;"></span></div>
-              <div class="palette-meta"><strong>Pastel Dream (Lilac &amp; Matcha)</strong><small>Faceted lilac beads, matcha beads, and butterflies</small></div>
+            <button type="button" class="palette-row-btn active" data-palette="fairy-garden" data-palette-name="PASTEL DREAM (LILAC &amp; GREENS)" data-accent="#5E966B" data-primary="#8A58B5">
+              <div class="swatch-strip"><span style="background:#8A58B5;"></span><span style="background:#5E966B;"></span><span style="background:#A3C9A8;"></span><span style="background:#FFF;"></span></div>
+              <div class="palette-meta"><strong>Pastel Dream (Lilac &amp; Greens)</strong><small>Faceted lilac beads, sage green beads, and butterflies</small></div>
             </button>
             <button type="button" class="palette-row-btn" data-palette="cherry-blossom" data-palette-name="SAKURA BLOSSOM PALETTE" data-accent="#E27396" data-primary="#B32025">
               <div class="swatch-strip"><span style="background:#B32025;"></span><span style="background:#E27396;"></span><span style="background:#F7B2BD;"></span><span style="background:#FFF;"></span></div>
@@ -379,6 +393,14 @@
             <button type="button" class="palette-row-btn" data-palette="ocean-mist" data-palette-name="OCEAN MIST PALETTE" data-accent="#5BC0BE" data-primary="#3A506B">
               <div class="swatch-strip"><span style="background:#3A506B;"></span><span style="background:#5BC0BE;"></span><span style="background:#A3CEF1;"></span><span style="background:#FFF;"></span></div>
               <div class="palette-meta"><strong>Ocean Mist (Aquas &amp; Indigo)</strong><small>Clear sea-glass beads, frosted stars, and silver accents</small></div>
+            </button>
+            <button type="button" class="palette-row-btn" data-palette="yellow-pink" data-palette-name="SUNSET SORBET (YELLOW &amp; PINK)" data-accent="#F06292" data-primary="#FDD835">
+              <div class="swatch-strip"><span style="background:#FDD835;"></span><span style="background:#F06292;"></span><span style="background:#FFE082;"></span><span style="background:#FCE4EC;"></span></div>
+              <div class="palette-meta"><strong>Sunset Sorbet (Yellow &amp; Pink)</strong><small>Radiant sunny yellow crystals, pastel pink pearls, and daisy accents</small></div>
+            </button>
+            <button type="button" class="palette-row-btn" data-palette="surprise-me" data-palette-name="SURPRISE ME (ATELIER MIX)" data-accent="#EC407A" data-primary="#7E57C2">
+              <div class="swatch-strip"><span style="background:linear-gradient(135deg, #FF6B6B 0%, #FFA07A 100%);"></span><span style="background:linear-gradient(135deg, #A06CD5 0%, #E27396 100%);"></span><span style="background:linear-gradient(135deg, #4ECDC4 0%, #5BC0BE 100%);"></span><span style="background:linear-gradient(135deg, #FDD835 0%, #FFB300 100%);"></span></div>
+              <div class="palette-meta"><strong>Surprise Me (Atelier Mystery Mix)</strong><small>A one-of-a-kind harmony handpicked by our studio artist ✨</small></div>
             </button>
           </div>
 
@@ -405,7 +427,7 @@
           <div class="charms-category-pills-wrap">
             <div class="charms-tab-header" style="margin-bottom: 6px;">
               <label class="section-label" style="margin-bottom: 0;">Explore by Theme &amp; Aesthetic Vibe</label>
-              <span class="charms-limit-pill" id="charmsLimitBadge">Max 4 Charms</span>
+              <span class="charms-limit-pill" id="charmsLimitBadge">Max 7 Charms</span>
             </div>
             <div class="charms-category-pills" id="charmsCategoryPills" role="tablist" aria-label="Charm categories">
               <button type="button" class="cat-pill active" data-category="all" role="tab" aria-selected="true">
@@ -431,6 +453,18 @@
               <button type="button" class="cat-pill" data-category="minions" role="tab" aria-selected="false">
                 <span>🍌 Minions</span>
                 <span class="cat-count-badge" id="catCountMinions"></span>
+              </button>
+              <button type="button" class="cat-pill" data-category="cartoon" role="tab" aria-selected="false">
+                <span>🧸 Cartoon</span>
+                <span class="cat-count-badge" id="catCountCartoon"></span>
+              </button>
+              <button type="button" class="cat-pill" data-category="alphabets" role="tab" aria-selected="false">
+                <span>🔤 Alphabets</span>
+                <span class="cat-count-badge" id="catCountAlphabets"></span>
+              </button>
+              <button type="button" class="cat-pill" data-category="fur" role="tab" aria-selected="false">
+                <span>🧶 Fur</span>
+                <span class="cat-count-badge" id="catCountFur"></span>
               </button>
               <button type="button" class="cat-pill" data-category="flowers" role="tab" aria-selected="false">
                 <span>🌸 Flowers</span>
@@ -489,9 +523,12 @@
                   <option value="all">🎬 All Themes</option>
                   <option value="avengers">🛡️ Avengers</option>
                   <option value="harrypotter">⚡ Harry Potter</option>
-                  <option value="stitch">🌺 Stitch (Stnitch)</option>
+                  <option value="stitch">🌺 Stitch (lilo,Stnitch)</option>
                   <option value="htd">🐉 HTD (Dragons)</option>
                   <option value="minions">🍌 Minions</option>
+                  <option value="cartoon">🧸 Cartoon</option>
+                  <option value="alphabets">🔤 Alphabets</option>
+                  <option value="fur">🧶 Fur</option>
                 </select>
               </div>
 
@@ -522,6 +559,7 @@
                   <option value="copper">🟤 Copper</option>
                   <option value="bronze">🥉 Bronze</option>
                   <option value="glassy">🔮 Glassy</option>
+                  <option value="fur">🧶 Fur &amp; Fluffy</option>
                 </select>
               </div>
 
@@ -584,7 +622,7 @@
           <div class="stepper-nav-row" style="margin-top: 22px;">
             <button type="button" class="stepper-nav-btn stepper-back-btn" id="stepperBackFromCharms">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-              <span>Back: Color Story</span>
+              <span id="stepperBackFromCharmsText">Back: Cord &amp; Clasp</span>
             </button>
             <button type="button" class="stepper-nav-btn stepper-finish-btn" id="stepperDirectAddBtn">
               <span>✨ Add Custom Design To Bag</span>
@@ -641,8 +679,8 @@
   .phone-palette-tag { font-size: 10px; font-weight: 800; color: #9B6B28; letter-spacing: 0.8px; text-transform: uppercase; display: block; margin-bottom: 6px; }
   
   .phone-graphic-container { position: relative; min-height: 175px; height: 175px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 6px; }
-  .phone-tether-svg-wrap { width: 36px; height: 160px; color: #241A18; }
-  .phone-tether-svg-wrap svg { width: 100%; height: 100%; display: block; }
+  .phone-tether-svg-wrap { width: 36px; height: 160px; color: #D32F2F; }
+  .phone-tether-svg-wrap svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 1px 3px rgba(36,26,24,0.12)); }
   .phone-name-beads-stack { position: absolute; top: 54px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 2px; z-index: 4; }
   .phone-bead-item { width: 14px; height: 14px; border-radius: 50%; background: #FFFFFF; border: 1px solid #D5C7B5; font-size: 8.5px; font-weight: 800; color: #241A18; text-transform: uppercase; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.12); }
   .phone-spacer-dot { width: 8px; height: 8px; border-radius: 50%; box-shadow: inset -1px -1px 2px rgba(0,0,0,0.25); }
@@ -688,7 +726,7 @@
   .keychain-clasp-wrap {
     width: 52px !important;
     height: 66px !important;
-    color: #6A1E22;
+    color: #D32F2F;
     transition: color 0.3s ease;
     z-index: 10;
   }
@@ -1479,8 +1517,9 @@
   }
 
   .option-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
-  .option-card { display: flex; align-items: center; gap: 8px; padding: 10px; background: #FAF8F5; border: 1.5px solid #EFE8DE; border-radius: 10px; cursor: pointer; text-align: left; }
-  .option-card.active { border-color: #B32025; background: #FFF7F7; }
+  .option-card { display: flex; align-items: center; gap: 8px; padding: 10px; background: #FAF8F5; border: 1.5px solid #EFE8DE; border-radius: 10px; cursor: pointer; text-align: left; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04); transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
+  .option-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(113, 36, 35, 0.08); }
+  .option-card.active { border-color: #B32025; background: #FFF7F7; box-shadow: 0 4px 12px rgba(179, 32, 37, 0.12); }
   .color-swatch-circle { width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0; }
   .option-title { font-size: 12px; font-weight: 600; color: #332624; }
 
@@ -1787,6 +1826,25 @@
     box-shadow: 0 4px 12px rgba(113, 36, 35, 0.2);
   }
 
+  /* Desktop: keep the mobile spacer out of the two-column laptop layout. */
+  @media (min-width: 881px) {
+    #titliCustomizerApp .customizer-stage-spacer { display: none; }
+    #titliCustomizerApp .customizer-container {
+      grid-template-columns: 350px minmax(0, 1fr);
+    }
+    #titliCustomizerApp .customizer-stage-card,
+    #titliCustomizerApp .customizer-controls-card { min-width: 0; }
+    #titliCustomizerApp .type-switch-row {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    #titliCustomizerApp .type-btn,
+    #titliCustomizerApp .type-text { min-width: 0; }
+    #titliCustomizerApp .type-text strong {
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+  }
+
   @media (max-width: 880px) {
     .titli-minimal-header {
       position: relative !important;
@@ -1842,6 +1900,15 @@
       max-width: calc(100% - 12px) !important;
       z-index: 120 !important;
       box-shadow: 0 6px 22px rgba(179, 32, 37, 0.18) !important;
+    }
+    body.mobile-menu-open .customizer-stage-card,
+    body.mobile-menu-open .customizer-stage-card.is-mobile-pinned,
+    body.mobile-menu-open .mobile-integrated-checkout,
+    body.mobile-menu-open .mobile-floating-preview-pill {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+      z-index: 1 !important;
     }
     .customizer-stage-spacer {
       display: none;
@@ -2198,14 +2265,16 @@
     var appRoot = document.getElementById('titliCustomizerApp');
     var phoneVariantId = appRoot ? appRoot.getAttribute('data-phone-variant') : '50663420952773';
     var bagVariantId = appRoot ? appRoot.getAttribute('data-bag-variant') : '50663426982085';
-    var bagSingleVariantId = appRoot ? appRoot.getAttribute('data-bag-single-variant') : '50666935517381';
+    var goldClaspVariantId = appRoot ? appRoot.getAttribute('data-gold-clasp-variant') : '50813321806021';
+    var silverClaspVariantId = appRoot ? appRoot.getAttribute('data-silver-clasp-variant') : '50813322592453';
 
     var state = {
-      modelType: 'phone-charm',
+      modelType: 'bag-clip-single',
       bagClipMultiBasePrice: 199,
       bagClipSingleBasePrice: 100,
       phoneBasePrice: 50,
       claspPrice: 0,
+      claspVariantId: '',
       
       phoneCharms: [],
       bagClipSingleCharms: [], // Holds up to 7 charms clustered along the single cord
@@ -2213,12 +2282,12 @@
       bagClipCharms: { 1: null, 2: null, 3: null, 4: null },
       activeStrandTarget: 1,
 
-      claspColor: '#6A1E22',
-      claspName: 'Antique Brass & Burgundy',
+      claspColor: '#D32F2F',
+      claspName: 'Red',
       customName: 'CRAFT',
       palette: 'fairy-garden',
-      paletteName: 'PASTEL DREAM PALETTE',
-      accentColor: '#6BB377',
+      paletteName: 'PASTEL DREAM (LILAC & GREENS)',
+      accentColor: '#5E966B',
       primaryColor: '#8A58B5'
     };
 
@@ -2519,12 +2588,60 @@
         stageBagClipMulti.style.display = 'none';
         stageBagClipSingle.style.display = 'none';
 
-        if (chosen === 'bag-clip-multi') {
+        if (chosen === 'bag-clip-single') {
+          stageBagClipSingle.style.display = 'block';
+          if (bagClipTargetSection) bagClipTargetSection.style.display = 'none';
+          
+          if (tabBtnClasp) tabBtnClasp.textContent = '1. Cord & Clasp';
+          if (tabBtnCharms) tabBtnCharms.textContent = '2. Charms';
+          
+          // Hide Custom Name and Color Story tabs for Single
+          if (tabBtnName) tabBtnName.style.display = 'none';
+          if (tabBtnPalette) tabBtnPalette.style.display = 'none';
+          
+          // If on Name or Palette tab, switch automatically to Charms tab
+          var activeTab = document.querySelector('.controls-nav-tabs .tab-btn.active');
+          var activeTabId = activeTab ? activeTab.getAttribute('data-tab') : '';
+          if (activeTabId === 'tab-name' || activeTabId === 'tab-palette') {
+            switchTab('tab-charms');
+          }
+
+          if (claspHeadingLabel) claspHeadingLabel.textContent = 'Select Cord Color & Clasp';
+          if (claspDescText) claspDescText.textContent = 'Choose the central jewelry cord color and clasp for your attached charms.';
+          if (claspSelectorPhone) claspSelectorPhone.style.display = 'none';
+          if (claspSelectorBagMulti) claspSelectorBagMulti.style.display = 'none';
+          if (claspSelectorBagSingle) claspSelectorBagSingle.style.display = 'grid';
+
+          var activeSingleCard = document.querySelector('#claspSelectorBagSingle .option-card.active');
+          if (activeSingleCard) applySelectedClasp(activeSingleCard);
+
+          var chHeading = document.getElementById('charmsListHeading');
+          if (chHeading) chHeading.textContent = 'Select Atelier Charms to Attach';
+          var chDesc = document.getElementById('charmsListDesc');
+          if (chDesc) chDesc.textContent = 'Tap any charm below to attach it along your cord (up to 7). Tap on attached charm to remove.';
+          var chBadge = document.getElementById('charmsLimitBadge');
+          if (chBadge) chBadge.textContent = 'Max 7 Charms';
+
+          // Hide palette tag
+          if (singlePaletteLabel) singlePaletteLabel.style.display = 'none';
+          if (multiPaletteLabel) multiPaletteLabel.style.display = 'none';
+          if (phonePaletteLabel) phonePaletteLabel.style.display = 'none';
+
+          // Update Stepper labels & indicators
+          var stepInd1 = document.getElementById('stepperIndicatorTab1');
+          if (stepInd1) stepInd1.textContent = 'Phase 1 of 2: Cord & Clasp';
+          var nextClaspTxt = document.getElementById('stepperNextFromClaspText');
+          if (nextClaspTxt) nextClaspTxt.textContent = 'Next: Select Charms';
+          var backCharmsTxt = document.getElementById('stepperBackFromCharmsText');
+          if (backCharmsTxt) backCharmsTxt.textContent = 'Back: Cord & Clasp';
+
+        } else if (chosen === 'bag-clip-multi') {
           stageBagClipMulti.style.display = 'block';
           if (bagClipTargetSection) bagClipTargetSection.style.display = 'none';
-          if (tabBtnName) tabBtnName.style.display = '';
+          
           if (tabBtnClasp) tabBtnClasp.textContent = '1. Clasp Finish';
-          if (tabBtnPalette) tabBtnPalette.textContent = '3. Color Story';
+          if (tabBtnName) { tabBtnName.style.display = ''; tabBtnName.textContent = '2. Custom Name'; }
+          if (tabBtnPalette) { tabBtnPalette.style.display = ''; tabBtnPalette.textContent = '3. Color Story'; }
           if (tabBtnCharms) tabBtnCharms.textContent = '4. Charms';
 
           if (claspHeadingLabel) claspHeadingLabel.textContent = 'Select Clasp Hardware Finish';
@@ -2543,46 +2660,38 @@
           var chBadge = document.getElementById('charmsLimitBadge');
           if (chBadge) chBadge.textContent = 'Max 4 Charms';
 
-        } else if (chosen === 'bag-clip-single') {
-          stageBagClipSingle.style.display = 'block';
-          bagClipTargetSection.style.display = 'none';
-          if (tabBtnClasp) tabBtnClasp.textContent = '1. Cord & Clasp';
-          if (tabBtnPalette) tabBtnPalette.textContent = '2. Color Story';
-          if (tabBtnCharms) tabBtnCharms.textContent = '3. Charms';
-          
-          // Hide custom name tab for Single Cord style
-          if (tabBtnName) tabBtnName.style.display = 'none';
-          
-          // If on Name tab, switch automatically to Charms tab
-          if (tabBtnName && tabBtnName.classList.contains('active')) {
-            tabBtns.forEach(function(b) { b.classList.remove('active'); });
-            tabPanes.forEach(function(p) { p.classList.remove('active'); });
-            var charmsTabBtn = document.querySelector('.controls-nav-tabs .tab-btn[data-tab="tab-charms"]');
-            if (charmsTabBtn) charmsTabBtn.classList.add('active');
-            var charmsPane = document.getElementById('tab-charms');
-            if (charmsPane) charmsPane.classList.add('active');
-          }
+          // Show palette tag for multi
+          if (multiPaletteLabel) multiPaletteLabel.style.display = '';
+          if (singlePaletteLabel) singlePaletteLabel.style.display = 'none';
+          if (phonePaletteLabel) phonePaletteLabel.style.display = 'none';
 
-          if (claspHeadingLabel) claspHeadingLabel.textContent = 'Select Cord Color & Clasp';
-          if (claspDescText) claspDescText.textContent = 'Choose the central jewelry cord color and clasp for your attached charms.';
-          if (claspSelectorPhone) claspSelectorPhone.style.display = 'none';
-          if (claspSelectorBagMulti) claspSelectorBagMulti.style.display = 'none';
-          if (claspSelectorBagSingle) claspSelectorBagSingle.style.display = 'grid';
+          // Update Stepper labels & indicators
+          var stepInd1 = document.getElementById('stepperIndicatorTab1');
+          if (stepInd1) stepInd1.textContent = 'Phase 1 of 4: Base Canvas';
+          var nextClaspTxt = document.getElementById('stepperNextFromClaspText');
+          if (nextClaspTxt) nextClaspTxt.textContent = 'Next: Personalize Name';
+          var stepInd2 = document.getElementById('stepperIndicatorTab2');
+          if (stepInd2) stepInd2.textContent = 'Phase 2 of 4: Name Beads';
+          var nextNameTxt = document.getElementById('stepperNextFromNameText');
+          if (nextNameTxt) nextNameTxt.textContent = 'Next: Color Story';
+          var backCharmsTxt = document.getElementById('stepperBackFromCharmsText');
+          if (backCharmsTxt) backCharmsTxt.textContent = 'Back: Color Story';
 
-          var activeSingleCard = document.querySelector('#claspSelectorBagSingle .option-card.active');
-          if (activeSingleCard) applySelectedClasp(activeSingleCard);
-
-          document.getElementById('charmsListHeading').textContent = 'Select Atelier Charms to Attach';
-          document.getElementById('charmsListDesc').textContent = 'Tap any charm below to attach it along your cord (up to 7). Tap on attached charm to remove.';
-          document.getElementById('charmsLimitBadge').textContent = 'Max 7 Charms';
-
-        } else {
+        } else { // phone-charm
           stagePhoneCharm.style.display = 'block';
-          bagClipTargetSection.style.display = 'none';
-          if (tabBtnName) tabBtnName.style.display = '';
+          if (bagClipTargetSection) bagClipTargetSection.style.display = 'none';
+          
           if (tabBtnClasp) tabBtnClasp.textContent = '1. Tether Cord';
-          if (tabBtnPalette) tabBtnPalette.textContent = '3. Color Story';
-          if (tabBtnCharms) tabBtnCharms.textContent = '4. Charms';
+          if (tabBtnName) { tabBtnName.style.display = ''; tabBtnName.textContent = '2. Custom Name'; }
+          if (tabBtnPalette) tabBtnPalette.style.display = 'none'; // No color story for phone!
+          if (tabBtnCharms) tabBtnCharms.textContent = '3. Charms';
+
+          // If on Palette tab, switch automatically to Charms tab
+          var activeTab = document.querySelector('.controls-nav-tabs .tab-btn.active');
+          var activeTabId = activeTab ? activeTab.getAttribute('data-tab') : '';
+          if (activeTabId === 'tab-palette') {
+            switchTab('tab-charms');
+          }
 
           if (claspHeadingLabel) claspHeadingLabel.textContent = 'Select Tether Cord Color';
           if (claspDescText) claspDescText.textContent = 'Choose your soft durable nylon cord that loops through your phone case.';
@@ -2593,9 +2702,29 @@
           var activePhoneCard = document.querySelector('#claspSelectorPhone .option-card.active');
           if (activePhoneCard) applySelectedClasp(activePhoneCard);
 
-          document.getElementById('charmsListHeading').textContent = 'Select Atelier Charms to Attach';
-          document.getElementById('charmsListDesc').textContent = 'Tap any charm to attach it to your piece. Tap again to remove.';
-          document.getElementById('charmsLimitBadge').textContent = 'Max 4 Charms';
+          var chHeading = document.getElementById('charmsListHeading');
+          if (chHeading) chHeading.textContent = 'Select Atelier Charm to Attach';
+          var chDesc = document.getElementById('charmsListDesc');
+          if (chDesc) chDesc.textContent = 'Tap any charm to attach it to your phone strap (1 charm max). Tap again to remove or tap another charm to swap.';
+          var chBadge = document.getElementById('charmsLimitBadge');
+          if (chBadge) chBadge.textContent = 'Max 1 Charm';
+
+          // Hide palette tag
+          if (phonePaletteLabel) phonePaletteLabel.style.display = 'none';
+          if (singlePaletteLabel) singlePaletteLabel.style.display = 'none';
+          if (multiPaletteLabel) multiPaletteLabel.style.display = 'none';
+
+          // Update Stepper labels & indicators
+          var stepInd1 = document.getElementById('stepperIndicatorTab1');
+          if (stepInd1) stepInd1.textContent = 'Phase 1 of 3: Base Canvas';
+          var nextClaspTxt = document.getElementById('stepperNextFromClaspText');
+          if (nextClaspTxt) nextClaspTxt.textContent = 'Next: Personalize Name';
+          var stepInd2 = document.getElementById('stepperIndicatorTab2');
+          if (stepInd2) stepInd2.textContent = 'Phase 2 of 3: Name Beads';
+          var nextNameTxt = document.getElementById('stepperNextFromNameText');
+          if (nextNameTxt) nextNameTxt.textContent = 'Next: Select Charms';
+          var backCharmsTxt = document.getElementById('stepperBackFromCharmsText');
+          if (backCharmsTxt) backCharmsTxt.textContent = 'Back: Name Beads';
         }
         
         syncCharmsGridActiveState();
@@ -2629,9 +2758,39 @@
       });
 
       var isSingleCord = state.modelType === 'bag-clip-single';
+      var isPhone = state.modelType === 'phone-charm';
       var tabBtnName = document.getElementById('tabBtnName');
+      var tabBtnPalette = document.getElementById('tabBtnPalette');
       if (tabBtnName) {
         tabBtnName.style.display = isSingleCord ? 'none' : 'inline-block';
+      }
+      if (tabBtnPalette) {
+        tabBtnPalette.style.display = (isSingleCord || isPhone) ? 'none' : 'inline-block';
+      }
+
+      // Sync stepper indicators & button labels based on active creation model
+      var stepInd1 = document.getElementById('stepperIndicatorTab1');
+      var nextClaspTxt = document.getElementById('stepperNextFromClaspText');
+      var stepInd2 = document.getElementById('stepperIndicatorTab2');
+      var nextNameTxt = document.getElementById('stepperNextFromNameText');
+      var backCharmsTxt = document.getElementById('stepperBackFromCharmsText');
+
+      if (isSingleCord) {
+        if (stepInd1) stepInd1.textContent = 'Phase 1 of 2: Cord & Clasp';
+        if (nextClaspTxt) nextClaspTxt.textContent = 'Next: Select Charms';
+        if (backCharmsTxt) backCharmsTxt.textContent = 'Back: Cord & Clasp';
+      } else if (isPhone) {
+        if (stepInd1) stepInd1.textContent = 'Phase 1 of 3: Base Canvas';
+        if (nextClaspTxt) nextClaspTxt.textContent = 'Next: Personalize Name';
+        if (stepInd2) stepInd2.textContent = 'Phase 2 of 3: Name Beads';
+        if (nextNameTxt) nextNameTxt.textContent = 'Next: Select Charms';
+        if (backCharmsTxt) backCharmsTxt.textContent = 'Back: Name Beads';
+      } else { // bag-clip-multi
+        if (stepInd1) stepInd1.textContent = 'Phase 1 of 4: Base Canvas';
+        if (nextClaspTxt) nextClaspTxt.textContent = 'Next: Personalize Name';
+        if (stepInd2) stepInd2.textContent = 'Phase 2 of 4: Name Beads';
+        if (nextNameTxt) nextNameTxt.textContent = 'Next: Color Story';
+        if (backCharmsTxt) backCharmsTxt.textContent = 'Back: Color Story';
       }
     }
 
@@ -2668,7 +2827,7 @@
       nextFromClaspBtn.addEventListener('click', function(e) {
         e.preventDefault();
         if (state.modelType === 'bag-clip-single') {
-          switchTab('tab-palette');
+          switchTab('tab-charms');
         } else {
           switchTab('tab-name');
         }
@@ -2687,7 +2846,11 @@
     if (nextFromNameBtn) {
       nextFromNameBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        switchTab('tab-palette');
+        if (state.modelType === 'phone-charm') {
+          switchTab('tab-charms');
+        } else {
+          switchTab('tab-palette');
+        }
       });
     }
 
@@ -2695,11 +2858,7 @@
     if (backFromPaletteBtn) {
       backFromPaletteBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        if (state.modelType === 'bag-clip-single') {
-          switchTab('tab-clasp');
-        } else {
-          switchTab('tab-name');
-        }
+        switchTab('tab-name');
       });
     }
 
@@ -2715,7 +2874,13 @@
     if (backFromCharmsBtn) {
       backFromCharmsBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        switchTab('tab-palette');
+        if (state.modelType === 'bag-clip-single') {
+          switchTab('tab-clasp');
+        } else if (state.modelType === 'phone-charm') {
+          switchTab('tab-name');
+        } else {
+          switchTab('tab-palette');
+        }
       });
     }
 
@@ -2739,6 +2904,11 @@
       state.claspColor = card.getAttribute('data-clasp-color');
       state.claspName = card.getAttribute('data-clasp-name');
       state.claspPrice = parseInt(card.getAttribute('data-clasp-price') || '0', 10);
+      state.claspVariantId = card.getAttribute('data-clasp-variant') || '';
+      if (!state.claspVariantId && state.claspPrice > 0) {
+        if (/gold/i.test(state.claspName)) state.claspVariantId = goldClaspVariantId;
+        else if (/silver/i.test(state.claspName)) state.claspVariantId = silverClaspVariantId;
+      }
       
       if (renderClasp) renderClasp.style.color = state.claspColor;
       var strandsCluster = document.getElementById('strandsCluster');
@@ -2764,6 +2934,20 @@
           parentGrid.querySelectorAll('.option-card').forEach(function(c) { c.classList.remove('active'); });
         }
         card.classList.add('active');
+
+        // Sync active selection across all clasp grids
+        var chosenName = card.getAttribute('data-clasp-name');
+        document.querySelectorAll('.clasp-selector-grid').forEach(function(grid) {
+          if (grid !== parentGrid) {
+            grid.querySelectorAll('.option-card').forEach(function(c) {
+              if (c.getAttribute('data-clasp-name') === chosenName) {
+                grid.querySelectorAll('.option-card').forEach(function(o) { o.classList.remove('active'); });
+                c.classList.add('active');
+              }
+            });
+          }
+        });
+
         applySelectedClasp(card);
       });
     });
@@ -2887,11 +3071,11 @@
         var pIndex = state.phoneCharms.findIndex(function(c) { return String(c.id) === String(charmId); });
         if (pIndex > -1) {
           state.phoneCharms.splice(pIndex, 1);
-          showCustomizerToast('Removed ' + charmTitle + ' (' + state.phoneCharms.length + '/4)');
+          showCustomizerToast('Removed ' + charmTitle + ' (0/1)');
         } else {
-          if (state.phoneCharms.length >= 4) { alert('You can attach up to 4 charms per piece.'); return; }
-          state.phoneCharms.push({ id: charmId, title: charmTitle, price: charmPrice, img: charmImg });
-          showCustomizerToast('✨ ' + charmTitle + ' attached (' + state.phoneCharms.length + '/4)');
+          // Client requirement: Only 1 charm allowed on Phone Strap (replaces if one is already attached)
+          state.phoneCharms = [{ id: charmId, title: charmTitle, price: charmPrice, img: charmImg }];
+          showCustomizerToast('✨ ' + charmTitle + ' attached (1/1)');
         }
         renderAttachedLists();
       }
@@ -3017,7 +3201,30 @@
       { id: 'seed-mn1', title: 'Bello Minion Stuart', price: 25, img: '🍌', category: 'minions', categories: ['minions'], finish: 'enamel', color: 'gold', material: 'glossy', tags: ['minions', 'mininons', 'minion', 'stuart', 'banana'] },
       { id: 'seed-mn2', title: 'Bob & Teddy Bear', price: 30, img: '🧸', category: 'minions', categories: ['minions'], finish: 'enamel', color: 'gold', material: 'glossy', tags: ['minions', 'mininons', 'minion', 'bob', 'cute'] },
       { id: 'seed-mn3', title: 'Minion Goggles Drop', price: 25, img: '👓', category: 'minions', categories: ['minions'], finish: 'silver', color: 'silver', material: 'silver', tags: ['minions', 'mininons', 'goggles', 'minion'] },
-      { id: 'seed-mn4', title: 'Golden Banana Pendant', price: 20, img: '🍌', category: 'minions', categories: ['minions'], finish: 'gold', color: 'gold', material: 'gold', tags: ['minions', 'mininons', 'banana', 'yellow'] }
+      { id: 'seed-mn4', title: 'Golden Banana Pendant', price: 20, img: '🍌', category: 'minions', categories: ['minions'], finish: 'gold', color: 'gold', material: 'gold', tags: ['minions', 'mininons', 'banana', 'yellow'] },
+
+      // 15. Cartoon
+      { id: 'seed-cart1', title: 'Hello Kitty Enamel Bow', price: 30, img: '🎀', category: 'cartoon', categories: ['cartoon', 'ribbons'], finish: 'enamel', color: 'pink', material: 'glossy', tags: ['cartoon', 'hello kitty', 'sanrio', 'kitty', 'bow', 'cute'] },
+      { id: 'seed-cart2', title: 'Pikachu Lightning Star', price: 30, img: '⚡', category: 'cartoon', categories: ['cartoon'], finish: 'gold', color: 'gold', material: 'gold', tags: ['cartoon', 'pokemon', 'pikachu', 'lightning', 'anime'] },
+      { id: 'seed-cart3', title: 'Kuromi Gothic Crown', price: 35, img: '💜', category: 'cartoon', categories: ['cartoon'], finish: 'enamel', color: 'purple', material: 'glossy', tags: ['cartoon', 'kuromi', 'sanrio', 'star', 'anime'] },
+      { id: 'seed-cart4', title: 'Cinnamoroll Fluffy Cloud', price: 35, img: '☁️', category: 'cartoon', categories: ['cartoon'], finish: 'crystal', color: 'white', material: 'glassy', tags: ['cartoon', 'cinnamoroll', 'sanrio', 'cloud', 'cute'] },
+      { id: 'seed-cart5', title: 'Totoro Forest Acorn', price: 30, img: '🌰', category: 'cartoon', categories: ['cartoon'], finish: 'enamel', color: 'green', material: 'glossy', tags: ['cartoon', 'totoro', 'ghibli', 'anime', 'forest'] },
+      { id: 'seed-cart6', title: 'Shinchan Playful Face', price: 25, img: '🧸', category: 'cartoon', categories: ['cartoon'], finish: 'enamel', color: 'red', material: 'glossy', tags: ['cartoon', 'shinchan', 'doraemon', 'chibi', 'toons'] },
+
+      // 16. Alphabets
+      { id: 'seed-alph1', title: 'Golden Script Letter A', price: 25, img: '🅰️', category: 'alphabets', categories: ['alphabets'], finish: 'gold', color: 'gold', material: 'gold', tags: ['alphabets', 'letter', 'initial', 'a', 'alphabet', 'monogram'] },
+      { id: 'seed-alph2', title: 'Pavé Crystal Initial M', price: 30, img: '🔤', category: 'alphabets', categories: ['alphabets'], finish: 'crystal', color: 'silver', material: 'glassy', tags: ['alphabets', 'letter', 'initial', 'm', 'alphabet', 'crystal'] },
+      { id: 'seed-alph3', title: 'Mother of Pearl Letter S', price: 30, img: '🤍', category: 'alphabets', categories: ['alphabets'], finish: 'pearl', color: 'white', material: 'pearl', tags: ['alphabets', 'letter', 'initial', 's', 'alphabet', 'pearl'] },
+      { id: 'seed-alph4', title: 'Gleaming Gold Initial K', price: 25, img: '🔠', category: 'alphabets', categories: ['alphabets'], finish: 'gold', color: 'gold', material: 'gold', tags: ['alphabets', 'letter', 'initial', 'k', 'alphabet', 'monogram'] },
+      { id: 'seed-alph5', title: 'Rose Gold Monogram R', price: 25, img: '✨', category: 'alphabets', categories: ['alphabets'], finish: 'gold', color: 'pink', material: 'gold', tags: ['alphabets', 'letter', 'initial', 'r', 'alphabet'] },
+      { id: 'seed-alph6', title: 'Silver Engraved Initial Z', price: 25, img: '🪙', category: 'alphabets', categories: ['alphabets'], finish: 'silver', color: 'silver', material: 'silver', tags: ['alphabets', 'letter', 'initial', 'z', 'alphabet'] },
+
+      // 17. Fur
+      { id: 'seed-fur1', title: 'Cloud White Fur Pom-Pom', price: 35, img: '🧶', category: 'fur', categories: ['fur'], finish: 'enamel', color: 'white', material: 'fur', tags: ['fur', 'fluffy', 'pompom', 'pom pom', 'white', 'plush'] },
+      { id: 'seed-fur2', title: 'Sweetheart Pink Fur Heart', price: 35, img: '💖', category: 'fur', categories: ['fur', 'heart'], finish: 'enamel', color: 'pink', material: 'fur', tags: ['fur', 'fluffy', 'heart', 'plushie', 'pink'] },
+      { id: 'seed-fur3', title: 'Velvet Teddy Bear Fur Ball', price: 40, img: '🧸', category: 'fur', categories: ['fur'], finish: 'enamel', color: 'gold', material: 'fur', tags: ['fur', 'fluffy', 'teddy', 'fuzzy', 'brown'] },
+      { id: 'seed-fur4', title: 'Lilac Soft Fur Puff', price: 35, img: '💜', category: 'fur', categories: ['fur'], finish: 'enamel', color: 'purple', material: 'fur', tags: ['fur', 'fluffy', 'pompom', 'lavender', 'lilac'] },
+      { id: 'seed-fur5', title: 'Ocean Mint Cloud Fur Fluff', price: 35, img: '☁️', category: 'fur', categories: ['fur'], finish: 'crystal', color: 'blue', material: 'fur', tags: ['fur', 'fluffy', 'cloud', 'plush', 'aqua', 'mint'] }
     ];
 
     function getCharmCategories(title, tags, productType) {
@@ -3093,6 +3300,21 @@
       // 14. Minions (mininons): Strictly minion, minions, mininon, mininons, despicable me, kevin, stuart, gru, banana minion
       if (/\b(minion|minions|mininon|mininons|despicable\s*me|kevin|stuart|gru)\b/i.test(text) || (/\b(bob)\b/i.test(text) && /minion|despicable/i.test(text))) {
         cats.push('minions');
+      }
+
+      // 15. Cartoon: Strictly cartoon, cartoons, anime, manga, disney, sanrio, hello kitty, kuromi, cinnamoroll, my melody, pochacco, pompompurin, mickey, minnie, winnie, pooh, snoopy, peanuts, pokemon, pikachu, shinchan, doraemon, chibi, animated, toons, spongebob, naruto
+      if (/\b(cartoon|cartoons|anime|manga|disney|sanrio|hello\s*kitty|kuromi|cinnamoroll|my\s*melody|pochacco|pompompurin|mickey|minnie|winnie|pooh|snoopy|peanuts|pokemon|pikachu|shinchan|doraemon|chibi|animated|toons|spongebob|naruto)\b/i.test(text)) {
+        cats.push('cartoon');
+      }
+
+      // 16. Alphabets: Strictly alphabet, alphabets, letter, letters, initial, initials, monogram, abc, a-z
+      if (/\b(alphabet|alphabets|letter|letters|initial|initials|monogram|abcs?|name\s*letter|script\s*letter|charms?\s*letter)\b/i.test(text) || /\bletter\s+[a-z]\b/i.test(text) || /\binitial\s+[a-z]\b/i.test(text)) {
+        cats.push('alphabets');
+      }
+
+      // 17. Fur: Strictly fur, furry, fluffy, plush, plushie, pompom, pom pom, fuzzy, fleece, wool, woolen, yarn, soft fur, faux fur, sherpa, teddy fur
+      if (/\b(fur|furry|fluffy|plush|plushie|pom\s*pom|pompom|fuzzy|fleece|wool|woolen|yarn|soft\s*fur|faux\s*fur|sherpa|teddy\s*fur)\b/i.test(text)) {
+        cats.push('fur');
       }
 
       // STRICT: Charms not matching any specific aesthetic or theme categories do NOT receive a fallback.
@@ -3183,6 +3405,11 @@
       // 7. Glassy (matches glassy, glass, crystal, transparent, trasperent)
       if (/\b(glassy|glass|crystal|transparent|trasperent)\b/i.test(text)) {
         mats.push('glassy');
+      }
+
+      // 8. Fur (matches fur, furry, fluffy, plush, pompom, pom pom)
+      if (/\b(fur|furry|fluffy|plush|pompom|pom\s*pom|fuzzy|fleece)\b/i.test(text)) {
+        mats.push('fur');
       }
 
       return mats;
@@ -3525,6 +3752,9 @@
         stitch: 0,
         htd: 0,
         minions: 0,
+        cartoon: 0,
+        alphabets: 0,
+        fur: 0,
         flowers: 0,
         eye: 0,
         heart: 0,
@@ -3555,6 +3785,9 @@
         stitch: 'catCountStitch',
         htd: 'catCountHtd',
         minions: 'catCountMinions',
+        cartoon: 'catCountCartoon',
+        alphabets: 'catCountAlphabets',
+        fur: 'catCountFur',
         flowers: 'catCountFlowers',
         eye: 'catCountEye',
         heart: 'catCountHeart',
@@ -3853,7 +4086,7 @@
     function renderAttachedLists() {
       // Phone strap preview items
       var pCount = state.phoneCharms.length;
-      if (phoneCharmsCounter) phoneCharmsCounter.innerHTML = 'Charms Attached: <strong>' + pCount + '/4</strong>';
+      if (phoneCharmsCounter) phoneCharmsCounter.innerHTML = 'Charms Attached: <strong>' + pCount + '/1</strong>';
       if (phoneTapHint) phoneTapHint.style.display = pCount > 0 ? 'none' : 'block';
       if (phoneAttachedList) {
         phoneAttachedList.innerHTML = '';
@@ -3989,7 +4222,12 @@
         renderFloralBeads.innerHTML = '<div class="bead-round" style="background:' + state.primaryColor + ';"></div><div class="bead-accent-charm">🌸</div><div class="bead-round" style="background:' + state.accentColor + ';"></div><div class="bead-accent-charm">🦋</div><div class="bead-round" style="background:' + state.primaryColor + ';"></div><div class="bead-round" style="background:' + state.accentColor + ';"></div>';
       }
       if (renderPastelBeads) {
-        renderPastelBeads.innerHTML = '<div class="bead-accent-charm">⭐</div><div class="bead-round" style="background:#CBE3DA;"></div><div class="bead-accent-charm">🎀</div><div class="bead-round" style="background:#CBE3DA;"></div>';
+        var pColor = '#CBE3DA';
+        if (state.palette === 'yellow-pink') pColor = '#FFE082';
+        else if (state.palette === 'surprise-me') pColor = '#FFD166';
+        else if (state.palette === 'cherry-blossom') pColor = '#FAD2E1';
+        else if (state.palette === 'ocean-mist') pColor = '#BEE1E6';
+        renderPastelBeads.innerHTML = '<div class="bead-accent-charm">⭐</div><div class="bead-round" style="background:' + pColor + ';"></div><div class="bead-accent-charm">🎀</div><div class="bead-round" style="background:' + pColor + ';"></div>';
       }
       renderBagClipMultiDrops();
     }
@@ -4067,6 +4305,27 @@
         });
       }
 
+      if (state.claspPrice > 0) {
+        var upgradeId = state.claspVariantId;
+        if (!upgradeId) {
+          if (/gold/i.test(state.claspName)) upgradeId = goldClaspVariantId;
+          else if (/silver/i.test(state.claspName)) upgradeId = silverClaspVariantId;
+        }
+        var upgradeIdNum = parseInt(upgradeId, 10);
+        if (upgradeIdNum && !isNaN(upgradeIdNum)) {
+          cartItems.push({
+            id: upgradeIdNum,
+            quantity: 1,
+            properties: {
+              '_bundle_id': bundleId,
+              '_bundle_child': 'true',
+              '_upgrade_type': 'clasp',
+              'Customizer Add-on': state.claspName + ' Hardware Upgrade (+₹' + state.claspPrice + ')'
+            }
+          });
+        }
+      }
+
       fetch('/cart/add.js', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -4096,7 +4355,6 @@
           'Creation Type': 'Phone Strap Charm',
           'Tether Cord': state.claspName,
           'Personalized Name': state.customName || 'None',
-          'Color Palette': state.paletteName,
           'Attached Charms': charmTitles,
           'Clasp Upgrade Fee': state.claspPrice > 0 ? ('+₹' + state.claspPrice) : 'None'
         }, state.phoneCharms, phoneDirectAddBtn);
@@ -4138,7 +4396,6 @@
         sendToCart(bagSingleVariantId, {
           'Creation Type': 'Bag Clip Charm (Single-Strand)',
           'Cord & Clasp Finish': state.claspName,
-          'Color Palette': state.paletteName,
           'Attached Charms': charmTitles,
           'Clasp Upgrade Fee': state.claspPrice > 0 ? ('+₹' + state.claspPrice) : 'None'
         }, state.bagClipSingleCharms, singleDirectAddBtn);
@@ -4214,44 +4471,52 @@
             thumbsHtml += '<span style="font-size:12px;">' + ch.img + '</span>';
           }
         });
-        countEl.textContent = totalCount + '/4 Charms';
+        countEl.textContent = totalCount + '/1 Charm';
       }
       
       thumbsEl.innerHTML = totalCount > 0 ? thumbsHtml : '<span class="pip-empty-hint">Tap to preview strap 🔍</span>';
     }
 
-    // Robust Mobile Pin Enforcer
+    // Keep the fixed mobile preview, reserving its space to avoid scroll jumps.
     var stageCard = document.getElementById('stageMainCard');
     var stageSpacer = document.getElementById('stageSpacer');
     var customizerContainer = document.querySelector('.customizer-container');
-    var headerEl = document.querySelector('.titli-minimal-header');
+    var mobilePinFrame = null;
 
     function updateMobilePin() {
-      if (!stageCard || !customizerContainer) return;
-      if (window.innerWidth <= 880) {
-        var topPinOffset = 6;
-        var containerRect = customizerContainer.getBoundingClientRect();
-        var cardHeight = stageCard.offsetHeight;
+      if (!stageCard || !stageSpacer || !customizerContainer) return;
+      var containerRect = customizerContainer.getBoundingClientRect();
+      var cardHeight = stageCard.getBoundingClientRect().height;
+      var shouldPin = window.innerWidth <= 880 && containerRect.top < 6 && containerRect.bottom > cardHeight + 80;
 
-        // If user scrolled down past top of customizer, enforce fixed pin right at the top
-        if (containerRect.top < topPinOffset && containerRect.bottom > (cardHeight + 80)) {
-          stageCard.classList.add('is-mobile-pinned');
-          stageCard.style.top = topPinOffset + 'px';
-          if (stageSpacer) stageSpacer.style.height = cardHeight + 'px';
-        } else {
-          stageCard.classList.remove('is-mobile-pinned');
-          stageCard.style.top = '';
-          if (stageSpacer) stageSpacer.style.height = '0px';
-        }
+      if (shouldPin) {
+        // The spacer is hidden in CSS: height alone cannot preserve layout space.
+        var cardMargin = window.getComputedStyle(stageCard).marginBottom;
+        stageSpacer.style.display = 'block';
+        stageSpacer.style.height = cardHeight + 'px';
+        stageSpacer.style.marginBottom = cardMargin;
+        stageCard.classList.add('is-mobile-pinned');
       } else {
         stageCard.classList.remove('is-mobile-pinned');
-        stageCard.style.top = '';
-        if (stageSpacer) stageSpacer.style.height = '0px';
+        stageSpacer.style.display = '';
+        stageSpacer.style.height = '';
+        stageSpacer.style.marginBottom = '';
       }
     }
 
-    window.addEventListener('scroll', updateMobilePin, { passive: true });
-    window.addEventListener('resize', updateMobilePin, { passive: true });
+    function scheduleMobilePin() {
+      if (mobilePinFrame !== null) return;
+      mobilePinFrame = window.requestAnimationFrame(function() {
+        mobilePinFrame = null;
+        updateMobilePin();
+      });
+    }
+
+    window.addEventListener('scroll', scheduleMobilePin, { passive: true });
+    window.addEventListener('resize', scheduleMobilePin, { passive: true });
+    if (window.ResizeObserver && stageCard) {
+      new window.ResizeObserver(scheduleMobilePin).observe(stageCard);
+    }
     updateMobilePin();
 
     // High-Res Charm Inspection Zoom Modal
@@ -4410,7 +4675,7 @@
     }
 
     // Init
-    var activeInitialCard = document.querySelector('.clasp-selector-grid .option-card.active');
+    var activeInitialCard = document.querySelector('#claspSelectorBagSingle .option-card.active') || document.querySelector('.clasp-selector-grid .option-card.active');
     if (activeInitialCard) applySelectedClasp(activeInitialCard);
     renderNameBeadsVerticals();
     renderAttachedLists();

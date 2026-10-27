@@ -113,10 +113,15 @@
                           {% for child in cart.items %}
                             {% if child.properties._bundle_id == bundle_id and child.properties._bundle_child == 'true' %}
                               <span class="charm-chip">
-                                {% if child.image %}
-                                  <img src="{{ child.image | image_url: width: 36 }}" alt="{{ child.title | escape }}" width="16" height="16" class="charm-chip-thumb">
+                                {% if child.properties._upgrade_type == 'clasp' %}
+                                  <span class="charm-chip-thumb" style="display:inline-flex;align-items:center;justify-content:center;font-size:12px;">✨</span>
+                                  <span class="charm-chip-name">{{ child.properties['Customizer Add-on'] | default: 'Metallic Clasp Upgrade' }}</span>
+                                {% else %}
+                                  {% if child.image %}
+                                    <img src="{{ child.image | image_url: width: 36 }}" alt="{{ child.title | escape }}" width="16" height="16" class="charm-chip-thumb">
+                                  {% endif %}
+                                  <span class="charm-chip-name">{{ child.product.title }}</span>
                                 {% endif %}
-                                <span class="charm-chip-name">{{ child.product.title }}</span>
                                 {% if child.final_price > 0 %}
                                   <span class="charm-chip-price">+{{ child.final_price | money }}</span>
                                 {% endif %}

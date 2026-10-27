@@ -2,34 +2,34 @@
 <div class="titli-announcement-bar" id="titliAnnouncementBar">
   <div class="announcement-content-wrap">
     <div class="announcement-marquee-track">
-      <div class="announcement-item">
+      <div class="announcement-item" style="color: #FAF5EE !important; -webkit-text-fill-color: #FAF5EE !important; opacity: 1 !important;">
         <span class="announcement-icon">✨</span>
-        <span class="announcement-text">{{ section.settings.text_1 | default: "FREE SHIPPING ACROSS INDIA ON ORDERS OVER ₹499" }}</span>
+        <span class="announcement-text" style="color: #FAF5EE !important; -webkit-text-fill-color: #FAF5EE !important; opacity: 1 !important;">{{ section.settings.text_1 | default: "FREE SHIPPING ACROSS INDIA ON ORDERS OVER ₹1500" }}</span>
       </div>
       <span class="announcement-bullet">•</span>
-      <div class="announcement-item">
+      <div class="announcement-item" style="color: #FAF5EE !important; -webkit-text-fill-color: #FAF5EE !important; opacity: 1 !important;">
         <span class="announcement-icon">🦋</span>
-        <span class="announcement-text">{{ section.settings.text_2 | default: "HANDCRAFTED IN OUR ATELIER WITH GENUINE CRYSTALS" }}</span>
+        <span class="announcement-text" style="color: #FAF5EE !important; -webkit-text-fill-color: #FAF5EE !important; opacity: 1 !important;">{{ section.settings.text_2 | default: "HANDCRAFTED IN OUR ATELIER WITH GENUINE CRYSTALS" }}</span>
       </div>
       <span class="announcement-bullet">•</span>
-      <div class="announcement-item">
+      <div class="announcement-item" style="color: #FAF5EE !important; -webkit-text-fill-color: #FAF5EE !important; opacity: 1 !important;">
         <span class="announcement-icon">🪄</span>
-        <span class="announcement-text">{{ section.settings.text_3 | default: "CUSTOM PHONE CHARMS DISPATCHED IN 3-5 DAYS" }}</span>
+        <span class="announcement-text" style="color: #FAF5EE !important; -webkit-text-fill-color: #FAF5EE !important; opacity: 1 !important;">{{ section.settings.text_3 | default: "CUSTOM PHONE CHARMS DISPATCHED IN 7-10 DAYS" }}</span>
       </div>
       <span class="announcement-bullet">•</span>
-      <div class="announcement-item">
+      <div class="announcement-item" style="color: #FAF5EE !important; -webkit-text-fill-color: #FAF5EE !important; opacity: 1 !important;">
         <span class="announcement-icon">✨</span>
-        <span class="announcement-text">{{ section.settings.text_1 | default: "FREE SHIPPING ACROSS INDIA ON ORDERS OVER ₹499" }}</span>
+        <span class="announcement-text" style="color: #FAF5EE !important; -webkit-text-fill-color: #FAF5EE !important; opacity: 1 !important;">{{ section.settings.text_1 | default: "FREE SHIPPING ACROSS INDIA ON ORDERS OVER ₹1500" }}</span>
       </div>
       <span class="announcement-bullet">•</span>
-      <div class="announcement-item">
+      <div class="announcement-item" style="color: #FAF5EE !important; -webkit-text-fill-color: #FAF5EE !important; opacity: 1 !important;">
         <span class="announcement-icon">🦋</span>
-        <span class="announcement-text">{{ section.settings.text_2 | default: "HANDCRAFTED IN OUR ATELIER WITH GENUINE CRYSTALS" }}</span>
+        <span class="announcement-text" style="color: #FAF5EE !important; -webkit-text-fill-color: #FAF5EE !important; opacity: 1 !important;">{{ section.settings.text_2 | default: "HANDCRAFTED IN OUR ATELIER WITH GENUINE CRYSTALS" }}</span>
       </div>
       <span class="announcement-bullet">•</span>
-      <div class="announcement-item">
+      <div class="announcement-item" style="color: #FAF5EE !important; -webkit-text-fill-color: #FAF5EE !important; opacity: 1 !important;">
         <span class="announcement-icon">🪄</span>
-        <span class="announcement-text">{{ section.settings.text_3 | default: "CUSTOM PHONE CHARMS DISPATCHED IN 3-5 DAYS" }}</span>
+        <span class="announcement-text" style="color: #FAF5EE !important; -webkit-text-fill-color: #FAF5EE !important; opacity: 1 !important;">{{ section.settings.text_3 | default: "CUSTOM PHONE CHARMS DISPATCHED IN 7-10 DAYS" }}</span>
       </div>
     </div>
   </div>
@@ -70,22 +70,43 @@
   animation-play-state: paused;
 }
 
+.titli-announcement-bar a,
+.titli-announcement-bar a:visited,
+.titli-announcement-bar a:hover,
+.titli-announcement-bar span:not(.announcement-icon):not(.announcement-bullet),
+.titli-announcement-bar div,
+.titli-announcement-bar strong,
+.titli-announcement-bar b,
+.announcement-item,
+.announcement-text {
+  color: #FAF5EE !important;
+  -webkit-text-fill-color: #FAF5EE !important;
+  opacity: 1 !important;
+  text-decoration: none !important;
+}
+
 .announcement-item {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  color: #FAF5EE;
+}
+
+.announcement-text {
+  font-weight: 600;
+  display: inline-block;
 }
 
 .announcement-icon {
   font-size: 13px;
   display: inline-block;
   transform: translateY(-1px);
+  -webkit-text-fill-color: initial !important;
 }
 
 .announcement-bullet {
-  color: #E7DBCA;
-  opacity: 0.6;
+  color: #E7DBCA !important;
+  -webkit-text-fill-color: #E7DBCA !important;
+  opacity: 0.6 !important;
   font-size: 10px;
 }
 
@@ -121,7 +142,7 @@
       "type": "text",
       "id": "text_1",
       "label": "Announcement 1",
-      "default": "FREE SHIPPING ACROSS INDIA ON ORDERS OVER ₹499"
+      "default": "FREE SHIPPING ACROSS INDIA ON ORDERS OVER ₹1500"
     },
     {
       "type": "text",
@@ -133,7 +154,7 @@
       "type": "text",
       "id": "text_3",
       "label": "Announcement 3",
-      "default": "CUSTOM PHONE CHARMS DISPATCHED IN 3-5 DAYS"
+      "default": "CUSTOM PHONE CHARMS DISPATCHED IN 7-10 DAYS"
     }
   ],
   "presets": [

@@ -1,3 +1,51 @@
+<style>
+  .catalog-list-item {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid rgba(235, 222, 215, 0.85);
+    box-shadow: 0 12px 28px rgba(113, 36, 35, 0.15), 0 4px 12px rgba(36, 26, 24, 0.08);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+    will-change: transform, box-shadow;
+  }
+  .catalog-list-item:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 20px 42px rgba(113, 36, 35, 0.22), 0 8px 18px rgba(36, 26, 24, 0.12);
+    border-color: rgba(178, 31, 36, 0.28);
+  }
+  .catalog-list-item .catalog-list-media {
+    overflow: hidden;
+  }
+  .catalog-list-item .catalog-list-media img {
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .catalog-list-item:hover .catalog-list-media img {
+    transform: scale(1.05);
+  }
+  .catalog-list-item .catalog-list-link-text {
+    display: inline-block;
+    transition: color 0.25s ease, transform 0.25s ease;
+  }
+  .catalog-list-item:hover .catalog-list-link-text {
+    color: #B21F24 !important;
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 768px) {
+    .catalog-list-item {
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), 0 3px 10px rgba(0, 0, 0, 0.25);
+    }
+    .catalog-list-item:active {
+      transform: scale(0.98);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+  }
+</style>
+
 <section class="titli-catalog-list-section">
   <div class="catalog-list-container">
     <div class="catalog-header">
@@ -14,7 +62,7 @@
             {% assign handleized_title = block.settings.title | handleize %}
             {% assign link_url = '/collections/' | append: handleized_title %}
           {% endif %}
-          <a href="{{ link_url }}" class="catalog-list-item" style="text-decoration: none; color: inherit; display: block; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease;">
+          <a href="{{ link_url }}" class="catalog-list-item">
             <div class="catalog-list-content" style="padding: 1.5rem; text-align: center;">
               <h3 class="catalog-list-name" style="margin: 0 0 0.5rem 0; font-family: 'Quicksand', sans-serif; font-size: 1.25rem;">{{ block.settings.title | default: collection.title }}</h3>
               <span class="catalog-list-link-text" style="font-size: 0.9rem; font-weight: 600; color: #607353;">Explore →</span>
@@ -32,19 +80,19 @@
         {% endfor %}
       {% else %}
         <!-- Default Placeholders exactly as requested -->
-        <a href="/collections/bag-charms" class="catalog-list-item" style="text-decoration: none; color: inherit; display: block; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        <a href="/collections/bag-charms" class="catalog-list-item">
           <div class="catalog-list-content" style="padding: 1.5rem; text-align: center;"><h3 class="catalog-list-name" style="margin: 0 0 0.5rem 0; font-family: 'Quicksand', sans-serif; font-size: 1.25rem;">Bag Charms</h3><span class="catalog-list-link-text" style="font-size: 0.9rem; font-weight: 600; color: #607353;">Explore →</span></div>
           <div class="catalog-list-media" style="aspect-ratio: 1; background: #fafafa; display: flex; align-items: center; justify-content: center;"><div class="catalog-list-fallback" style="font-size: 3rem;">🎒</div></div>
         </a>
-        <a href="/collections/phone-charms" class="catalog-list-item" style="text-decoration: none; color: inherit; display: block; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        <a href="/collections/phone-charms" class="catalog-list-item">
           <div class="catalog-list-content" style="padding: 1.5rem; text-align: center;"><h3 class="catalog-list-name" style="margin: 0 0 0.5rem 0; font-family: 'Quicksand', sans-serif; font-size: 1.25rem;">Phone Charms</h3><span class="catalog-list-link-text" style="font-size: 0.9rem; font-weight: 600; color: #607353;">Explore →</span></div>
           <div class="catalog-list-media" style="aspect-ratio: 1; background: #fafafa; display: flex; align-items: center; justify-content: center;"><div class="catalog-list-fallback" style="font-size: 3rem;">🔑</div></div>
         </a>
-        <a href="/collections/sun-catcher" class="catalog-list-item" style="text-decoration: none; color: inherit; display: block; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        <a href="/collections/sun-catcher" class="catalog-list-item">
           <div class="catalog-list-content" style="padding: 1.5rem; text-align: center;"><h3 class="catalog-list-name" style="margin: 0 0 0.5rem 0; font-family: 'Quicksand', sans-serif; font-size: 1.25rem;">Suncatchers</h3><span class="catalog-list-link-text" style="font-size: 0.9rem; font-weight: 600; color: #607353;">Explore →</span></div>
           <div class="catalog-list-media" style="aspect-ratio: 1; background: #fafafa; display: flex; align-items: center; justify-content: center;"><div class="catalog-list-fallback" style="font-size: 3rem;">☀️</div></div>
         </a>
-        <a href="/collections/bookmarks" class="catalog-list-item" style="text-decoration: none; color: inherit; display: block; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        <a href="/collections/bookmarks" class="catalog-list-item">
           <div class="catalog-list-content" style="padding: 1.5rem; text-align: center;"><h3 class="catalog-list-name" style="margin: 0 0 0.5rem 0; font-family: 'Quicksand', sans-serif; font-size: 1.25rem;">Bookmarks</h3><span class="catalog-list-link-text" style="font-size: 0.9rem; font-weight: 600; color: #607353;">Explore →</span></div>
           <div class="catalog-list-media" style="aspect-ratio: 1; background: #fafafa; display: flex; align-items: center; justify-content: center;"><div class="catalog-list-fallback" style="font-size: 3rem;">📱</div></div>
         </a>

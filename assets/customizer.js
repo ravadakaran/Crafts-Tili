@@ -523,6 +523,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function openMenu() {
     if (drawer) {
+      if (drawer.parentElement !== document.body) {
+        document.body.appendChild(drawer);
+      }
       drawer.classList.add('is-active');
       document.body.classList.add(
         'mobile-menu-open'
@@ -549,6 +552,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (backdrop) {
     backdrop.addEventListener('click', closeMenu);
+  }
+
+  // Close menu when clicking links inside drawer
+  if (drawer) {
+    const flyoutLinks = drawer.querySelectorAll('.flyout-links a');
+    flyoutLinks.forEach((link) => {
+      link.addEventListener('click', closeMenu);
+    });
   }
 
   // Close menu when Escape is pressed

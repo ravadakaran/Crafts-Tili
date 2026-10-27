@@ -1,7 +1,7 @@
 {% comment %}
   Slide-out Drawer Cart for Crafts Titli
   Features:
-  - Free Shipping Progress Bar (₹499)
+  - Free Shipping Progress Bar (₹1500)
   - Full bundle and customizer item handling
   - Live quantity adjustment & item removal via Ajax (/cart/change.js)
   - Curated Add-on / Upsells Carousel
@@ -686,7 +686,7 @@
 
 <script>
 window.TitliDrawer = (function() {
-  const FREE_SHIPPING_THRESHOLD_PENCE = 49900; // ₹499 in paise
+  const FREE_SHIPPING_THRESHOLD_PENCE = 150000; // ₹1500 in paise
 
   function formatMoney(cents) {
     if (typeof cents !== 'number') cents = parseInt(cents, 10) || 0;
@@ -826,7 +826,18 @@ window.TitliDrawer = (function() {
                 <span class="drawer-qty-val">${item.quantity}</span>
                 <button type="button" class="drawer-qty-btn" onclick="window.TitliDrawer.updateQty('${item.key}', ${item.quantity + 1})">+</button>
               </div>
-              <span class="drawer-item-price">${formatMoney(item.final_line_price)}</span>
+              <span class="drawer-item-price">${(() => {
+                let lineTotal = item.final_line_price;
+                if (isBundle) {
+                  const bId = item.properties._bundle_id;
+                  cart.items.forEach(c => {
+                    if (c.properties && c.properties._bundle_id === bId && c.properties._bundle_child === 'true') {
+                      lineTotal += c.final_line_price;
+                    }
+                  });
+                }
+                return formatMoney(lineTotal);
+              })()}</span>
             </div>
           </div>
         </div>

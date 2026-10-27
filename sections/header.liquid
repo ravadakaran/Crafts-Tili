@@ -58,31 +58,48 @@
     </div>
 
   </div>
-
-  <!-- Slide-in Navigation Drawer (Mobile Off-Canvas) -->
-  <div id="titli-nav-flyout" class="nav-flyout-drawer">
-    <div class="flyout-backdrop" id="mobile-menu-close-backdrop"></div>
-    <div class="flyout-panel">
-      <div class="flyout-header">
-        <span class="flyout-title">Studio Menu</span>
-        <button type="button" class="flyout-close-btn" id="mobile-menu-close-btn">×</button>
-      </div>
-      <nav class="flyout-links">
-        <a href="{{ routes.root_url }}">🌸 Home</a>
-        <a href="{{ routes.collections_url }}/All-Items">🪞 Shop All Products</a>
-        <a href="{{ routes.collections_url }}/bag-charms">👜 Bag Charms</a>
-        <a href="{{ routes.collections_url }}/customizer-charms">📱 Phone Charms</a>
-        <a href="{{ routes.collections_url }}/sun-catchers">✨ Sun Catchers</a>
-        <a href="{{ routes.collections_url }}/keychains-clips">🔑 Keychains &amp; Clips</a>
-        <a href="/pages/design-custom-piece" class="flyout-custom-btn">✨ Create Your Own</a>
-        <a href="/pages/our-story">💌 Our Story</a>
-        <a href="{{ routes.cart_url }}">🛍️ View Bag ({{ visible_cart_count }})</a>
-      </nav>
-    </div>
-  </div>
 </header>
 
+<!-- Slide-in Navigation Drawer (Mobile Off-Canvas) -->
+<div id="titli-nav-flyout" class="nav-flyout-drawer">
+  <div class="flyout-backdrop" id="mobile-menu-close-backdrop"></div>
+  <div class="flyout-panel">
+    <div class="flyout-header">
+      <span class="flyout-title">Studio Menu</span>
+      <button type="button" class="flyout-close-btn" id="mobile-menu-close-btn">×</button>
+    </div>
+    <nav class="flyout-links">
+      <a href="{{ routes.root_url }}">🌸 Home</a>
+      <a href="{{ routes.collections_url }}/All-Items">🪞 Shop All Products</a>
+      <a href="{{ routes.collections_url }}/bag-charms">👜 Bag Charms</a>
+      <a href="{{ routes.collections_url }}/customizer-charms">📱 Phone Charms</a>
+      <a href="{{ routes.collections_url }}/sun-catchers">✨ Sun Catchers</a>
+      <a href="{{ routes.collections_url }}/keychains-clips">🔑 Keychains &amp; Clips</a>
+      <a href="/pages/design-custom-piece" class="flyout-custom-btn">✨ Create Your Own</a>
+      <a href="/pages/our-story">💌 Our Story</a>
+      <a href="{{ routes.cart_url }}">🛍️ View Bag ({{ visible_cart_count }})</a>
+    </nav>
+  </div>
+</div>
+
 <style>
+/* Navigation Drawer Global Stacking */
+.nav-flyout-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 100000 !important;
+}
+
+body.mobile-menu-open {
+  overflow: hidden !important;
+}
+
+body.mobile-menu-open #shopify-section-header,
+body.mobile-menu-open .shopify-section-header,
+body.mobile-menu-open .titli-minimal-header {
+  z-index: 100000 !important;
+  position: relative !important;
+}
 /* Desktop Navigation */
 .header-desktop-nav {
   display: flex;

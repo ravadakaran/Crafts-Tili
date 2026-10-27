@@ -178,9 +178,20 @@ body {
 .nav-flyout-drawer {
   position: fixed;
   inset: 0;
-  z-index: 999;
+  z-index: 100000 !important;
   visibility: hidden;
   transition: visibility 0.3s ease;
+}
+
+body.mobile-menu-open {
+  overflow: hidden !important;
+}
+
+body.mobile-menu-open #shopify-section-header,
+body.mobile-menu-open .shopify-section-header,
+body.mobile-menu-open .titli-minimal-header {
+  z-index: 100000 !important;
+  position: relative !important;
 }
 
 .nav-flyout-drawer.is-active {
