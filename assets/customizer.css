@@ -7,6 +7,7 @@
 :root {
   /* Core Brand Tokens */
   --titli-primary: #712423;         /* Sage Green */
+  --titli-primary-cust: #607353;
   --titli-primary-dark: #B7684C;    /* Deep Forest Green */
   --titli-primary-light: #FFF5F5;   /* Soft Blush */
   --titli-border: #607353;          /* Warm Rose Outline */
@@ -390,7 +391,7 @@ body.mobile-menu-open .titli-minimal-header {
 }
 
 .hero-primary-btn {
-  background: linear-gradient(135deg, var(--titli-primary) 0%, #B7684C 100%) !important;
+  background: linear-gradient(135deg, var(--titli-primary-cust) 0%, #233219ff 100%) !important;
   color: #FFFFFF !important;
   border: none;
   padding: 14px 26px;
@@ -1771,18 +1772,96 @@ body.mobile-menu-open .titli-minimal-header {
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 6px 18px rgba(113, 36, 35, 0.25);
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.product-add-to-bag-btn:hover {
+.product-add-to-bag-btn:hover:not(:disabled) {
   transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(113, 36, 35, 0.35);
 }
 
-.product-add-to-bag-btn:disabled {
+.product-add-to-bag-btn:disabled,
+.product-add-to-bag-btn.is-sold-out {
   background: #EAE5DF;
   color: #8C827D;
   cursor: not-allowed;
   box-shadow: none;
+  border: 1.5px solid #D8D2CD;
+}
+
+/* Sold Out + Notify Me Button Row */
+.quantity-add-row.is-sold-out-state {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.quantity-add-row.is-sold-out-state .product-add-to-bag-btn.is-sold-out {
+  flex: 0 0 115px;
+  min-width: 100px;
+  padding: 0 14px;
+}
+
+.product-notify-me-btn {
+  flex: 1;
+  height: 48px;
+  background: linear-gradient(135deg, var(--titli-primary, #712423) 0%, var(--titli-primary-dark, #B7684C) 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(113, 36, 35, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  padding: 0 16px;
+  white-space: nowrap;
+}
+
+.product-notify-me-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(113, 36, 35, 0.35);
+  filter: brightness(1.04);
+}
+
+.product-notify-me-btn:active {
+  transform: translateY(0);
+}
+
+.notify-btn-bell {
+  font-size: 16px;
+  line-height: 1;
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.product-notify-me-btn:hover .notify-btn-bell {
+  animation: bellWiggle 0.6s ease infinite;
+}
+
+@keyframes bellWiggle {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(-16deg); }
+  40% { transform: rotate(14deg); }
+  60% { transform: rotate(-10deg); }
+  80% { transform: rotate(6deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@media (max-width: 500px) {
+  .quantity-add-row.is-sold-out-state {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .quantity-add-row.is-sold-out-state .product-add-to-bag-btn.is-sold-out,
+  .quantity-add-row.is-sold-out-state .product-notify-me-btn {
+    width: 100%;
+    flex: none;
+  }
 }
 
 /* Perks List */
@@ -2957,10 +3036,27 @@ footer ul li a:hover {
   color: var(--titli-primary, #712423);
 }
 
-.titli-swatch-btn.disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
+.titli-swatch-btn.disabled,
+.titli-swatch-btn.is-sold-out {
+  opacity: 0.65;
+  background: #FAF8F5;
+  border-style: dashed;
+}
+
+.titli-swatch-btn.disabled .swatch-btn-title,
+.titli-swatch-btn.is-sold-out .swatch-btn-title {
   text-decoration: line-through;
+}
+
+.titli-swatch-btn.is-sold-out.active {
+  opacity: 1;
+  border-style: solid;
+  border-color: var(--titli-primary, #712423);
+  background: #FFF5F5;
+}
+
+.titli-swatch-btn.is-sold-out.active .swatch-btn-title {
+  text-decoration: none;
 }
 
 .swatch-btn-thumb {
@@ -3248,9 +3344,9 @@ footer ul li a:hover {
 
   background: linear-gradient(
     115deg,
-    #712423 0%,
-    #963E42 48%,
-    #B7684C 100%
+    #27381bff 0%,
+    #607353 48%,
+    #27381bff 100%
   ) !important;
 
   color: #FFFFFF !important;
@@ -3376,4 +3472,354 @@ footer ul li a:hover {
 
 .catalog-pills-row .catalog-pill-custom {
   gap: 20px !important;
+}
+
+/* ==========================================================================
+   Titli Atelier - Restock Notification Modal & Trigger Styles
+   ========================================================================== */
+.titli-restock-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.titli-restock-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.titli-restock-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(36, 26, 24, 0.58);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.titli-restock-dialog {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 460px;
+  background: #FFFFFF;
+  border: 1.5px solid var(--titli-border, #607353);
+  border-radius: 24px;
+  box-shadow: 0 20px 48px rgba(36, 26, 24, 0.22);
+  padding: 26px 22px;
+  box-sizing: border-box;
+  transform: translateY(20px) scale(0.96);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.titli-restock-modal.is-open .titli-restock-dialog {
+  transform: translateY(0) scale(1);
+}
+
+.restock-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(96, 115, 83, 0.25);
+  background: #FAF6F1;
+  color: var(--titli-primary, #712423);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.restock-close-btn:hover {
+  background: var(--titli-primary, #712423);
+  color: #FFFFFF;
+  border-color: var(--titli-primary, #712423);
+  transform: rotate(90deg);
+}
+
+.restock-badge-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--titli-brass, #607353);
+  background: #FFF5F5;
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+  border: 1px solid rgba(96, 115, 83, 0.2);
+}
+
+.restock-chip-icon {
+  font-size: 12px;
+}
+
+.restock-title {
+  margin: 0 0 6px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--titli-primary, #712423);
+  line-height: 1.25;
+}
+
+.restock-subtitle {
+  margin: 0 0 16px;
+  font-size: 13px;
+  color: var(--titli-text-muted, #607353);
+  line-height: 1.45;
+}
+
+/* Product Preview Snapshot in Modal */
+.restock-product-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #FAF6F1;
+  border: 1px solid rgba(96, 115, 83, 0.2);
+  border-radius: 16px;
+  padding: 10px 12px;
+  margin-bottom: 18px;
+}
+
+.restock-preview-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex: 0 0 56px;
+  background: #FFFFFF;
+  border: 1px solid rgba(96, 115, 83, 0.2);
+}
+
+.restock-preview-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.restock-preview-details {
+  min-width: 0;
+  flex: 1;
+}
+
+.restock-preview-title {
+  margin: 0 0 3px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--titli-text-main, #712423);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.restock-preview-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  margin-bottom: 3px;
+}
+
+.restock-preview-variant {
+  color: var(--titli-primary, #712423);
+  font-weight: 600;
+}
+
+.restock-preview-price {
+  font-weight: 800;
+  color: var(--titli-primary-dark, #B7684C);
+}
+
+.restock-preview-status {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #8C827D;
+}
+
+/* Form inputs */
+.restock-input-group {
+  margin-bottom: 14px;
+}
+
+.restock-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--titli-text-main, #712423);
+  margin-bottom: 5px;
+}
+
+.req-star {
+  color: #E24B4B;
+  margin-left: 2px;
+}
+
+.optional-pill {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--titli-text-muted, #607353);
+  background: rgba(96, 115, 83, 0.1);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.field-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.restock-text-input {
+  width: 100%;
+  height: 44px;
+  border: 1.5px solid var(--titli-border, #607353);
+  border-radius: 12px;
+  padding: 0 12px 0 38px;
+  font-size: 13.5px;
+  color: var(--titli-text-main, #712423);
+  background: #FFFFFF;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.restock-text-input:focus {
+  border-color: var(--titli-primary, #712423);
+  box-shadow: 0 0 0 3px rgba(113, 36, 35, 0.12);
+}
+
+.restock-action-submit-btn {
+  width: 100%;
+  height: 46px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--titli-primary, #712423) 0%, var(--titli-primary-dark, #B7684C) 100%);
+  color: #FFFFFF;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(113, 36, 35, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.restock-action-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(113, 36, 35, 0.35);
+  filter: brightness(1.05);
+}
+
+.restock-action-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #FFFFFF;
+  border-radius: 50%;
+  animation: restockSpin 0.7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes restockSpin {
+  to { transform: rotate(360deg); }
+}
+
+.restock-privacy-note {
+  text-align: center;
+  font-size: 11px;
+  color: var(--titli-text-muted, #607353);
+  margin-top: 12px;
+}
+
+/* Success Card */
+.restock-success-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 16px 8px 8px;
+}
+
+.success-icon {
+  font-size: 42px;
+  margin-bottom: 10px;
+  animation: restockPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes restockPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.restock-success-card h4 {
+  margin: 0 0 6px;
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--titli-primary, #712423);
+  font-family: 'Quicksand', sans-serif;
+}
+
+.restock-success-card p {
+  margin: 0 0 18px;
+  font-size: 13px;
+  color: var(--titli-text-muted, #607353);
+  line-height: 1.5;
+}
+
+.restock-done-btn {
+  padding: 9px 24px;
+  background: var(--titli-primary, #712423);
+  color: #FFFFFF;
+  border-radius: 999px;
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.restock-done-btn:hover {
+  background: var(--titli-primary-dark, #B7684C);
+  transform: translateY(-1px);
+}
+
+/* Sticky bar button style when in notify mode */
+.sticky-action-btn.is-notify-sticky {
+  background: linear-gradient(135deg, var(--titli-primary, #712423) 0%, var(--titli-primary-dark, #B7684C) 100%) !important;
 }

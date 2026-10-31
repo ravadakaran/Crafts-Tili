@@ -47,6 +47,65 @@
       </div>
     </div>
   </div>
+
+  <!-- Real-Life Finished Sample Preview Modal -->
+  <div id="customizerSampleModal" class="sample-modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="sampleModalTitle">
+    <div class="sample-modal-card">
+      <button type="button" class="sample-modal-close-btn" id="closeSampleModalBtn" aria-label="Close sample preview">✕</button>
+      
+      <div class="sample-modal-header">
+        <div class="sample-modal-badge" id="sampleModalBadge">
+          <span class="badge-sparkle">✨</span>
+          <span id="sampleModalBadgeText">Atelier Finished Sample</span>
+        </div>
+        <h3 class="sample-modal-title" id="sampleModalTitle">Phone Strap Sample Look</h3>
+        <p class="sample-modal-subtitle" id="sampleModalSubtitle">
+          Real-life handcrafted reference from our studio atelier
+        </p>
+      </div>
+
+      <div class="sample-modal-media-frame">
+        <div class="sample-slider-viewport" id="sampleSliderViewport">
+          <button type="button" class="sample-slider-arrow sample-arrow-prev" id="sampleSlidePrevBtn" aria-label="Previous sample photo">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          
+          <div class="sample-slider-track" id="sampleSliderTrack"></div>
+
+          <button type="button" class="sample-slider-arrow sample-arrow-next" id="sampleSlideNextBtn" aria-label="Next sample photo">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+
+          <!-- Floating Counter Pill e.g. "1 / 3" -->
+          <span class="sample-slider-counter" id="sampleSliderCounter">1 / 1</span>
+        </div>
+
+        <!-- Dot Pagination Indicators -->
+        <div class="sample-slider-dots" id="sampleSliderDots" role="tablist" aria-label="Sample image pagination"></div>
+
+        <div class="sample-modal-caption">
+          <span class="caption-icon">🪄</span>
+          <span id="sampleModalCaptionText">Handcrafted with love in our atelier. Your finished piece will reflect your unique bead and charm selections!</span>
+        </div>
+      </div>
+
+      <!-- Quick Type Switcher Tabs inside Modal so customer can explore all samples -->
+      <div class="sample-modal-type-nav">
+        <span class="sample-nav-label">Switch Sample View:</span>
+        <div class="sample-nav-pills">
+          <button type="button" class="sample-nav-pill" data-switch-sample="bag-clip-single">🎐 Single</button>
+          <button type="button" class="sample-nav-pill" data-switch-sample="bag-clip-multi">🗝️ Multi</button>
+          <button type="button" class="sample-nav-pill" data-switch-sample="phone-charm">📱 Phone</button>
+        </div>
+      </div>
+
+      <div class="sample-modal-footer">
+        <button type="button" class="sample-modal-resume-btn" id="resumeCustomizerBtn">
+          <span>Back to Designing ✨</span>
+        </button>
+      </div>
+    </div>
+  </div>
      
   <div class="customizer-container">
     
@@ -58,8 +117,14 @@
            ========================================== -->
       <div id="stagePhoneCharmWrapper" style="display: none; width: 100%;">
         <div class="stage-header">
-          <span class="stage-pill">LIVE PREVIEW</span>
-          <h2 class="stage-title">Phone Strap</h2>
+          <div class="stage-header-title-box">
+            <span class="stage-pill">LIVE PREVIEW</span>
+            <h2 class="stage-title">Phone Strap</h2>
+          </div>
+          <button type="button" class="view-sample-btn" data-sample-type="phone-charm" aria-label="View Phone Strap Sample Image">
+            <span class="sample-btn-icon">📸</span>
+            <span class="sample-btn-text">View Sample</span>
+          </button>
         </div>
 
         <div class="unified-preview-box">
@@ -101,8 +166,14 @@
            ========================================== -->
       <div id="stageBagClipMultiWrapper" style="display: none; width: 100%;">
         <div class="stage-header">
-          <span class="stage-pill">LIVE ATELIER PREVIEW</span>
-          <h2 class="stage-title">Multi-Strand Bag Clip</h2>
+          <div class="stage-header-title-box">
+            <span class="stage-pill">LIVE ATELIER PREVIEW</span>
+            <h2 class="stage-title">Multi-Strand Bag Charm</h2>
+          </div>
+          <button type="button" class="view-sample-btn" data-sample-type="bag-clip-multi" aria-label="View Multi-Strand Bag Charm Sample Image">
+            <span class="sample-btn-icon">📸</span>
+            <span class="sample-btn-text">View Sample</span>
+          </button>
         </div>
 
         <div class="unified-preview-box">
@@ -152,10 +223,10 @@
 
         <div class="desktop-only-action-bar">
           <div class="phone-price-breakdown">
-            <div class="price-row"><span>Base Design Price:</span><strong id="multiBasePriceText">₹199.00</strong></div>
+            <div class="price-row"><span>Base Design Price:</span><strong id="multiBasePriceText">₹250.00</strong></div>
             <div class="price-row"><span>Add-ons Total:</span><strong id="multiAddonsText">₹0.00</strong></div>
             <div class="price-divider"></div>
-            <div class="price-row total-row"><span class="total-label">Estimated Total:</span><span class="total-amount" id="customizerTotalMultiPrice">₹199.00</span></div>
+            <div class="price-row total-row"><span class="total-label">Estimated Total:</span><span class="total-amount" id="customizerTotalMultiPrice">₹250.00</span></div>
           </div>
           <button type="button" class="phone-add-to-bag-btn" id="addMultiToBagBtn"><span>✨ Add Custom Design To Bag</span></button>
         </div>
@@ -166,8 +237,14 @@
            ========================================== -->
       <div id="stageBagClipSingleWrapper" style="width: 100%;">
         <div class="stage-header">
-          <span class="stage-pill">LIVE ATELIER PREVIEW</span>
-          <h2 class="stage-title">Single-Strand Bag Clip</h2>
+          <div class="stage-header-title-box">
+            <span class="stage-pill">LIVE ATELIER PREVIEW</span>
+            <h2 class="stage-title">Single-Strand Bag Charm</h2>
+          </div>
+          <button type="button" class="view-sample-btn" data-sample-type="bag-clip-single" aria-label="View Single-Strand Bag Charm Sample Image">
+            <span class="sample-btn-icon">📸</span>
+            <span class="sample-btn-text">View Sample</span>
+          </button>
         </div>
 
         <div class="unified-preview-box">
@@ -206,10 +283,10 @@
 
         <div class="desktop-only-action-bar">
           <div class="phone-price-breakdown">
-            <div class="price-row"><span>Base Design Price:</span><strong id="singleBasePriceText">₹100.00</strong></div>
+            <div class="price-row"><span>Base Design Price:</span><strong id="singleBasePriceText">₹150.00</strong></div>
             <div class="price-row"><span>Add-ons Total:</span><strong id="singleAddonsText">₹0.00</strong></div>
             <div class="price-divider"></div>
-            <div class="price-row total-row"><span class="total-label">Estimated Total:</span><span class="total-amount" id="singleEstimatedTotal">₹100.00</span></div>
+            <div class="price-row total-row"><span class="total-label">Estimated Total:</span><span class="total-amount" id="singleEstimatedTotal">₹150.00</span></div>
           </div>
           <button type="button" class="phone-add-to-bag-btn" id="singleDirectAddBtn"><span>✨ Add Custom Design To Bag</span></button>
         </div>
@@ -227,11 +304,11 @@
         <div class="type-switch-row">
           <button type="button" class="type-btn active" id="btnTypeBagClipSingle" data-type="bag-clip-single">
             <span class="type-icon">🎐</span>
-            <span class="type-text"><strong>Bag Clip (Single)</strong><small>1 cord (Max 7)</small></span>
+            <span class="type-text"><strong>Bag Charm (Single)</strong><small>1 strand (Max 7)</small></span>
           </button>
           <button type="button" class="type-btn" id="btnTypeBagClipMulti" data-type="bag-clip-multi">
             <span class="type-icon">🗝️</span>
-            <span class="type-text"><strong>Bag Clip (Multi)</strong><small>4 distinct strands</small></span>
+            <span class="type-text"><strong>Bag Charm (Multi)</strong><small>4 distinct strands</small></span>
           </button>
           <button type="button" class="type-btn" id="btnTypePhoneCharm" data-type="phone-charm">
             <span class="type-icon">📱</span>
@@ -242,120 +319,14 @@
 
       <!-- Navigation Tabs -->
       <div class="controls-nav-tabs">
-        <button type="button" class="tab-btn active" data-tab="tab-clasp" id="tabBtnClasp">1. Cord &amp; Clasp</button>
+        <button type="button" class="tab-btn active" data-tab="tab-charms" id="tabBtnCharms">Charms</button>
         <button type="button" class="tab-btn" data-tab="tab-name" id="tabBtnName" style="display: none;">2. Custom Name</button>
         <button type="button" class="tab-btn" data-tab="tab-palette" id="tabBtnPalette" style="display: none;">3. Color Story</button>
-        <button type="button" class="tab-btn" data-tab="tab-charms" id="tabBtnCharms">2. Charms</button>
       </div>
 
       <form id="multiStrandCustomizerForm" class="controls-form" onsubmit="return false;">
         
-        <!-- Tab 1: Clasp / Cord -->
-        <div class="tab-pane active" id="tab-clasp">
-          <label class="section-label" id="claspHeadingLabel">Select Cord Color &amp; Clasp</label>
-          <p class="section-desc" id="claspDescText">Choose the central jewelry cord color and clasp for your attached charms.</p>
-          
-          <!-- Option Grid 1: Phone Strap (Tether Cords) -->
-          <div class="option-grid clasp-selector-grid" id="claspSelectorPhone" style="display: none;">
-            <button type="button" class="option-card active" data-clasp-color="#D32F2F" data-clasp-name="Red" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #D32F2F;"></span><span class="option-title">Red</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#F06292" data-clasp-name="Pink" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #F06292;"></span><span class="option-title">Pink</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#1E88E5" data-clasp-name="Blue" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #1E88E5;"></span><span class="option-title">Blue</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#FDD835" data-clasp-name="Yellow" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #FDD835;"></span><span class="option-title">Yellow</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#FFFFFF" data-clasp-name="White" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #FFFFFF; border: 1.5px solid #DDD6CC;"></span><span class="option-title">White</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#212121" data-clasp-name="Black" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #212121;"></span><span class="option-title">Black</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#A0A5A3" data-clasp-name="Silver" data-clasp-price="20" data-clasp-variant="50813322592453">
-              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #E0E2E1 0%, #A0A5A3 100%); border: 1px solid #7B817F;"></span>
-              <span class="option-title">Silver (+₹20)</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#D4AF37" data-clasp-name="Gold" data-clasp-price="20" data-clasp-variant="50813321806021">
-              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #FBE082 0%, #D4AF37 100%); border: 1px solid #B89324;"></span>
-              <span class="option-title">Gold (+₹20)</span>
-            </button>
-          </div>
-
-          <!-- Option Grid 2: Multi-Strand Bag Clip (Hardware Finishes) -->
-          <div class="option-grid clasp-selector-grid" id="claspSelectorBagMulti" style="display: none;">
-            <button type="button" class="option-card active" data-clasp-color="#D32F2F" data-clasp-name="Red" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #D32F2F;"></span><span class="option-title">Red</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#F06292" data-clasp-name="Pink" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #F06292;"></span><span class="option-title">Pink</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#1E88E5" data-clasp-name="Blue" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #1E88E5;"></span><span class="option-title">Blue</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#FDD835" data-clasp-name="Yellow" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #FDD835;"></span><span class="option-title">Yellow</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#FFFFFF" data-clasp-name="White" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #FFFFFF; border: 1.5px solid #DDD6CC;"></span><span class="option-title">White</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#212121" data-clasp-name="Black" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #212121;"></span><span class="option-title">Black</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#A0A5A3" data-clasp-name="Silver" data-clasp-price="20" data-clasp-variant="50813322592453">
-              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #E0E2E1 0%, #A0A5A3 100%); border: 1px solid #7B817F;"></span>
-              <span class="option-title">Silver (+₹20)</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#D4AF37" data-clasp-name="Gold" data-clasp-price="20" data-clasp-variant="50813321806021">
-              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #FBE082 0%, #D4AF37 100%); border: 1px solid #B89324;"></span>
-              <span class="option-title">Gold (+₹20)</span>
-            </button>
-          </div>
-
-          <!-- Option Grid 3: Single-Strand Bag Clip (Cord & Clasp Colors) -->
-          <div class="option-grid clasp-selector-grid" id="claspSelectorBagSingle" style="display: grid;">
-            <button type="button" class="option-card active" data-clasp-color="#D32F2F" data-clasp-name="Red" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #D32F2F;"></span><span class="option-title">Red</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#F06292" data-clasp-name="Pink" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #F06292;"></span><span class="option-title">Pink</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#1E88E5" data-clasp-name="Blue" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #1E88E5;"></span><span class="option-title">Blue</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#FDD835" data-clasp-name="Yellow" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #FDD835;"></span><span class="option-title">Yellow</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#FFFFFF" data-clasp-name="White" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #FFFFFF; border: 1.5px solid #DDD6CC;"></span><span class="option-title">White</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#212121" data-clasp-name="Black" data-clasp-price="0">
-              <span class="color-swatch-circle" style="background: #212121;"></span><span class="option-title">Black</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#A0A5A3" data-clasp-name="Silver" data-clasp-price="20" data-clasp-variant="50813322592453">
-              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #E0E2E1 0%, #A0A5A3 100%); border: 1px solid #7B817F;"></span>
-              <span class="option-title">Silver (+₹20)</span>
-            </button>
-            <button type="button" class="option-card" data-clasp-color="#D4AF37" data-clasp-name="Gold" data-clasp-price="20" data-clasp-variant="50813321806021">
-              <span class="color-swatch-circle" style="background: linear-gradient(135deg, #FBE082 0%, #D4AF37 100%); border: 1px solid #B89324;"></span>
-              <span class="option-title">Gold (+₹20)</span>
-            </button>
-          </div>
-
-          <!-- Stepper Footer: Tab 1 -->
-          <div class="stepper-nav-row">
-            <span class="stepper-step-indicator" id="stepperIndicatorTab1">Phase 1 of 2: Cord &amp; Clasp</span>
-            <button type="button" class="stepper-nav-btn stepper-next-btn" id="stepperNextFromClasp">
-              <span id="stepperNextFromClaspText">Next: Select Charms</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- Tab 2: Custom Name -->
+        <!-- Tab: Custom Name -->
         <div class="tab-pane" id="tab-name">
           <label class="section-label">Personalized Name / Word</label>
           <p class="section-desc">Up to 8 characters. Acrylic letter beads strung directly along the core design.</p>
@@ -364,16 +335,19 @@
             <button type="button" id="clearNameBtn" class="clear-btn">✕</button>
           </div>
 
-          <!-- Stepper Footer: Tab 2 -->
+          <!-- Stepper Footer: Name Beads -->
           <div class="stepper-nav-row">
             <button type="button" class="stepper-nav-btn stepper-back-btn" id="stepperBackFromName">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-              <span>Back: Canvas</span>
+              <span>Back: Charms</span>
             </button>
-            <span class="stepper-step-indicator" id="stepperIndicatorTab2">Phase 2 of 4: Name Beads</span>
+            <span class="stepper-step-indicator" id="stepperIndicatorTab2">Phase 2 of 3: Name Beads</span>
             <button type="button" class="stepper-nav-btn stepper-next-btn" id="stepperNextFromName">
               <span id="stepperNextFromNameText">Next: Color Story</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <button type="button" class="stepper-nav-btn stepper-finish-btn" id="stepperFinishFromName" style="display: none;">
+              <span>✨ Add Custom Design To Bag</span>
             </button>
           </div>
         </div>
@@ -382,52 +356,59 @@
         <div class="tab-pane" id="tab-palette">
           <label class="section-label">Select Color Palette Theme</label>
           <div class="palette-list" id="paletteSelector">
-            <button type="button" class="palette-row-btn active" data-palette="fairy-garden" data-palette-name="PASTEL DREAM (LILAC &amp; GREENS)" data-accent="#5E966B" data-primary="#8A58B5">
+            <button type="button" class="palette-row-btn active" data-palette="fairy-garden" data-palette-name="PASTEL DREAM (LILAC &amp; GREENS)" data-accent="#5E966B" data-primary="#8A58B5" data-clasp-color="#C5A059" data-clasp-name="Gold Clasp">
               <div class="swatch-strip"><span style="background:#8A58B5;"></span><span style="background:#5E966B;"></span><span style="background:#A3C9A8;"></span><span style="background:#FFF;"></span></div>
-              <div class="palette-meta"><strong>Pastel Dream (Lilac &amp; Greens)</strong><small>Faceted lilac beads, sage green beads, and butterflies</small></div>
+              <div class="palette-meta"><strong>Pastel Dream (Lilac &amp; Greens)</strong><small>Faceted lilac beads, sage green beads, and butterflies • Gold Hardware</small></div>
             </button>
-            <button type="button" class="palette-row-btn" data-palette="cherry-blossom" data-palette-name="SAKURA BLOSSOM PALETTE" data-accent="#E27396" data-primary="#B32025">
+            <button type="button" class="palette-row-btn" data-palette="cherry-blossom" data-palette-name="SAKURA BLOSSOM PALETTE" data-accent="#E27396" data-primary="#B32025" data-clasp-color="#C5A059" data-clasp-name="Gold Clasp">
               <div class="swatch-strip"><span style="background:#B32025;"></span><span style="background:#E27396;"></span><span style="background:#F7B2BD;"></span><span style="background:#FFF;"></span></div>
-              <div class="palette-meta"><strong>Sakura Blossom (Pinks &amp; Ruby)</strong><small>Rose quartz tones, frosted flowers, and blush beads</small></div>
+              <div class="palette-meta"><strong>Sakura Blossom (Pinks &amp; Ruby)</strong><small>Rose quartz tones, frosted flowers, and blush beads • Gold Hardware</small></div>
             </button>
-            <button type="button" class="palette-row-btn" data-palette="ocean-mist" data-palette-name="OCEAN MIST PALETTE" data-accent="#5BC0BE" data-primary="#3A506B">
+            <button type="button" class="palette-row-btn" data-palette="ocean-mist" data-palette-name="OCEAN MIST PALETTE" data-accent="#5BC0BE" data-primary="#3A506B" data-clasp-color="#A8B2B8" data-clasp-name="Silver Clasp">
               <div class="swatch-strip"><span style="background:#3A506B;"></span><span style="background:#5BC0BE;"></span><span style="background:#A3CEF1;"></span><span style="background:#FFF;"></span></div>
-              <div class="palette-meta"><strong>Ocean Mist (Aquas &amp; Indigo)</strong><small>Clear sea-glass beads, frosted stars, and silver accents</small></div>
+              <div class="palette-meta"><strong>Ocean Mist (Aquas &amp; Indigo)</strong><small>Clear sea-glass beads, frosted stars, and silver accents • Silver Hardware</small></div>
             </button>
-            <button type="button" class="palette-row-btn" data-palette="yellow-pink" data-palette-name="SUNSET SORBET (YELLOW &amp; PINK)" data-accent="#F06292" data-primary="#FDD835">
+            <button type="button" class="palette-row-btn" data-palette="yellow-pink" data-palette-name="SUNSET SORBET (YELLOW &amp; PINK)" data-accent="#F06292" data-primary="#FDD835" data-clasp-color="#C5A059" data-clasp-name="Gold Clasp">
               <div class="swatch-strip"><span style="background:#FDD835;"></span><span style="background:#F06292;"></span><span style="background:#FFE082;"></span><span style="background:#FCE4EC;"></span></div>
-              <div class="palette-meta"><strong>Sunset Sorbet (Yellow &amp; Pink)</strong><small>Radiant sunny yellow crystals, pastel pink pearls, and daisy accents</small></div>
+              <div class="palette-meta"><strong>Sunset Sorbet (Yellow &amp; Pink)</strong><small>Radiant sunny yellow crystals, pastel pink pearls, and daisy accents • Gold Hardware</small></div>
             </button>
-            <button type="button" class="palette-row-btn" data-palette="surprise-me" data-palette-name="SURPRISE ME (ATELIER MIX)" data-accent="#EC407A" data-primary="#7E57C2">
+            <button type="button" class="palette-row-btn" data-palette="surprise-me" data-palette-name="SURPRISE ME (ATELIER MIX)" data-accent="#EC407A" data-primary="#7E57C2" data-clasp-color="#C5A059" data-clasp-name="Gold Clasp">
               <div class="swatch-strip"><span style="background:linear-gradient(135deg, #FF6B6B 0%, #FFA07A 100%);"></span><span style="background:linear-gradient(135deg, #A06CD5 0%, #E27396 100%);"></span><span style="background:linear-gradient(135deg, #4ECDC4 0%, #5BC0BE 100%);"></span><span style="background:linear-gradient(135deg, #FDD835 0%, #FFB300 100%);"></span></div>
-              <div class="palette-meta"><strong>Surprise Me (Atelier Mystery Mix)</strong><small>A one-of-a-kind harmony handpicked by our studio artist ✨</small></div>
+              <div class="palette-meta"><strong>Surprise Me (Atelier Mystery Mix)</strong><small>A one-of-a-kind harmony handpicked by our studio artist ✨ • Gold Hardware</small></div>
             </button>
           </div>
 
-          <!-- Stepper Footer: Tab 3 -->
+          <!-- Stepper Footer: Color Story -->
           <div class="stepper-nav-row">
             <button type="button" class="stepper-nav-btn stepper-back-btn" id="stepperBackFromPalette">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
               <span id="stepperBackFromPaletteLabel">Back: Name Beads</span>
             </button>
-            <span class="stepper-step-indicator">Phase 3 of 4: Palette</span>
-            <button type="button" class="stepper-nav-btn stepper-next-btn" id="stepperNextFromPalette">
-              <span>Next: Select Charms</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <span class="stepper-step-indicator" id="stepperIndicatorTab3">Phase 3 of 3: Color Story</span>
+            <button type="button" class="stepper-nav-btn stepper-finish-btn" id="stepperFinishFromPalette">
+              <span>✨ Add Custom Design To Bag</span>
             </button>
           </div>
         </div>
 
-        <!-- Tab 4: Charms (Curated Phased Atelier Visual Builder) -->
-        <div class="tab-pane" id="tab-charms">
+        <!-- Tab: Charms (Curated Phased Atelier Visual Builder) -->
+        <div class="tab-pane active" id="tab-charms">
           <!-- Hidden compatibility anchor (replaced with direct auto-fill & drag reordering) -->
           <div id="bagClipStrandTargetSection" style="display: none !important;"></div>
+
+          <!-- Dynamic Mode Instruction Box -->
+          <div class="charms-instruction-box" style="margin-bottom: 12px; padding: 10px 14px; background: #FAF8F5; border: 1px solid #EFE8DE; border-radius: 12px;">
+            <div class="charms-tab-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <h3 class="section-label" id="charmsListHeading" style="margin-bottom: 0; font-size: 13.5px; font-weight: 700; color: #241A18;">Select Atelier Charms to Attach</h3>
+              <span class="charms-limit-pill" id="charmsLimitBadge">Max 7 Charms</span>
+            </div>
+            <p class="section-desc" id="charmsListDesc" style="margin: 0; font-size: 12px; color: #7A6B67; line-height: 1.4;">Tap any charm below to attach it along your cord (up to 7). Tap on attached charm to remove.</p>
+          </div>
 
           <!-- Aesthetic Categories (Theme Pills) -->
           <div class="charms-category-pills-wrap">
             <div class="charms-tab-header" style="margin-bottom: 6px;">
               <label class="section-label" style="margin-bottom: 0;">Explore by Theme &amp; Aesthetic Vibe</label>
-              <span class="charms-limit-pill" id="charmsLimitBadge">Max 7 Charms</span>
             </div>
             <div class="charms-category-pills" id="charmsCategoryPills" role="tablist" aria-label="Charm categories">
               <button type="button" class="cat-pill active" data-category="all" role="tab" aria-selected="true">
@@ -517,18 +498,31 @@
             </div>
 
             <div class="charm-dropdown-filters">
-              <!-- Fandom / Theme Filter -->
+              <!-- Fandom / Theme / Aesthetic Filter -->
               <div class="charm-select-box charm-select-box-fandom">
-                <select id="charmFandomSelect" class="charm-filter-select" aria-label="Filter by Theme or Fandom">
-                  <option value="all">🎬 All Themes</option>
-                  <option value="avengers">🛡️ Avengers</option>
-                  <option value="harrypotter">⚡ Harry Potter</option>
-                  <option value="stitch">🌺 Stitch (lilo,Stnitch)</option>
-                  <option value="htd">🐉 HTD (Dragons)</option>
-                  <option value="minions">🍌 Minions</option>
-                  <option value="cartoon">🧸 Cartoon</option>
-                  <option value="alphabets">🔤 Alphabets</option>
-                  <option value="fur">🧶 Fur</option>
+                <select id="charmFandomSelect" class="charm-filter-select" aria-label="Filter by Theme or Aesthetic">
+                  <option value="all">🎬 All Themes &amp; Aesthetics</option>
+                  <optgroup label="Fandoms &amp; Characters">
+                    <option value="avengers">🛡️ Avengers</option>
+                    <option value="harrypotter">⚡ Harry Potter</option>
+                    <option value="stitch">🌺 Stitch (Lilo &amp; Stitch)</option>
+                    <option value="htd">🐉 HTD (Dragons)</option>
+                    <option value="minions">🍌 Minions</option>
+                    <option value="cartoon">🧸 Cartoon / Anime</option>
+                  </optgroup>
+                  <optgroup label="Aesthetic Themes">
+                    <option value="flowers">🌸 Flowers</option>
+                    <option value="butterflies">🦋 Butterflies &amp; Titli</option>
+                    <option value="heart">💖 Hearts</option>
+                    <option value="eye">🧿 Evil Eye &amp; Nazar</option>
+                    <option value="cats">🐱 Cats &amp; Kittens</option>
+                    <option value="dogs">🐶 Dogs &amp; Puppies</option>
+                    <option value="sea">🌊 Sea &amp; Ocean</option>
+                    <option value="leafs">🍃 Leafs &amp; Botanical</option>
+                    <option value="ribbons">🎀 Ribbons &amp; Bows</option>
+                    <option value="alphabets">🔤 Alphabets</option>
+                    <option value="fur">🧶 Fur &amp; Fluffy</option>
+                  </optgroup>
                 </select>
               </div>
 
@@ -567,8 +561,8 @@
               <div class="charm-select-box">
                 <select id="charmPriceTierSelect" class="charm-filter-select" aria-label="Filter by Price Tier">
                   <option value="all">💰 All Prices</option>
-                  <option value="tier-low">Under ₹20</option>
-                  <option value="tier-mid">₹20 – ₹35</option>
+                  <option value="tier-low">₹20 &amp; Under</option>
+                  <option value="tier-mid">₹21 – ₹35</option>
                   <option value="tier-high">₹35+</option>
                 </select>
               </div>
@@ -618,11 +612,16 @@
             </div>
           </div>
 
-          <!-- Stepper Footer: Tab 4 -->
+          <!-- Stepper Footer: Charms -->
           <div class="stepper-nav-row" style="margin-top: 22px;">
-            <button type="button" class="stepper-nav-btn stepper-back-btn" id="stepperBackFromCharms">
+            <button type="button" class="stepper-nav-btn stepper-back-btn" id="stepperBackFromCharms" style="display: none;">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-              <span id="stepperBackFromCharmsText">Back: Cord &amp; Clasp</span>
+              <span id="stepperBackFromCharmsText">Back</span>
+            </button>
+            <span class="stepper-step-indicator" id="stepperIndicatorTab4" style="display: none;"></span>
+            <button type="button" class="stepper-nav-btn stepper-next-btn" id="stepperNextFromCharms" style="display: none;">
+              <span id="stepperNextFromCharmsText">Next: Personalize Name</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
             <button type="button" class="stepper-nav-btn stepper-finish-btn" id="stepperDirectAddBtn">
               <span>✨ Add Custom Design To Bag</span>
@@ -634,7 +633,7 @@
         <div class="mobile-integrated-checkout">
           <div class="mobile-price-summary">
             <span class="mobile-price-lbl">Estimated Total:</span>
-            <span class="mobile-price-amt" id="mobileIntegratedPrice">₹50.00</span>
+            <span class="mobile-price-amt" id="mobileIntegratedPrice">₹150.00</span>
           </div>
           <button type="button" class="mobile-integrated-btn" id="mobileIntegratedAddBtn">
             <span>✨ Add Custom Design To Bag</span>
@@ -671,9 +670,387 @@
     overflow: visible;
   }
   
-  .stage-header { display: flex; flex-direction: column; align-items: flex-start; width: 100%; margin-bottom: 8px; gap: 3px; }
+  .stage-header { display: flex; flex-direction: row; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 8px; gap: 8px; }
+  .stage-header-title-box { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
   .stage-title { font-family: 'Playfair Display', Georgia, serif; font-size: 18px; font-weight: 700; color: #B32025; margin: 0; line-height: 1.2; white-space: nowrap; }
   .stage-pill { font-size: 9px; text-transform: uppercase; letter-spacing: 0.8px; color: #9B6B28; font-weight: 700; background: #FAF5EE; padding: 2px 8px; border-radius: 999px; border: 1px solid #E2C79A; }
+
+  /* Sample Look Button */
+  .view-sample-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #FAF5EE;
+    color: #712423;
+    border: 1.5px solid #E2D5C3;
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 2px 6px rgba(113, 36, 35, 0.05);
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .view-sample-btn:hover {
+    background: #712423;
+    color: #FAF5EE;
+    border-color: #712423;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(113, 36, 35, 0.16);
+  }
+  .view-sample-btn:active {
+    transform: scale(0.97);
+  }
+  .sample-btn-icon {
+    font-size: 12px;
+  }
+
+  /* Real-Life Sample Look Modal */
+  .sample-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 100002;
+    background: rgba(36, 26, 24, 0.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    box-sizing: border-box;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .sample-modal-backdrop.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .sample-modal-card {
+    background: #FFFFFF;
+    border: 1.5px solid #EFE4D6;
+    border-radius: 24px;
+    padding: 24px 22px;
+    max-width: 440px;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 24px 60px rgba(36, 26, 24, 0.35);
+    position: relative;
+    text-align: center;
+    transform: scale(0.92) translateY(12px);
+    transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    max-height: 90vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+  .sample-modal-backdrop.is-open .sample-modal-card {
+    transform: scale(1) translateY(0);
+  }
+  .sample-modal-close-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #FAF5EE;
+    border: 1px solid #E2D5C3;
+    color: #712423;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 3;
+  }
+  .sample-modal-close-btn:hover {
+    background: #712423;
+    color: #FAF5EE;
+    transform: scale(1.08);
+  }
+  .sample-modal-header {
+    margin-bottom: 14px;
+    padding-right: 28px;
+    text-align: left;
+  }
+  .sample-modal-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(113, 36, 35, 0.08);
+    border: 1px solid rgba(113, 36, 35, 0.22);
+    color: #712423;
+    font-size: 9.5px;
+    font-weight: 750;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 999px;
+    margin-bottom: 6px;
+  }
+  .sample-modal-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #712423;
+    margin: 0 0 4px 0;
+    line-height: 1.25;
+  }
+  .sample-modal-subtitle {
+    margin: 0;
+    font-size: 12px;
+    color: #6E615D;
+    line-height: 1.4;
+  }
+  .sample-modal-media-frame {
+    background: #FAF6F0;
+    border: 1.5px solid #EBE0D2;
+    border-radius: 18px;
+    padding: 10px;
+    margin-bottom: 14px;
+    box-sizing: border-box;
+  }
+  /* Swipeable Carousel Slider in Sample Modal */
+  .sample-slider-viewport {
+    position: relative;
+    width: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #FAF8F5;
+    border: 1px solid #E7DAC9;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    touch-action: pan-y pinch-zoom;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .sample-slider-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
+  }
+  .sample-slide-item {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .sample-slide-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+    transition: transform 0.4s ease;
+  }
+  .sample-slide-item:hover img {
+    transform: scale(1.02);
+  }
+  .sample-slide-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 24px;
+    color: #712423;
+    text-align: center;
+    box-sizing: border-box;
+    background: #FAF6F0;
+  }
+  .sample-slide-placeholder .placeholder-icon {
+    font-size: 44px;
+    filter: drop-shadow(0 2px 6px rgba(113,36,35,0.12));
+  }
+  .sample-slide-placeholder .placeholder-title {
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .sample-slide-placeholder .placeholder-hint {
+    font-size: 11.5px;
+    color: #8C7B76;
+  }
+  
+  /* Slider Nav Arrows */
+  .sample-slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(226, 213, 195, 0.9);
+    color: #712423;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+    box-shadow: 0 4px 12px rgba(36, 26, 24, 0.12);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+  .sample-slider-arrow:hover {
+    background: #712423;
+    color: #FAF5EE;
+    border-color: #712423;
+    transform: translateY(-50%) scale(1.1);
+  }
+  .sample-slider-arrow:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+  .sample-arrow-prev { left: 10px; }
+  .sample-arrow-next { right: 10px; }
+  .sample-slider-arrow[disabled],
+  .sample-slider-arrow.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  /* Counter Badge */
+  .sample-slider-counter {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(36, 26, 24, 0.65);
+    color: #FAF5EE;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  /* Dots */
+  .sample-slider-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    min-height: 12px;
+  }
+  .sample-slider-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #D9CCC0;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+  .sample-slider-dot:hover {
+    background: #B7684C;
+  }
+  .sample-slider-dot.active {
+    width: 20px;
+    border-radius: 10px;
+    background: #712423;
+  }
+  .sample-modal-caption {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 8px 4px 2px;
+    font-size: 11.5px;
+    color: #6E615D;
+    line-height: 1.45;
+    text-align: left;
+  }
+  .sample-modal-caption .caption-icon {
+    flex-shrink: 0;
+    font-size: 13px;
+    margin-top: 1px;
+  }
+  .sample-modal-type-nav {
+    margin-bottom: 14px;
+    text-align: left;
+  }
+  .sample-nav-label {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 750;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #8C7B76;
+    margin-bottom: 6px;
+  }
+  .sample-nav-pills {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .sample-nav-pill {
+    flex: 1;
+    min-width: 90px;
+    background: #FAF6F0;
+    border: 1px solid #E2D7C8;
+    border-radius: 12px;
+    padding: 6px 8px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 650;
+    color: #554D48;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    text-align: center;
+  }
+  .sample-nav-pill:hover {
+    background: #FFFFFF;
+    border-color: #B7684C;
+    color: #712423;
+  }
+  .sample-nav-pill.active {
+    background: #712423;
+    color: #FAF5EE;
+    border-color: #712423;
+    box-shadow: 0 2px 8px rgba(113, 36, 35, 0.18);
+  }
+  .sample-modal-footer {
+    width: 100%;
+  }
+  .sample-modal-resume-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #712423 0%, #8D302F 100%);
+    color: #FAF5EE;
+    border: none;
+    border-radius: 14px;
+    padding: 12px 18px;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 14px rgba(113, 36, 35, 0.18);
+  }
+  .sample-modal-resume-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(113, 36, 35, 0.25);
+    background: linear-gradient(135deg, #8D302F 0%, #712423 100%);
+  }
 
   .unified-preview-box { width: 100%; background: #FAF6F0; border: 1.5px dashed #E2D5C3; border-radius: 14px; padding: 12px 10px 10px; box-sizing: border-box; text-align: center; position: relative; overflow: hidden; }
   .phone-palette-tag { font-size: 10px; font-weight: 800; color: #9B6B28; letter-spacing: 0.8px; text-transform: uppercase; display: block; margin-bottom: 6px; }
@@ -1851,7 +2228,28 @@
       top: auto !important;
     }
     .mobile-floating-preview-pill {
-      display: none !important;
+      position: fixed !important;
+      bottom: 95px !important;
+      right: 14px !important;
+      z-index: 180 !important;
+      background: rgba(255, 253, 249, 0.98) !important;
+      border: 1.5px solid #DECBAF !important;
+      border-radius: 999px !important;
+      box-shadow: 0 6px 20px rgba(156, 31, 36, 0.2) !important;
+      padding: 6px 14px 6px 10px !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      cursor: pointer !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transform: translateY(14px) !important;
+      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+    }
+    .mobile-floating-preview-pill.is-active {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      transform: translateY(0) !important;
     }
     html, body {
       overflow-x: clip !important;
@@ -1890,19 +2288,7 @@
       margin-bottom: 8px !important; 
       transition: box-shadow 0.2s ease;
     }
-    .customizer-stage-card.is-mobile-pinned {
-      position: fixed !important;
-      top: 6px !important;
-      top: max(6px, env(safe-area-inset-top)) !important;
-      left: 6px !important;
-      right: 6px !important;
-      width: calc(100% - 12px) !important;
-      max-width: calc(100% - 12px) !important;
-      z-index: 120 !important;
-      box-shadow: 0 6px 22px rgba(179, 32, 37, 0.18) !important;
-    }
     body.mobile-menu-open .customizer-stage-card,
-    body.mobile-menu-open .customizer-stage-card.is-mobile-pinned,
     body.mobile-menu-open .mobile-integrated-checkout,
     body.mobile-menu-open .mobile-floating-preview-pill {
       opacity: 0 !important;
@@ -1911,7 +2297,7 @@
       z-index: 1 !important;
     }
     .customizer-stage-spacer {
-      display: none;
+      display: none !important;
       width: 100%;
     }
     .customizer-controls-card { 
@@ -1937,6 +2323,23 @@
       font-size: 8px !important;
       padding: 1.5px 6px !important;
       letter-spacing: 0.5px !important;
+    }
+    .view-sample-btn {
+      padding: 3.5px 9px !important;
+      font-size: 10px !important;
+      border-radius: 14px !important;
+      gap: 4px !important;
+    }
+    .sample-btn-icon {
+      font-size: 11px !important;
+    }
+    .sample-modal-card {
+      padding: 20px 16px !important;
+      border-radius: 20px !important;
+      max-width: 95vw !important;
+    }
+    .sample-modal-title {
+      font-size: 17px !important;
     }
     .unified-preview-box {
       padding: 4px 8px 4px !important;
@@ -2259,19 +2662,88 @@
   }
 </style>
 
+<script type="application/json" id="customizerSampleImagesJson">
+{
+  "phone-charm": [
+    {%- assign comma = '' -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'sample_image' and block.settings.target_type == 'phone-charm' and block.settings.image != blank -%}
+        {{ comma }}{{ block.settings.image | image_url: width: 900 | json }}
+        {%- assign comma = ',' -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if section.settings.phone_sample_1 != blank -%}
+      {{ comma }}{{ section.settings.phone_sample_1 | image_url: width: 900 | json }}
+      {%- assign comma = ',' -%}
+    {%- endif -%}
+    {%- if section.settings.phone_sample_2 != blank -%}
+      {{ comma }}{{ section.settings.phone_sample_2 | image_url: width: 900 | json }}
+      {%- assign comma = ',' -%}
+    {%- endif -%}
+    {%- if section.settings.phone_sample_3 != blank -%}
+      {{ comma }}{{ section.settings.phone_sample_3 | image_url: width: 900 | json }}
+      {%- assign comma = ',' -%}
+    {%- endif -%}
+  ],
+  "bag-clip-single": [
+    {%- assign comma = '' -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'sample_image' and block.settings.target_type == 'bag-clip-single' and block.settings.image != blank -%}
+        {{ comma }}{{ block.settings.image | image_url: width: 900 | json }}
+        {%- assign comma = ',' -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if section.settings.single_sample_1 != blank -%}
+      {{ comma }}{{ section.settings.single_sample_1 | image_url: width: 900 | json }}
+      {%- assign comma = ',' -%}
+    {%- endif -%}
+    {%- if section.settings.single_sample_2 != blank -%}
+      {{ comma }}{{ section.settings.single_sample_2 | image_url: width: 900 | json }}
+      {%- assign comma = ',' -%}
+    {%- endif -%}
+    {%- if section.settings.single_sample_3 != blank -%}
+      {{ comma }}{{ section.settings.single_sample_3 | image_url: width: 900 | json }}
+      {%- assign comma = ',' -%}
+    {%- endif -%}
+  ],
+  "bag-clip-multi": [
+    {%- assign comma = '' -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'sample_image' and block.settings.target_type == 'bag-clip-multi' and block.settings.image != blank -%}
+        {{ comma }}{{ block.settings.image | image_url: width: 900 | json }}
+        {%- assign comma = ',' -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if section.settings.multi_sample_1 != blank -%}
+      {{ comma }}{{ section.settings.multi_sample_1 | image_url: width: 900 | json }}
+      {%- assign comma = ',' -%}
+    {%- endif -%}
+    {%- if section.settings.multi_sample_2 != blank -%}
+      {{ comma }}{{ section.settings.multi_sample_2 | image_url: width: 900 | json }}
+      {%- assign comma = ',' -%}
+    {%- endif -%}
+    {%- if section.settings.multi_sample_3 != blank -%}
+      {{ comma }}{{ section.settings.multi_sample_3 | image_url: width: 900 | json }}
+      {%- assign comma = ',' -%}
+    {%- endif -%}
+  ]
+}
+</script>
+
 <script>
 (function() {
   function initTitliCustomizer() {
     var appRoot = document.getElementById('titliCustomizerApp');
     var phoneVariantId = appRoot ? appRoot.getAttribute('data-phone-variant') : '50663420952773';
     var bagVariantId = appRoot ? appRoot.getAttribute('data-bag-variant') : '50663426982085';
+    var bagSingleVariantId = appRoot ? (appRoot.getAttribute('data-bag-single-variant') || '50666935517381') : '50666935517381';
     var goldClaspVariantId = appRoot ? appRoot.getAttribute('data-gold-clasp-variant') : '50813321806021';
     var silverClaspVariantId = appRoot ? appRoot.getAttribute('data-silver-clasp-variant') : '50813322592453';
 
     var state = {
       modelType: 'bag-clip-single',
-      bagClipMultiBasePrice: 199,
-      bagClipSingleBasePrice: 100,
+      bagClipMultiBasePrice: 250,
+      bagClipSingleBasePrice: 150,
       phoneBasePrice: 50,
       claspPrice: 0,
       claspVariantId: '',
@@ -2280,10 +2752,10 @@
       bagClipSingleCharms: [], // Holds up to 7 charms clustered along the single cord
 
       bagClipCharms: { 1: null, 2: null, 3: null, 4: null },
-      activeStrandTarget: 1,
+      activeStrandTarget: null,
 
-      claspColor: '#D32F2F',
-      claspName: 'Red',
+      claspColor: '#C5A059',
+      claspName: 'Gold Clasp',
       customName: 'CRAFT',
       palette: 'fairy-garden',
       paletteName: 'PASTEL DREAM (LILAC & GREENS)',
@@ -2295,15 +2767,9 @@
     var stageBagClipMulti = document.getElementById('stageBagClipMultiWrapper');
     var stageBagClipSingle = document.getElementById('stageBagClipSingleWrapper');
     
-    var tabBtnClasp = document.getElementById('tabBtnClasp');
     var tabBtnName = document.getElementById('tabBtnName');
     var tabBtnPalette = document.getElementById('tabBtnPalette');
     var tabBtnCharms = document.getElementById('tabBtnCharms');
-    var claspHeadingLabel = document.getElementById('claspHeadingLabel');
-    var claspDescText = document.getElementById('claspDescText');
-    var claspSelectorPhone = document.getElementById('claspSelectorPhone');
-    var claspSelectorBagMulti = document.getElementById('claspSelectorBagMulti');
-    var claspSelectorBagSingle = document.getElementById('claspSelectorBagSingle');
     var bagClipTargetSection = document.getElementById('bagClipStrandTargetSection');
     var mobilePriceAmt = document.getElementById('mobileIntegratedPrice');
     var mobileAddBtn = document.getElementById('mobileIntegratedAddBtn');
@@ -2513,9 +2979,9 @@
         if (event.button !== 0 || charmDrag || !item.hasAttribute('data-charm-reorder')) return;
         var currentType = item.getAttribute('data-reorder-type');
         var currentIndex = parseInt(item.getAttribute('data-reorder-index'), 10);
-        if (item.setPointerCapture) item.setPointerCapture(event.pointerId);
         charmDrag = {
           pointerId: event.pointerId,
+          pointerType: event.pointerType || 'mouse',
           type: currentType,
           fromIndex: currentIndex,
           source: item,
@@ -2547,9 +3013,13 @@
 
     document.addEventListener('pointermove', function(event) {
       if (!charmDrag || event.pointerId !== charmDrag.pointerId) return;
+      var threshold = (charmDrag.pointerType === 'touch') ? 16 : 6;
       var distance = Math.hypot(event.clientX - charmDrag.startX, event.clientY - charmDrag.startY);
-      if (!charmDrag.started && distance >= 6) {
+      if (!charmDrag.started && distance >= threshold) {
         charmDrag.started = true;
+        if (charmDrag.source.setPointerCapture) {
+          try { charmDrag.source.setPointerCapture(event.pointerId); } catch(e) {}
+        }
         charmDrag.source.classList.add('is-drag-source');
         charmDrag.ghost = charmDrag.source.cloneNode(true);
         charmDrag.ghost.removeAttribute('id');
@@ -2592,28 +3062,12 @@
           stageBagClipSingle.style.display = 'block';
           if (bagClipTargetSection) bagClipTargetSection.style.display = 'none';
           
-          if (tabBtnClasp) tabBtnClasp.textContent = '1. Cord & Clasp';
-          if (tabBtnCharms) tabBtnCharms.textContent = '2. Charms';
-          
           // Hide Custom Name and Color Story tabs for Single
           if (tabBtnName) tabBtnName.style.display = 'none';
           if (tabBtnPalette) tabBtnPalette.style.display = 'none';
+          if (tabBtnCharms) { tabBtnCharms.style.display = ''; tabBtnCharms.textContent = 'Charms'; }
           
-          // If on Name or Palette tab, switch automatically to Charms tab
-          var activeTab = document.querySelector('.controls-nav-tabs .tab-btn.active');
-          var activeTabId = activeTab ? activeTab.getAttribute('data-tab') : '';
-          if (activeTabId === 'tab-name' || activeTabId === 'tab-palette') {
-            switchTab('tab-charms');
-          }
-
-          if (claspHeadingLabel) claspHeadingLabel.textContent = 'Select Cord Color & Clasp';
-          if (claspDescText) claspDescText.textContent = 'Choose the central jewelry cord color and clasp for your attached charms.';
-          if (claspSelectorPhone) claspSelectorPhone.style.display = 'none';
-          if (claspSelectorBagMulti) claspSelectorBagMulti.style.display = 'none';
-          if (claspSelectorBagSingle) claspSelectorBagSingle.style.display = 'grid';
-
-          var activeSingleCard = document.querySelector('#claspSelectorBagSingle .option-card.active');
-          if (activeSingleCard) applySelectedClasp(activeSingleCard);
+          switchTab('tab-charms');
 
           var chHeading = document.getElementById('charmsListHeading');
           if (chHeading) chHeading.textContent = 'Select Atelier Charms to Attach';
@@ -2627,31 +3081,21 @@
           if (multiPaletteLabel) multiPaletteLabel.style.display = 'none';
           if (phonePaletteLabel) phonePaletteLabel.style.display = 'none';
 
-          // Update Stepper labels & indicators
-          var stepInd1 = document.getElementById('stepperIndicatorTab1');
-          if (stepInd1) stepInd1.textContent = 'Phase 1 of 2: Cord & Clasp';
-          var nextClaspTxt = document.getElementById('stepperNextFromClaspText');
-          if (nextClaspTxt) nextClaspTxt.textContent = 'Next: Select Charms';
-          var backCharmsTxt = document.getElementById('stepperBackFromCharmsText');
-          if (backCharmsTxt) backCharmsTxt.textContent = 'Back: Cord & Clasp';
-
         } else if (chosen === 'bag-clip-multi') {
           stageBagClipMulti.style.display = 'block';
           if (bagClipTargetSection) bagClipTargetSection.style.display = 'none';
           
-          if (tabBtnClasp) tabBtnClasp.textContent = '1. Clasp Finish';
+          if (tabBtnCharms) { tabBtnCharms.style.display = ''; tabBtnCharms.textContent = '1. Charms'; }
           if (tabBtnName) { tabBtnName.style.display = ''; tabBtnName.textContent = '2. Custom Name'; }
           if (tabBtnPalette) { tabBtnPalette.style.display = ''; tabBtnPalette.textContent = '3. Color Story'; }
-          if (tabBtnCharms) tabBtnCharms.textContent = '4. Charms';
 
-          if (claspHeadingLabel) claspHeadingLabel.textContent = 'Select Clasp Hardware Finish';
-          if (claspDescText) claspDescText.textContent = 'Choose the luxury metal swivel clasp & ring for your handbag charm.';
-          if (claspSelectorPhone) claspSelectorPhone.style.display = 'none';
-          if (claspSelectorBagSingle) claspSelectorBagSingle.style.display = 'none';
-          if (claspSelectorBagMulti) claspSelectorBagMulti.style.display = 'grid';
-
-          var activeMultiCard = document.querySelector('#claspSelectorBagMulti .option-card.active');
-          if (activeMultiCard) applySelectedClasp(activeMultiCard);
+          var activeTab = document.querySelector('.controls-nav-tabs .tab-btn.active');
+          var activeTabId = activeTab ? activeTab.getAttribute('data-tab') : '';
+          if (!activeTabId) {
+            switchTab('tab-charms');
+          } else {
+            updateStepperUI(activeTabId);
+          }
 
           var chHeading = document.getElementById('charmsListHeading');
           if (chHeading) chHeading.textContent = 'Select Atelier Charms';
@@ -2665,42 +3109,38 @@
           if (singlePaletteLabel) singlePaletteLabel.style.display = 'none';
           if (phonePaletteLabel) phonePaletteLabel.style.display = 'none';
 
-          // Update Stepper labels & indicators
-          var stepInd1 = document.getElementById('stepperIndicatorTab1');
-          if (stepInd1) stepInd1.textContent = 'Phase 1 of 4: Base Canvas';
-          var nextClaspTxt = document.getElementById('stepperNextFromClaspText');
-          if (nextClaspTxt) nextClaspTxt.textContent = 'Next: Personalize Name';
-          var stepInd2 = document.getElementById('stepperIndicatorTab2');
-          if (stepInd2) stepInd2.textContent = 'Phase 2 of 4: Name Beads';
-          var nextNameTxt = document.getElementById('stepperNextFromNameText');
-          if (nextNameTxt) nextNameTxt.textContent = 'Next: Color Story';
-          var backCharmsTxt = document.getElementById('stepperBackFromCharmsText');
-          if (backCharmsTxt) backCharmsTxt.textContent = 'Back: Color Story';
+          // Sync clasp color to active palette
+          var activePaletteBtn = document.querySelector('#paletteSelector .palette-row-btn.active') || document.querySelector('#paletteSelector .palette-row-btn');
+          if (activePaletteBtn) {
+            var palClaspColor = activePaletteBtn.getAttribute('data-clasp-color') || (activePaletteBtn.getAttribute('data-palette') === 'ocean-mist' ? '#A8B2B8' : '#C5A059');
+            var palClaspName = activePaletteBtn.getAttribute('data-clasp-name') || (activePaletteBtn.getAttribute('data-palette') === 'ocean-mist' ? 'Silver Clasp' : 'Gold Clasp');
+            state.claspColor = palClaspColor;
+            state.claspName = palClaspName;
+            if (/gold/i.test(state.claspName)) state.claspVariantId = goldClaspVariantId;
+            else if (/silver/i.test(state.claspName)) state.claspVariantId = silverClaspVariantId;
+            if (renderClasp) renderClasp.style.color = state.claspColor;
+            var strandsCluster = document.getElementById('strandsCluster');
+            if (strandsCluster) {
+              strandsCluster.style.color = state.claspColor;
+              strandsCluster.style.setProperty('--strand-clasp-color', state.claspColor);
+            }
+          }
 
         } else { // phone-charm
           stagePhoneCharm.style.display = 'block';
           if (bagClipTargetSection) bagClipTargetSection.style.display = 'none';
           
-          if (tabBtnClasp) tabBtnClasp.textContent = '1. Tether Cord';
+          if (tabBtnCharms) { tabBtnCharms.style.display = ''; tabBtnCharms.textContent = '1. Charms'; }
           if (tabBtnName) { tabBtnName.style.display = ''; tabBtnName.textContent = '2. Custom Name'; }
           if (tabBtnPalette) tabBtnPalette.style.display = 'none'; // No color story for phone!
-          if (tabBtnCharms) tabBtnCharms.textContent = '3. Charms';
 
-          // If on Palette tab, switch automatically to Charms tab
           var activeTab = document.querySelector('.controls-nav-tabs .tab-btn.active');
           var activeTabId = activeTab ? activeTab.getAttribute('data-tab') : '';
-          if (activeTabId === 'tab-palette') {
+          if (activeTabId === 'tab-palette' || !activeTabId) {
             switchTab('tab-charms');
+          } else {
+            updateStepperUI(activeTabId);
           }
-
-          if (claspHeadingLabel) claspHeadingLabel.textContent = 'Select Tether Cord Color';
-          if (claspDescText) claspDescText.textContent = 'Choose your soft durable nylon cord that loops through your phone case.';
-          if (claspSelectorBagMulti) claspSelectorBagMulti.style.display = 'none';
-          if (claspSelectorBagSingle) claspSelectorBagSingle.style.display = 'none';
-          if (claspSelectorPhone) claspSelectorPhone.style.display = 'grid';
-
-          var activePhoneCard = document.querySelector('#claspSelectorPhone .option-card.active');
-          if (activePhoneCard) applySelectedClasp(activePhoneCard);
 
           var chHeading = document.getElementById('charmsListHeading');
           if (chHeading) chHeading.textContent = 'Select Atelier Charm to Attach';
@@ -2713,18 +3153,6 @@
           if (phonePaletteLabel) phonePaletteLabel.style.display = 'none';
           if (singlePaletteLabel) singlePaletteLabel.style.display = 'none';
           if (multiPaletteLabel) multiPaletteLabel.style.display = 'none';
-
-          // Update Stepper labels & indicators
-          var stepInd1 = document.getElementById('stepperIndicatorTab1');
-          if (stepInd1) stepInd1.textContent = 'Phase 1 of 3: Base Canvas';
-          var nextClaspTxt = document.getElementById('stepperNextFromClaspText');
-          if (nextClaspTxt) nextClaspTxt.textContent = 'Next: Personalize Name';
-          var stepInd2 = document.getElementById('stepperIndicatorTab2');
-          if (stepInd2) stepInd2.textContent = 'Phase 2 of 3: Name Beads';
-          var nextNameTxt = document.getElementById('stepperNextFromNameText');
-          if (nextNameTxt) nextNameTxt.textContent = 'Next: Select Charms';
-          var backCharmsTxt = document.getElementById('stepperBackFromCharmsText');
-          if (backCharmsTxt) backCharmsTxt.textContent = 'Back: Name Beads';
         }
         
         syncCharmsGridActiveState();
@@ -2761,37 +3189,72 @@
       var isPhone = state.modelType === 'phone-charm';
       var tabBtnName = document.getElementById('tabBtnName');
       var tabBtnPalette = document.getElementById('tabBtnPalette');
+      var tabBtnCharms = document.getElementById('tabBtnCharms');
+
+      if (tabBtnCharms) {
+        if (isSingleCord) tabBtnCharms.textContent = 'Charms';
+        else tabBtnCharms.textContent = '1. Charms';
+      }
       if (tabBtnName) {
         tabBtnName.style.display = isSingleCord ? 'none' : 'inline-block';
+        tabBtnName.textContent = '2. Custom Name';
       }
       if (tabBtnPalette) {
         tabBtnPalette.style.display = (isSingleCord || isPhone) ? 'none' : 'inline-block';
+        tabBtnPalette.textContent = '3. Color Story';
       }
 
-      // Sync stepper indicators & button labels based on active creation model
-      var stepInd1 = document.getElementById('stepperIndicatorTab1');
-      var nextClaspTxt = document.getElementById('stepperNextFromClaspText');
-      var stepInd2 = document.getElementById('stepperIndicatorTab2');
-      var nextNameTxt = document.getElementById('stepperNextFromNameText');
-      var backCharmsTxt = document.getElementById('stepperBackFromCharmsText');
+      // Tab 1: Charms Stepper
+      var backCharmsBtn = document.getElementById('stepperBackFromCharms');
+      var nextCharmsBtn = document.getElementById('stepperNextFromCharms');
+      var finishCharmsBtn = document.getElementById('stepperDirectAddBtn');
+      var stepIndCharms = document.getElementById('stepperIndicatorTab4');
 
       if (isSingleCord) {
-        if (stepInd1) stepInd1.textContent = 'Phase 1 of 2: Cord & Clasp';
-        if (nextClaspTxt) nextClaspTxt.textContent = 'Next: Select Charms';
-        if (backCharmsTxt) backCharmsTxt.textContent = 'Back: Cord & Clasp';
+        if (backCharmsBtn) backCharmsBtn.style.display = 'none';
+        if (nextCharmsBtn) nextCharmsBtn.style.display = 'none';
+        if (finishCharmsBtn) finishCharmsBtn.style.display = '';
+        if (stepIndCharms) stepIndCharms.style.display = 'none';
       } else if (isPhone) {
-        if (stepInd1) stepInd1.textContent = 'Phase 1 of 3: Base Canvas';
-        if (nextClaspTxt) nextClaspTxt.textContent = 'Next: Personalize Name';
-        if (stepInd2) stepInd2.textContent = 'Phase 2 of 3: Name Beads';
-        if (nextNameTxt) nextNameTxt.textContent = 'Next: Select Charms';
-        if (backCharmsTxt) backCharmsTxt.textContent = 'Back: Name Beads';
+        if (backCharmsBtn) backCharmsBtn.style.display = 'none';
+        if (nextCharmsBtn) nextCharmsBtn.style.display = '';
+        if (finishCharmsBtn) finishCharmsBtn.style.display = 'none';
+        if (stepIndCharms) {
+          stepIndCharms.style.display = '';
+          stepIndCharms.textContent = 'Phase 1 of 2: Charms';
+        }
       } else { // bag-clip-multi
-        if (stepInd1) stepInd1.textContent = 'Phase 1 of 4: Base Canvas';
-        if (nextClaspTxt) nextClaspTxt.textContent = 'Next: Personalize Name';
-        if (stepInd2) stepInd2.textContent = 'Phase 2 of 4: Name Beads';
-        if (nextNameTxt) nextNameTxt.textContent = 'Next: Color Story';
-        if (backCharmsTxt) backCharmsTxt.textContent = 'Back: Color Story';
+        if (backCharmsBtn) backCharmsBtn.style.display = 'none';
+        if (nextCharmsBtn) nextCharmsBtn.style.display = '';
+        if (finishCharmsBtn) finishCharmsBtn.style.display = 'none';
+        if (stepIndCharms) {
+          stepIndCharms.style.display = '';
+          stepIndCharms.textContent = 'Phase 1 of 3: Charms';
+        }
       }
+
+      // Tab 2: Custom Name Stepper
+      var backFromNameBtn = document.getElementById('stepperBackFromName');
+      var nextFromNameBtn = document.getElementById('stepperNextFromName');
+      var finishFromNameBtn = document.getElementById('stepperFinishFromName');
+      var stepIndName = document.getElementById('stepperIndicatorTab2');
+
+      if (backFromNameBtn) {
+        backFromNameBtn.style.display = '';
+      }
+      if (isPhone) {
+        if (stepIndName) stepIndName.textContent = 'Phase 2 of 2: Name Beads';
+        if (nextFromNameBtn) nextFromNameBtn.style.display = 'none';
+        if (finishFromNameBtn) finishFromNameBtn.style.display = '';
+      } else { // bag-clip-multi
+        if (stepIndName) stepIndName.textContent = 'Phase 2 of 3: Name Beads';
+        if (nextFromNameBtn) nextFromNameBtn.style.display = '';
+        if (finishFromNameBtn) finishFromNameBtn.style.display = 'none';
+      }
+
+      // Tab 3: Color Story Stepper (Multi only)
+      var stepIndPalette = document.getElementById('stepperIndicatorTab3');
+      if (stepIndPalette) stepIndPalette.textContent = 'Phase 3 of 3: Color Story';
     }
 
     function switchTab(targetId) {
@@ -2822,15 +3285,11 @@
     });
 
     // Stepper Footer Buttons
-    var nextFromClaspBtn = document.getElementById('stepperNextFromClasp');
-    if (nextFromClaspBtn) {
-      nextFromClaspBtn.addEventListener('click', function(e) {
+    var nextFromCharmsBtn = document.getElementById('stepperNextFromCharms');
+    if (nextFromCharmsBtn) {
+      nextFromCharmsBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        if (state.modelType === 'bag-clip-single') {
-          switchTab('tab-charms');
-        } else {
-          switchTab('tab-name');
-        }
+        switchTab('tab-name');
       });
     }
 
@@ -2838,7 +3297,7 @@
     if (backFromNameBtn) {
       backFromNameBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        switchTab('tab-clasp');
+        switchTab('tab-charms');
       });
     }
 
@@ -2846,11 +3305,15 @@
     if (nextFromNameBtn) {
       nextFromNameBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        if (state.modelType === 'phone-charm') {
-          switchTab('tab-charms');
-        } else {
-          switchTab('tab-palette');
-        }
+        switchTab('tab-palette');
+      });
+    }
+
+    var finishFromNameBtn = document.getElementById('stepperFinishFromName');
+    if (finishFromNameBtn) {
+      finishFromNameBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (phoneDirectAddBtn) phoneDirectAddBtn.click();
       });
     }
 
@@ -2862,11 +3325,11 @@
       });
     }
 
-    var nextFromPaletteBtn = document.getElementById('stepperNextFromPalette');
-    if (nextFromPaletteBtn) {
-      nextFromPaletteBtn.addEventListener('click', function(e) {
+    var finishFromPaletteBtn = document.getElementById('stepperFinishFromPalette');
+    if (finishFromPaletteBtn) {
+      finishFromPaletteBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        switchTab('tab-charms');
+        if (addMultiToBagBtn) addMultiToBagBtn.click();
       });
     }
 
@@ -2874,13 +3337,6 @@
     if (backFromCharmsBtn) {
       backFromCharmsBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        if (state.modelType === 'bag-clip-single') {
-          switchTab('tab-clasp');
-        } else if (state.modelType === 'phone-charm') {
-          switchTab('tab-name');
-        } else {
-          switchTab('tab-palette');
-        }
       });
     }
 
@@ -2986,6 +3442,36 @@
         state.paletteName = row.getAttribute('data-palette-name') || 'PASTEL DREAM PALETTE';
         state.accentColor = row.getAttribute('data-accent');
         state.primaryColor = row.getAttribute('data-primary');
+
+        // Dynamically update clasp hardware based on the selected color story
+        var palClaspColor = row.getAttribute('data-clasp-color');
+        var palClaspName = row.getAttribute('data-clasp-name');
+        if (!palClaspColor) {
+          if (state.palette === 'ocean-mist') {
+            palClaspColor = '#A8B2B8';
+            palClaspName = 'Silver Clasp';
+          } else {
+            palClaspColor = '#C5A059';
+            palClaspName = 'Gold Clasp';
+          }
+        }
+        state.claspColor = palClaspColor;
+        state.claspName = palClaspName;
+        if (/gold/i.test(state.claspName)) {
+          state.claspVariantId = goldClaspVariantId;
+        } else if (/silver/i.test(state.claspName)) {
+          state.claspVariantId = silverClaspVariantId;
+        }
+
+        if (renderClasp) renderClasp.style.color = state.claspColor;
+        var strandsCluster = document.getElementById('strandsCluster');
+        if (strandsCluster) {
+          strandsCluster.style.color = state.claspColor;
+          strandsCluster.style.setProperty('--strand-clasp-color', state.claspColor);
+        }
+        if (renderClaspSingle) renderClaspSingle.style.color = state.claspColor;
+        if (singleCordStrand) singleCordStrand.style.color = state.claspColor;
+        if (phoneTether) phoneTether.querySelectorAll('path').forEach(function(p) { p.setAttribute('stroke', state.claspColor); });
         
         if (phonePaletteLabel) phonePaletteLabel.textContent = state.paletteName;
         if (singlePaletteLabel) singlePaletteLabel.textContent = state.paletteName;
@@ -2996,7 +3482,20 @@
       });
     });
 
-    // Click on attached multi drops to quickly remove charm
+    // Click on multi drops or strands to remove charm or target string
+    function highlightActiveStrandTarget() {
+      [1, 2, 3, 4].forEach(function(s) {
+        var drop = document.getElementById('renderDrop' + s);
+        if (drop) {
+          if (state.activeStrandTarget === s && !state.bagClipCharms[s]) {
+            drop.classList.add('is-active-target');
+          } else {
+            drop.classList.remove('is-active-target');
+          }
+        }
+      });
+    }
+
     [1, 2, 3, 4].forEach(function(sNum) {
       var dropEl = document.getElementById('renderDrop' + sNum);
       if (dropEl) {
@@ -3010,6 +3509,21 @@
             syncCharmsGridActiveState();
             updatePrices();
             updateMobileFloatingPill();
+          } else {
+            state.activeStrandTarget = sNum;
+            showCustomizerToast('String ' + sNum + ' targeted! Tap a charm below to attach.');
+            highlightActiveStrandTarget();
+          }
+        });
+      }
+      var strandEl = document.getElementById('renderStrand' + sNum);
+      if (strandEl) {
+        strandEl.addEventListener('click', function(e) {
+          if (e.target.closest('.strand-drop-frame')) return;
+          if (!state.bagClipCharms[sNum]) {
+            state.activeStrandTarget = sNum;
+            showCustomizerToast('String ' + sNum + ' targeted! Tap a charm below to attach.');
+            highlightActiveStrandTarget();
           }
         });
       }
@@ -3036,22 +3550,28 @@
           state.bagClipCharms[attachedStrand] = null;
           showCustomizerToast('Removed ' + charmTitle + ' from string ' + attachedStrand);
         } else {
-          // 2. Auto-fill the next available empty string (1 -> 2 -> 3 -> 4)
-          var nextEmptyStrand = null;
-          for (var es = 1; es <= 4; es++) {
-            if (!state.bagClipCharms[es]) {
-              nextEmptyStrand = es;
-              break;
+          // 2. Targeted strand or next available empty string (1 -> 2 -> 3 -> 4)
+          var targetStrand = null;
+          if (state.activeStrandTarget && !state.bagClipCharms[state.activeStrandTarget]) {
+            targetStrand = state.activeStrandTarget;
+          } else {
+            for (var es = 1; es <= 4; es++) {
+              if (!state.bagClipCharms[es]) {
+                targetStrand = es;
+                break;
+              }
             }
           }
 
-          if (!nextEmptyStrand) {
+          if (!targetStrand) {
             showCustomizerToast('All 4 strings are full! Drag on preview to swap, or tap a charm to remove.');
             return;
           }
 
-          state.bagClipCharms[nextEmptyStrand] = { id: charmId, title: charmTitle, price: charmPrice, img: charmImg };
-          showCustomizerToast('✨ ' + charmTitle + ' attached to string ' + nextEmptyStrand);
+          state.bagClipCharms[targetStrand] = { id: charmId, title: charmTitle, price: charmPrice, img: charmImg };
+          state.activeStrandTarget = null;
+          highlightActiveStrandTarget();
+          showCustomizerToast('✨ ' + charmTitle + ' attached to string ' + targetStrand);
         }
         renderBagClipMultiDrops();
         
@@ -3479,9 +3999,9 @@
 
       // Price Tier filter
       if (charmsState.activePriceTier === 'tier-low') {
-        list = list.filter(function(c) { return c.price < 20; });
+        list = list.filter(function(c) { return c.price <= 20; });
       } else if (charmsState.activePriceTier === 'tier-mid') {
-        list = list.filter(function(c) { return c.price >= 20 && c.price <= 35; });
+        list = list.filter(function(c) { return c.price > 20 && c.price <= 35; });
       } else if (charmsState.activePriceTier === 'tier-high') {
         list = list.filter(function(c) { return c.price > 35; });
       }
@@ -3741,7 +4261,29 @@
         }
 
         syncCharmsGridActiveState();
+        setupInfiniteScrollObserver();
       }, 100);
+    }
+
+    var infiniteScrollObserver = null;
+    function setupInfiniteScrollObserver() {
+      if (typeof IntersectionObserver === 'undefined') return;
+      var loadMoreBtn = document.getElementById('charmsLoadMoreBtn');
+      if (!loadMoreBtn) return;
+      if (infiniteScrollObserver) {
+        infiniteScrollObserver.disconnect();
+      }
+      infiniteScrollObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting && !charmsState.isLoadingMore) {
+            var filtered = getFilteredCharms();
+            if (charmsState.loadedCount < filtered.length) {
+              loadMoreCharms();
+            }
+          }
+        });
+      }, { rootMargin: '250px 0px' });
+      infiniteScrollObserver.observe(loadMoreBtn);
     }
 
     function updateCategoryCounts() {
@@ -4204,16 +4746,22 @@
         strandsCluster.style.setProperty('--strand-accent-color', state.accentColor);
         strandsCluster.style.setProperty('--strand-primary-color', state.primaryColor);
       }
+      if (renderClasp) {
+        renderClasp.style.color = state.claspColor;
+      }
 
       if (renderNameBeads) {
         var nHtml = '<div class="bead-round" style="background:' + state.accentColor + ';"></div>';
         if (state.customName && state.customName.trim().length > 0) {
-          var letters = state.customName.split('');
+          var letters = state.customName.trim().toUpperCase().split('');
           for (var i = 0; i < letters.length; i++) { 
             nHtml += '<div class="bead-letter">' + letters[i] + '</div>'; 
           }
         } else {
-          nHtml += '<div class="bead-letter">C</div><div class="bead-letter">R</div><div class="bead-letter">A</div><div class="bead-letter">F</div><div class="bead-letter">T</div>';
+          nHtml += '<div class="bead-round" style="background:' + state.primaryColor + ';"></div>' +
+                   '<div class="bead-round" style="background:' + state.accentColor + ';"></div>' +
+                   '<div class="bead-accent-charm">✨</div>' +
+                   '<div class="bead-round" style="background:' + state.primaryColor + ';"></div>';
         }
         nHtml += '<div class="bead-accent-charm">🦋</div>';
         renderNameBeads.innerHTML = nHtml;
@@ -4268,19 +4816,47 @@
     }
 
     function sendToCart(baseVariantId, properties, selectedCharms, btn) {
+      var allSubmitBtns = [
+        btn,
+        mobileAddBtn,
+        phoneDirectAddBtn,
+        addMultiToBagBtn,
+        singleDirectAddBtn,
+        document.getElementById('stepperDirectAddBtn'),
+        document.getElementById('stepperFinishFromName'),
+        document.getElementById('stepperFinishFromPalette')
+      ].filter(Boolean);
+
       function resetAddBtns() {
-        if (btn) { btn.disabled = false; btn.textContent = '✨ Add Custom Design To Bag'; }
-        if (mobileAddBtn) { mobileAddBtn.disabled = false; mobileAddBtn.innerHTML = '<span>✨ Add Custom Design To Bag</span>'; }
+        allSubmitBtns.forEach(function(b) {
+          b.disabled = false;
+          var orig = b.getAttribute('data-original-html');
+          if (orig) {
+            b.innerHTML = orig;
+          }
+        });
       }
 
-      if (btn) { btn.disabled = true; btn.textContent = 'Adding to Bag...'; }
-      if (mobileAddBtn) { mobileAddBtn.disabled = true; mobileAddBtn.innerHTML = '<span>Adding to Bag...</span>'; }
+      allSubmitBtns.forEach(function(b) {
+        if (!b.getAttribute('data-original-html')) {
+          b.setAttribute('data-original-html', b.innerHTML);
+        }
+        b.disabled = true;
+      });
+      if (btn) btn.innerHTML = '<span>Adding to Bag...</span>';
+      if (mobileAddBtn && mobileAddBtn !== btn) mobileAddBtn.innerHTML = '<span>Adding to Bag...</span>';
+
       var targetId = parseInt(baseVariantId, 10);
       
       if (!targetId || isNaN(targetId)) {
         alert('Invalid Product Variant ID configuration.');
         resetAddBtns();
         return;
+      }
+
+      // Record clasp hardware details on line item properties if selector is present
+      if (document.getElementById('claspSelectorSection') && state.claspName) {
+        properties['Hardware / Clasp'] = state.claspName + (state.claspPrice > 0 ? ' (+₹' + state.claspPrice + ')' : ' (Included)');
       }
 
       var bundleId = 'bundle_' + Date.now();
@@ -4353,10 +4929,8 @@
         var charmTitles = state.phoneCharms.map(function(c) { return c.title; }).join(', ') || 'None';
         sendToCart(phoneVariantId, {
           'Creation Type': 'Phone Strap Charm',
-          'Tether Cord': state.claspName,
           'Personalized Name': state.customName || 'None',
-          'Attached Charms': charmTitles,
-          'Clasp Upgrade Fee': state.claspPrice > 0 ? ('+₹' + state.claspPrice) : 'None'
+          'Attached Charms': charmTitles
         }, state.phoneCharms, phoneDirectAddBtn);
       });
     }
@@ -4377,14 +4951,13 @@
 
         sendToCart(bagVariantId, {
           'Creation Type': 'Bag Clip Charm (Multi-Strand)',
-          'Clasp Finish': state.claspName,
           'Personalized Name': state.customName || 'None',
           'Color Palette': state.paletteName,
+          'Clasp Hardware': state.claspName || 'Gold Clasp',
           'Strand 1 Charm': c1 ? c1.title : 'Default Bell',
           'Strand 2 Charm': c2 ? c2.title : 'Default Heart',
           'Strand 3 Charm': c3 ? c3.title : 'Default Flower',
-          'Strand 4 Charm': c4 ? c4.title : 'Default Key',
-          'Clasp Upgrade Fee': state.claspPrice > 0 ? ('+₹' + state.claspPrice) : 'None'
+          'Strand 4 Charm': c4 ? c4.title : 'Default Key'
         }, bagCharmsList, addMultiToBagBtn);
       });
     }
@@ -4395,9 +4968,7 @@
         var charmTitles = state.bagClipSingleCharms.map(function(c) { return c.title; }).join(', ') || 'None';
         sendToCart(bagSingleVariantId, {
           'Creation Type': 'Bag Clip Charm (Single-Strand)',
-          'Cord & Clasp Finish': state.claspName,
-          'Attached Charms': charmTitles,
-          'Clasp Upgrade Fee': state.claspPrice > 0 ? ('+₹' + state.claspPrice) : 'None'
+          'Attached Charms': charmTitles
         }, state.bagClipSingleCharms, singleDirectAddBtn);
       });
     }
@@ -4484,24 +5055,30 @@
     var mobilePinFrame = null;
 
     function updateMobilePin() {
-      if (!stageCard || !stageSpacer || !customizerContainer) return;
-      var containerRect = customizerContainer.getBoundingClientRect();
-      var cardHeight = stageCard.getBoundingClientRect().height;
-      var shouldPin = window.innerWidth <= 880 && containerRect.top < 6 && containerRect.bottom > cardHeight + 80;
-
-      if (shouldPin) {
-        // The spacer is hidden in CSS: height alone cannot preserve layout space.
-        var cardMargin = window.getComputedStyle(stageCard).marginBottom;
-        stageSpacer.style.display = 'block';
-        stageSpacer.style.height = cardHeight + 'px';
-        stageSpacer.style.marginBottom = cardMargin;
-        stageCard.classList.add('is-mobile-pinned');
+      var pill = document.getElementById('mobileFloatingPreviewPill');
+      if (!stageCard) return;
+      if (window.innerWidth <= 880) {
+        var cardRect = stageCard.getBoundingClientRect();
+        if (pill) {
+          if (cardRect.bottom < 50) {
+            pill.classList.add('is-active');
+          } else {
+            pill.classList.remove('is-active');
+          }
+        }
       } else {
-        stageCard.classList.remove('is-mobile-pinned');
-        stageSpacer.style.display = '';
-        stageSpacer.style.height = '';
-        stageSpacer.style.marginBottom = '';
+        if (pill) pill.classList.remove('is-active');
       }
+    }
+
+    var mobilePreviewPill = document.getElementById('mobileFloatingPreviewPill');
+    if (mobilePreviewPill) {
+      mobilePreviewPill.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (stageCard) {
+          stageCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
     }
 
     function scheduleMobilePin() {
@@ -4546,7 +5123,8 @@
       }
 
       if (zoomActionBtn) {
-        zoomActionBtn.textContent = isAttached ? '✓ Remove From Cord' : '✨ Attach Charm to Cord';
+        var attachTargetName = (state.modelType === 'phone-charm') ? 'Phone Strap' : (state.modelType === 'bag-clip-multi') ? 'Strand' : 'Bag Charm';
+        zoomActionBtn.textContent = isAttached ? ('✓ Remove From ' + attachTargetName) : ('✨ Attach Charm to ' + attachTargetName);
       }
       zoomModal.classList.add('is-open');
     }
@@ -4569,6 +5147,313 @@
         }
       });
     }
+
+    // Modal Escape Key Accessibility
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' || e.keyCode === 27) {
+        if (zoomModal && zoomModal.classList.contains('is-open')) {
+          zoomModal.classList.remove('is-open');
+        }
+        if (sampleModal && sampleModal.classList.contains('is-open')) {
+          sampleModal.classList.remove('is-open');
+        }
+      }
+    });
+
+    // ==========================================
+    // Real-Life Finished Sample Preview Modal
+    // ==========================================
+    var sampleModal = document.getElementById('customizerSampleModal');
+    var closeSampleBtn = document.getElementById('closeSampleModalBtn');
+    var resumeCustomizerBtn = document.getElementById('resumeCustomizerBtn');
+    var sampleModalTitle = document.getElementById('sampleModalTitle');
+    var sampleModalSubtitle = document.getElementById('sampleModalSubtitle');
+    var sampleModalCaption = document.getElementById('sampleModalCaptionText');
+    var sampleSliderViewport = document.getElementById('sampleSliderViewport');
+    var sampleSliderTrack = document.getElementById('sampleSliderTrack');
+    var sampleSlidePrevBtn = document.getElementById('sampleSlidePrevBtn');
+    var sampleSlideNextBtn = document.getElementById('sampleSlideNextBtn');
+    var sampleSliderCounter = document.getElementById('sampleSliderCounter');
+    var sampleSliderDots = document.getElementById('sampleSliderDots');
+    var sampleNavPills = document.querySelectorAll('.sample-nav-pill');
+    var viewSampleBtns = document.querySelectorAll('.view-sample-btn');
+
+    // Parse uploaded sample images from theme settings / blocks
+    var sampleImagesConfig = {};
+    try {
+      var sampleJsonEl = document.getElementById('customizerSampleImagesJson');
+      if (sampleJsonEl && sampleJsonEl.textContent.trim()) {
+        sampleImagesConfig = JSON.parse(sampleJsonEl.textContent.trim());
+      }
+    } catch(e) {
+      console.warn('Sample images JSON parse notice:', e);
+    }
+
+    // Data structure: each category supports multiple images
+    var sampleDataByType = {
+      'phone-charm': {
+        title: 'Phone Strap Sample Look',
+        badge: 'Atelier Finished Piece',
+        subtitle: 'Real-life handcrafted wrist loop charm with personalized beads & dangles',
+        images: (sampleImagesConfig['phone-charm'] && sampleImagesConfig['phone-charm'].length > 0) ? sampleImagesConfig['phone-charm'] : [],
+        caption: 'Handcrafted wrist loop strung with reinforced tensile cords, custom letter beads, and sparkling atelier charm accents!'
+      },
+      'bag-clip-single': {
+        title: 'Single-Strand Bag Charm Sample',
+        badge: 'Atelier Finished Piece',
+        subtitle: 'Real-life handcrafted single-strand cord with clustered statement charms',
+        images: (sampleImagesConfig['bag-clip-single'] && sampleImagesConfig['bag-clip-single'].length > 0) ? sampleImagesConfig['bag-clip-single'] : [],
+        caption: 'Features a premium swivel lobster clasp and naturally clustered charm cascade, perfect for backpacks, totes, and handbags!'
+      },
+      'bag-clip-multi': {
+        title: 'Multi-Strand Bag Charm Sample',
+        badge: 'Atelier Finished Piece',
+        subtitle: 'Real-life handcrafted 4-strand luxury bag dangle with florals & personalized letters',
+        images: (sampleImagesConfig['bag-clip-multi'] && sampleImagesConfig['bag-clip-multi'].length > 0) ? sampleImagesConfig['bag-clip-multi'] : [],
+        caption: 'Combines accent cords, personalized name beads, statement floral beads, and pastel dangles on a heavy-duty gold/silver clasp!'
+      }
+    };
+
+    var currentSampleSlideIndex = 0;
+    var currentSampleSlidesCount = 0;
+
+    function goToSampleSlide(index) {
+      if (currentSampleSlidesCount <= 0) return;
+      if (index < 0) index = 0;
+      if (index >= currentSampleSlidesCount) index = currentSampleSlidesCount - 1;
+
+      currentSampleSlideIndex = index;
+      if (sampleSliderTrack) {
+        sampleSliderTrack.style.transform = 'translateX(-' + (currentSampleSlideIndex * 100) + '%)';
+      }
+
+      // Update counter
+      if (sampleSliderCounter) {
+        sampleSliderCounter.textContent = (currentSampleSlideIndex + 1) + ' / ' + currentSampleSlidesCount;
+      }
+
+      // Update dots
+      if (sampleSliderDots) {
+        var dots = sampleSliderDots.querySelectorAll('.sample-slider-dot');
+        dots.forEach(function(dot, idx) {
+          if (idx === currentSampleSlideIndex) dot.classList.add('active');
+          else dot.classList.remove('active');
+        });
+      }
+
+      // Update arrows visibility
+      if (sampleSlidePrevBtn) {
+        if (currentSampleSlideIndex === 0) {
+          sampleSlidePrevBtn.setAttribute('disabled', 'disabled');
+          sampleSlidePrevBtn.classList.add('is-hidden');
+        } else {
+          sampleSlidePrevBtn.removeAttribute('disabled');
+          sampleSlidePrevBtn.classList.remove('is-hidden');
+        }
+      }
+      if (sampleSlideNextBtn) {
+        if (currentSampleSlideIndex >= currentSampleSlidesCount - 1) {
+          sampleSlideNextBtn.setAttribute('disabled', 'disabled');
+          sampleSlideNextBtn.classList.add('is-hidden');
+        } else {
+          sampleSlideNextBtn.removeAttribute('disabled');
+          sampleSlideNextBtn.classList.remove('is-hidden');
+        }
+      }
+    }
+
+    function nextSampleSlide() {
+      if (currentSampleSlideIndex < currentSampleSlidesCount - 1) {
+        goToSampleSlide(currentSampleSlideIndex + 1);
+      }
+    }
+
+    function prevSampleSlide() {
+      if (currentSampleSlideIndex > 0) {
+        goToSampleSlide(currentSampleSlideIndex - 1);
+      }
+    }
+
+    function buildSampleSlider(imageList, title) {
+      if (!sampleSliderTrack) return;
+      sampleSliderTrack.innerHTML = '';
+      if (sampleSliderDots) sampleSliderDots.innerHTML = '';
+
+      var images = (Array.isArray(imageList) && imageList.length > 0) ? imageList : [];
+      currentSampleSlidesCount = images.length;
+      currentSampleSlideIndex = 0;
+
+      if (images.length === 0) {
+        var emptySlide = document.createElement('div');
+        emptySlide.className = 'sample-slide-item';
+        emptySlide.innerHTML = '<div class="sample-slide-placeholder" style="padding:48px 24px;text-align:center;">' +
+          '<div style="font-size:42px;margin-bottom:12px;">✨ 🧵 💎</div>' +
+          '<span class="placeholder-title" style="font-size:16px;font-weight:700;display:block;margin-bottom:6px;">' + title + '</span>' +
+          '<span class="placeholder-hint" style="font-size:13px;line-height:1.5;color:#666;display:block;max-width:320px;margin:0 auto;">Handcrafted on demand in our studio. Custom charms, braided tensile cords, and metallic clasps assembled exactly to your design.</span>' +
+          '</div>';
+        sampleSliderTrack.appendChild(emptySlide);
+        currentSampleSlidesCount = 1;
+      }
+
+      // Populate slides
+      images.forEach(function(src, i) {
+        var slide = document.createElement('div');
+        slide.className = 'sample-slide-item';
+
+        var img = document.createElement('img');
+        img.src = src;
+        img.alt = title + ' - Photo ' + (i + 1);
+        img.loading = (i === 0) ? 'eager' : 'lazy';
+
+        // Error handling fallback per slide
+        img.onerror = function() {
+          slide.innerHTML = '<div class="sample-slide-placeholder">' +
+            '<span class="placeholder-icon">📸</span>' +
+            '<span class="placeholder-title">' + title + ' (' + (i + 1) + ')</span>' +
+            '<span class="placeholder-hint">Awaiting photo ' + (i + 1) + ' from atelier</span>' +
+            '</div>';
+        };
+
+        slide.appendChild(img);
+        sampleSliderTrack.appendChild(slide);
+
+        // Dot
+        if (sampleSliderDots && images.length > 1) {
+          var dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = 'sample-slider-dot' + (i === 0 ? ' active' : '');
+          dot.setAttribute('aria-label', 'Go to sample photo ' + (i + 1));
+          dot.addEventListener('click', function(e) {
+            e.stopPropagation();
+            goToSampleSlide(i);
+          });
+          sampleSliderDots.appendChild(dot);
+        }
+      });
+
+      // Show/hide navigation UI if only 1 slide
+      if (images.length <= 1) {
+        if (sampleSlidePrevBtn) sampleSlidePrevBtn.style.display = 'none';
+        if (sampleSlideNextBtn) sampleSlideNextBtn.style.display = 'none';
+        if (sampleSliderCounter) sampleSliderCounter.style.display = 'none';
+        if (sampleSliderDots) sampleSliderDots.style.display = 'none';
+      } else {
+        if (sampleSlidePrevBtn) sampleSlidePrevBtn.style.display = 'flex';
+        if (sampleSlideNextBtn) sampleSlideNextBtn.style.display = 'flex';
+        if (sampleSliderCounter) sampleSliderCounter.style.display = 'block';
+        if (sampleSliderDots) sampleSliderDots.style.display = 'flex';
+      }
+
+      goToSampleSlide(0);
+    }
+
+    function openSampleModal(type) {
+      if (!sampleModal) return;
+      var currentType = type || state.modelType || 'bag-clip-single';
+      var data = sampleDataByType[currentType] || sampleDataByType['bag-clip-single'];
+
+      if (sampleModalTitle) sampleModalTitle.textContent = data.title;
+      if (sampleModalSubtitle) sampleModalSubtitle.textContent = data.subtitle;
+      if (sampleModalCaption) sampleModalCaption.textContent = data.caption;
+
+      buildSampleSlider(data.images, data.title);
+
+      sampleNavPills.forEach(function(pill) {
+        if (pill.getAttribute('data-switch-sample') === currentType) {
+          pill.classList.add('active');
+        } else {
+          pill.classList.remove('active');
+        }
+      });
+
+      sampleModal.classList.add('is-open');
+      sampleModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeSampleModal() {
+      if (!sampleModal) return;
+      sampleModal.classList.remove('is-open');
+      sampleModal.setAttribute('aria-hidden', 'true');
+    }
+
+    if (sampleSlidePrevBtn) {
+      sampleSlidePrevBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        prevSampleSlide();
+      });
+    }
+    if (sampleSlideNextBtn) {
+      sampleSlideNextBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        nextSampleSlide();
+      });
+    }
+
+    // Touch Swipe Navigation for Mobile / Tablet
+    if (sampleSliderViewport) {
+      var touchStartX = 0;
+      var touchStartY = 0;
+      var touchEndX = 0;
+
+      sampleSliderViewport.addEventListener('touchstart', function(e) {
+        if (!e.touches || e.touches.length === 0) return;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchEndX = touchStartX;
+      }, { passive: true });
+
+      sampleSliderViewport.addEventListener('touchmove', function(e) {
+        if (!e.touches || e.touches.length === 0) return;
+        touchEndX = e.touches[0].clientX;
+      }, { passive: true });
+
+      sampleSliderViewport.addEventListener('touchend', function(e) {
+        var diffX = touchStartX - touchEndX;
+        if (Math.abs(diffX) > 40) {
+          if (diffX > 0) {
+            nextSampleSlide(); // Swiped Left -> Next
+          } else {
+            prevSampleSlide(); // Swiped Right -> Prev
+          }
+        }
+      }, { passive: true });
+    }
+
+    viewSampleBtns.forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var sampleType = btn.getAttribute('data-sample-type') || state.modelType;
+        openSampleModal(sampleType);
+      });
+    });
+
+    sampleNavPills.forEach(function(pill) {
+      pill.addEventListener('click', function(e) {
+        e.preventDefault();
+        var targetType = pill.getAttribute('data-switch-sample');
+        openSampleModal(targetType);
+      });
+    });
+
+    if (closeSampleBtn) closeSampleBtn.addEventListener('click', closeSampleModal);
+    if (resumeCustomizerBtn) resumeCustomizerBtn.addEventListener('click', closeSampleModal);
+    if (sampleModal) {
+      sampleModal.addEventListener('click', function(e) {
+        if (e.target === sampleModal) closeSampleModal();
+      });
+    }
+    document.addEventListener('keydown', function(e) {
+      if (sampleModal && sampleModal.classList.contains('is-open')) {
+        if (e.key === 'Escape') {
+          closeSampleModal();
+        } else if (e.key === 'ArrowRight') {
+          nextSampleSlide();
+        } else if (e.key === 'ArrowLeft') {
+          prevSampleSlide();
+        }
+      }
+    });
 
     // Asynchronously fetch all charms from collection JSON with automatic multi-page loading
     // Note: Shopify's products.json endpoint returns up to 250 items per page; this paginates dynamically until all items are loaded.
@@ -4657,14 +5542,40 @@
             allCatalogCharms = remoteCharms;
             var totalCount = allCatalogCharms.length;
 
+            // Bridge any already-attached seed charms to real remote variant data
+            var charmTitleMap = {};
+            remoteCharms.forEach(function(rc) {
+              if (rc.title) charmTitleMap[rc.title.toLowerCase().trim()] = rc;
+            });
+
+            function bridgeCharm(c) {
+              if (!c || !c.title) return;
+              var match = charmTitleMap[c.title.toLowerCase().trim()];
+              if (match) {
+                c.id = match.id;
+                c.price = match.price;
+                if (match.img && (match.img.includes('/') || match.img.startsWith('http'))) {
+                  c.img = match.img;
+                }
+              }
+            }
+
+            state.phoneCharms.forEach(bridgeCharm);
+            state.bagClipSingleCharms.forEach(bridgeCharm);
+            [1, 2, 3, 4].forEach(function(s) {
+              if (state.bagClipCharms[s]) bridgeCharm(state.bagClipCharms[s]);
+            });
+
             // Dynamically update UI counts
-            var stepperNextSpan = document.querySelector('#stepperNextFromPalette span');
-            if (stepperNextSpan) stepperNextSpan.textContent = 'Next: Select Charms (' + totalCount + '+)';
             var searchInput = document.getElementById('charmQuickSearchInput');
             if (searchInput) searchInput.setAttribute('placeholder', 'Search ' + totalCount + '+ charms by keyword...');
             var countBadge = document.getElementById('charmsCountAvailableBadge');
             if (countBadge) countBadge.textContent = totalCount + '+ Charms';
 
+            updatePrices();
+            renderAttachedLists();
+            renderSingleCordCharms();
+            renderBagClipMultiDrops();
             updateCategoryCounts();
             renderCharmsPage(true);
           }
@@ -4675,15 +5586,23 @@
     }
 
     // Init
-    var activeInitialCard = document.querySelector('#claspSelectorBagSingle .option-card.active') || document.querySelector('.clasp-selector-grid .option-card.active');
-    if (activeInitialCard) applySelectedClasp(activeInitialCard);
+    if (renderClasp) renderClasp.style.color = state.claspColor;
+    var strandsCluster = document.getElementById('strandsCluster');
+    if (strandsCluster) {
+      strandsCluster.style.color = state.claspColor;
+      strandsCluster.style.setProperty('--strand-clasp-color', state.claspColor);
+    }
+    if (renderClaspSingle) renderClaspSingle.style.color = state.claspColor;
+    if (singleCordStrand) singleCordStrand.style.color = state.claspColor;
+    if (phoneTether) phoneTether.querySelectorAll('path').forEach(function(p) { p.setAttribute('stroke', state.claspColor); });
+
     renderNameBeadsVerticals();
     renderAttachedLists();
     renderSingleCordCharms();
     renderBagClipMultiStrands();
     updatePrices();
     updateMobileFloatingPill();
-    updateStepperUI('tab-clasp');
+    updateStepperUI('tab-charms');
     updateCategoryCounts();
     renderCharmsPage(true);
     loadAllCharmsViaAjax();
@@ -4693,3 +5612,113 @@
   else { initTitliCustomizer(); }
 })();
 </script>
+
+{% schema %}
+{
+  "name": "Build Your Own Charm",
+  "tag": "section",
+  "class": "section-build-your-own",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Phone Strap Sample Photos"
+    },
+    {
+      "type": "image_picker",
+      "id": "phone_sample_1",
+      "label": "Phone Strap Photo 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "phone_sample_2",
+      "label": "Phone Strap Photo 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "phone_sample_3",
+      "label": "Phone Strap Photo 3"
+    },
+    {
+      "type": "header",
+      "content": "Single Bag Charm Sample Photos"
+    },
+    {
+      "type": "image_picker",
+      "id": "single_sample_1",
+      "label": "Single Bag Charm Photo 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "single_sample_2",
+      "label": "Single Bag Charm Photo 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "single_sample_3",
+      "label": "Single Bag Charm Photo 3"
+    },
+    {
+      "type": "header",
+      "content": "Multi-Strand Bag Charm Sample Photos"
+    },
+    {
+      "type": "image_picker",
+      "id": "multi_sample_1",
+      "label": "Multi Bag Charm Photo 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "multi_sample_2",
+      "label": "Multi Bag Charm Photo 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "multi_sample_3",
+      "label": "Multi Bag Charm Photo 3"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "sample_image",
+      "name": "Sample Look Photo",
+      "settings": [
+        {
+          "type": "select",
+          "id": "target_type",
+          "label": "Charm Model Type",
+          "options": [
+            {
+              "value": "phone-charm",
+              "label": "Phone Strap Charm"
+            },
+            {
+              "value": "bag-clip-single",
+              "label": "Single-Strand Bag Charm"
+            },
+            {
+              "value": "bag-clip-multi",
+              "label": "Multi-Strand Bag Charm"
+            }
+          ],
+          "default": "bag-clip-multi"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Sample Look Image"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Photo Caption / Note"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Build Your Own Charm"
+    }
+  ]
+}
+{% endschema %}

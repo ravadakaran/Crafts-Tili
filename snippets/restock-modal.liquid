@@ -1,0 +1,264 @@
+{% comment %}
+  Titli Atelier - Restock Notification Modal
+  Uses Shopify's native contact form (zero external app fees or dependencies).
+  Records customer email, phone, and tags customer with 'restock-notify' + variant information in Shopify Admin.
+{% endcomment %}
+
+<div id="titliRestockModal" class="titli-restock-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="restockModalTitle">
+  <div class="titli-restock-backdrop" id="titliRestockBackdrop"></div>
+  
+  <div class="titli-restock-dialog">
+    <button type="button" class="restock-close-btn" id="titliRestockCloseBtn" onclick="closeRestockModal()" aria-label="Close notification modal">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+
+    <div class="restock-header">
+      <div class="restock-badge-chip">
+        <span class="restock-chip-icon">🔔</span>
+        <span>ATELIER RESTOCK ALERT</span>
+      </div>
+      <h3 class="restock-title" id="restockModalTitle">Notify Me When Restocked</h3>
+      <p class="restock-subtitle">
+        Each Titli charm is handcrafted in small batches. Leave your details below and we'll notify you the moment this piece is back!
+      </p>
+    </div>
+
+    <!-- Live Product Snapshot -->
+    <div class="restock-product-preview">
+      <div class="restock-preview-thumb">
+        <img 
+          id="restockModalImg" 
+          src="{{ current_variant.featured_media | default: product.featured_media | image_url: width: 140 }}" 
+          alt="{{ product.title | escape }}"
+          width="56" 
+          height="56"
+          loading="lazy"
+        >
+      </div>
+      <div class="restock-preview-details">
+        <h4 class="restock-preview-title">{{ product.title }}</h4>
+        <div class="restock-preview-meta">
+          <span class="restock-preview-variant" id="restockModalVariantName">
+            {% if product.variants.size > 1 and current_variant.title != 'Default Title' %}{{ current_variant.title }}{% endif %}
+          </span>
+          <span class="restock-preview-price" id="restockModalPrice">{{ current_variant.price | default: product.price | money }}</span>
+        </div>
+        <span class="restock-preview-status">⏳ Currently Crafting More</span>
+      </div>
+    </div>
+
+    <!-- Native Shopify Form -->
+    {% form 'contact', id: 'titliRestockForm', class: 'titli-restock-form' %}
+      <input type="hidden" name="contact[tags]" id="restockTagField" value="restock-notify, {{ product.handle | escape }}, {{ current_variant.title | escape }}">
+      <input type="hidden" name="contact[product_title]" id="restockProductField" value="{{ product.title | escape }}">
+      <input type="hidden" name="contact[variant_title]" id="restockVariantField" value="{{ current_variant.title | escape }} (ID: {{ current_variant.id }})">
+      <input type="hidden" name="contact[body]" id="restockBodyField" value="RESTOCK ALERT REQUEST: Please notify customer when '{{ product.title | escape }}' (Variant: {{ current_variant.title | escape }}, Variant ID: {{ current_variant.id }}) is restocked in the atelier. Store URL: {{ shop.url }}{{ product.url }}">
+
+      {% if form.posted_successfully? %}
+        <div class="restock-success-card" id="restockSuccessMessage">
+          <span class="success-icon">🌸</span>
+          <h4>You're on the VIP list!</h4>
+          <p>We'll notify you the moment this piece is handcrafted and restocked in our atelier.</p>
+          <button type="button" class="restock-done-btn" onclick="closeRestockModal()">Got It ✨</button>
+        </div>
+      {% else %}
+        <div class="restock-form-fields" id="restockFormFields">
+          {% if form.errors %}
+            <div class="restock-error-msg">
+              {{ form.errors | default_errors }}
+            </div>
+          {% endif %}
+
+          <div class="restock-input-group">
+            <label for="restockCustomerEmail" class="restock-label">
+              <span>Email Address</span>
+              <span class="req-star">*</span>
+            </label>
+            <div class="input-with-icon">
+              <span class="field-icon">✉️</span>
+              <input 
+                type="email" 
+                name="contact[email]" 
+                id="restockCustomerEmail" 
+                class="restock-text-input" 
+                placeholder="name@example.com" 
+                required 
+                autocomplete="email"
+              >
+            </div>
+          </div>
+
+          <div class="restock-input-group">
+            <label for="restockCustomerPhone" class="restock-label">
+              <span>WhatsApp / Mobile Number</span>
+              <span class="optional-pill">Optional</span>
+            </label>
+            <div class="input-with-icon">
+              <span class="field-icon">📱</span>
+              <input 
+                type="tel" 
+                name="contact[phone]" 
+                id="restockCustomerPhone" 
+                class="restock-text-input" 
+                placeholder="+91 98765 43210" 
+                autocomplete="tel"
+              >
+            </div>
+          </div>
+
+          <button type="submit" id="restockModalSubmitBtn" class="restock-action-submit-btn">
+            <span class="btn-text">🔔 Notify Me When Available</span>
+            <span class="btn-spinner" style="display: none;"></span>
+          </button>
+
+          <div class="restock-privacy-note">
+            <span>🔒 We respect your privacy. No spam, only sparkle.</span>
+          </div>
+        </div>
+
+        <div class="restock-success-card" id="restockSuccessMessage" style="display: none;">
+          <span class="success-icon">🌸</span>
+          <h4>You're on the VIP list!</h4>
+          <p id="restockSuccessDesc">We'll email you the moment this piece is handcrafted and restocked in our atelier.</p>
+          <button type="button" class="restock-done-btn" onclick="closeRestockModal()">Got It ✨</button>
+        </div>
+      {% endif %}
+    {% endform %}
+  </div>
+</div>
+
+<script>
+  // Open & Close Modal Helpers
+  function openRestockModal() {
+    var modal = document.getElementById('titliRestockModal');
+    if (!modal) return;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    var emailInput = document.getElementById('restockCustomerEmail');
+    if (emailInput && !emailInput.value) {
+      setTimeout(function() { emailInput.focus(); }, 160);
+    }
+  }
+
+  function closeRestockModal() {
+    var modal = document.getElementById('titliRestockModal');
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  // Dynamic Update from Variant Swatch Click
+  function updateRestockModalData(variantId, variantTitle, price, mediaUrl) {
+    var variantNameEl = document.getElementById('restockModalVariantName');
+    var priceEl = document.getElementById('restockModalPrice');
+    var imgEl = document.getElementById('restockModalImg');
+    var tagField = document.getElementById('restockTagField');
+    var variantField = document.getElementById('restockVariantField');
+    var bodyField = document.getElementById('restockBodyField');
+
+    if (variantNameEl && variantTitle && variantTitle !== 'Default Title') {
+      variantNameEl.textContent = variantTitle;
+    }
+    if (priceEl && price) {
+      priceEl.textContent = price;
+    }
+    if (imgEl && mediaUrl) {
+      imgEl.src = mediaUrl;
+    }
+
+    var productHandle = {{ product.handle | json }};
+    var productTitle = {{ product.title | json }};
+    var storeUrl = {{ shop.url | append: product.url | json }};
+
+    if (tagField) {
+      tagField.value = 'restock-notify, ' + productHandle + ', ' + (variantTitle || 'Default');
+    }
+    if (variantField) {
+      variantField.value = (variantTitle || 'Default') + ' (ID: ' + variantId + ')';
+    }
+    if (bodyField) {
+      bodyField.value = 'RESTOCK ALERT REQUEST: Please notify customer when \'' + productTitle + '\' (Variant: ' + (variantTitle || 'Default') + ', Variant ID: ' + variantId + ') is restocked in the atelier. Store URL: ' + storeUrl;
+    }
+  }
+
+  // Backdrop & Keyboard Events
+  document.addEventListener('DOMContentLoaded', function() {
+    var backdrop = document.getElementById('titliRestockBackdrop');
+    if (backdrop) {
+      backdrop.addEventListener('click', closeRestockModal);
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeRestockModal();
+      }
+    });
+
+    // Handle AJAX Form Submission for seamless UI experience
+    var restockForm = document.getElementById('titliRestockForm');
+    if (restockForm) {
+      restockForm.addEventListener('submit', function(e) {
+        var emailInput = document.getElementById('restockCustomerEmail');
+        if (!emailInput || !emailInput.checkValidity()) return;
+
+        e.preventDefault();
+
+        var submitBtn = document.getElementById('restockModalSubmitBtn');
+        var btnText = submitBtn ? submitBtn.querySelector('.btn-text') : null;
+        var btnSpinner = submitBtn ? submitBtn.querySelector('.btn-spinner') : null;
+
+        if (submitBtn) submitBtn.disabled = true;
+        if (btnText) btnText.textContent = 'Saving restock alert...';
+        if (btnSpinner) btnSpinner.style.display = 'inline-block';
+
+        var formData = new FormData(restockForm);
+        var targetAction = restockForm.getAttribute('action') || '/contact';
+
+        fetch(targetAction, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        })
+        .then(function(res) {
+          if (res && (res.ok || res.status === 200 || res.status === 302 || res.type === 'opaqueredirect')) {
+            showRestockSuccessView(emailInput.value);
+          } else {
+            // Fall back to native submit if Shopify challenges CSRF/reCAPTCHA
+            restockForm.submit();
+          }
+        })
+        .catch(function(err) {
+          console.warn('Native fallback for restock form', err);
+          restockForm.submit();
+        });
+      });
+    }
+
+    function showRestockSuccessView(email) {
+      var fields = document.getElementById('restockFormFields');
+      var successCard = document.getElementById('restockSuccessMessage');
+      var descEl = document.getElementById('restockSuccessDesc');
+
+      if (fields) fields.style.display = 'none';
+      if (descEl && email) {
+        descEl.textContent = "We'll notify you at " + email + " the second this piece sparkles back into our atelier.";
+      }
+      if (successCard) successCard.style.display = 'flex';
+    }
+
+    {% if form.posted_successfully? %}
+      // Automatically open modal if page was submitted natively and reloaded
+      setTimeout(function() {
+        openRestockModal();
+      }, 300);
+    {% endif %}
+  });
+</script>

@@ -85,7 +85,8 @@
 
       <!-- Purchase Form with Visual Variant Swatches -->
       <form method="post" action="{{ routes.cart_add_url }}" class="product-buy-form" id="titliProductForm">
-        {% assign current_variant = product.selected_or_first_available_variant %}
+        {% assign current_variant = product.selected_or_first_available_variant | default: product.variants.first %}
+        {% assign is_available = current_variant.available %}
         <input type="hidden" name="id" id="selected-variant-id" value="{{ current_variant.id }}">
         
         {% if product.variants.size > 1 %}
@@ -95,13 +96,14 @@
               {% for variant in product.variants %}
                 <button 
                   type="button" 
-                  class="titli-swatch-btn {% if variant == current_variant %}active{% endif %} {% unless variant.available %}disabled{% endunless %}" 
+                  class="titli-swatch-btn {% if variant == current_variant %}active{% endif %} {% unless variant.available %}is-sold-out{% endunless %}" 
                   data-variant-id="{{ variant.id }}" 
                   data-price="{{ variant.price | money }}" 
                   data-available="{{ variant.available }}" 
+                  data-variant-title="{{ variant.title | escape }}"
                   {% if variant.featured_media %}data-media-url="{{ variant.featured_media | image_url: width: 800 }}"{% endif %} 
                   onclick="selectVariantSwatch(this)" 
-                  {% unless variant.available %}disabled{% endunless %}
+                  aria-label="{{ variant.title | escape }}{% unless variant.available %} (Sold Out){% endunless %}"
                 >
                   {% if variant.featured_media %}
                     <img src="{{ variant.featured_media | image_url: width: 40, height: 40, crop: 'center' }}" alt="{{ variant.title | escape }}" class="swatch-btn-thumb" width="40" height="40">
@@ -116,18 +118,19 @@
           </div>
         {% endif %}
 
-        <div class="quantity-add-row">
-          <div class="qty-stepper">
+        <div class="quantity-add-row {% unless is_available %}is-sold-out-state{% endunless %}" id="productActionRow">
+          <div class="qty-stepper" id="productQtyStepper" {% unless is_available %}style="display: none;"{% endunless %}>
             <label for="product-quantity" class="visually-hidden">Quantity</label>
             <input type="number" id="product-quantity" name="quantity" value="1" min="1" class="qty-input">
           </div>
 
-          <button type="submit" id="mainAddToCartBtn" class="product-add-to-bag-btn" {% unless product.available %}disabled{% endunless %}>
-            {% if product.available %}
-              <span>🛍️ Add to Bag</span>
-            {% else %}
-              <span>Sold Out</span>
-            {% endif %}
+          <button type="submit" id="mainAddToCartBtn" class="product-add-to-bag-btn {% unless is_available %}is-sold-out{% endunless %}" {% unless is_available %}disabled{% endunless %}>
+            <span id="mainAddToCartText">{% if is_available %}🛍️ Add to Bag{% else %}Sold Out{% endif %}</span>
+          </button>
+
+          <button type="button" id="notifyMeTriggerBtn" class="product-notify-me-btn" onclick="openRestockModal()" {% if is_available %}style="display: none;"{% endif %}>
+            <span class="notify-btn-bell">🔔</span>
+            <span>Notify Me</span>
           </button>
         </div>
       </form>
@@ -174,13 +177,16 @@
   <div class="sticky-bar-content">
     <div class="sticky-meta">
       <span class="sticky-title">{{ product.title | truncate: 20 }}</span>
-      <span class="sticky-price" id="stickyPriceText">{{ product.price | money }}</span>
+      <span class="sticky-price" id="stickyPriceText">{{ current_variant.price | default: product.price | money }}</span>
     </div>
-    <button type="button" class="sticky-action-btn" onclick="document.getElementById('mainAddToCartBtn').click();">
-      Add to Bag &rarr;
+    <button type="button" class="sticky-action-btn {% unless is_available %}is-notify-sticky{% endunless %}" id="stickyActionBtn" onclick="handleStickyAction();">
+      {% if is_available %}Add to Bag &rarr;{% else %}🔔 Notify Me{% endif %}
     </button>
   </div>
 </div>
+
+<!-- Restock Notification Modal Component -->
+{% render 'restock-modal', product: product, current_variant: current_variant %}
 
 
 <!-- Related Products by Collection -->
@@ -581,14 +587,64 @@
     }
 
     var mainBtn = document.getElementById('mainAddToCartBtn');
-    if (mainBtn) {
-      if (available) {
+    var mainBtnText = document.getElementById('mainAddToCartText');
+    var notifyBtn = document.getElementById('notifyMeTriggerBtn');
+    var qtyStepper = document.getElementById('productQtyStepper');
+    var actionRow = document.getElementById('productActionRow');
+    var stickyBtn = document.getElementById('stickyActionBtn');
+
+    if (available) {
+      if (mainBtn) {
         mainBtn.disabled = false;
-        mainBtn.innerHTML = '<span>🛍️ Add to Bag</span>';
-      } else {
-        mainBtn.disabled = true;
-        mainBtn.innerHTML = '<span>Sold Out</span>';
+        mainBtn.classList.remove('is-sold-out');
+        if (mainBtnText) {
+          mainBtnText.textContent = '🛍️ Add to Bag';
+        } else {
+          mainBtn.innerHTML = '<span>🛍️ Add to Bag</span>';
+        }
       }
+      if (notifyBtn) notifyBtn.style.display = 'none';
+      if (qtyStepper) qtyStepper.style.display = 'block';
+      if (actionRow) actionRow.classList.remove('is-sold-out-state');
+      if (stickyBtn) {
+        stickyBtn.innerHTML = 'Add to Bag &rarr;';
+        stickyBtn.classList.remove('is-notify-sticky');
+      }
+    } else {
+      if (mainBtn) {
+        mainBtn.disabled = true;
+        mainBtn.classList.add('is-sold-out');
+        if (mainBtnText) {
+          mainBtnText.textContent = 'Sold Out';
+        } else {
+          mainBtn.innerHTML = '<span>Sold Out</span>';
+        }
+      }
+      if (notifyBtn) notifyBtn.style.display = 'inline-flex';
+      if (qtyStepper) qtyStepper.style.display = 'none';
+      if (actionRow) actionRow.classList.add('is-sold-out-state');
+      if (stickyBtn) {
+        stickyBtn.innerHTML = '🔔 Notify Me';
+        stickyBtn.classList.add('is-notify-sticky');
+      }
+    }
+
+    // Synchronize restock modal variant details
+    if (typeof updateRestockModalData === 'function') {
+      updateRestockModalData(variantId, variantTitle, price, mediaUrl);
+    }
+  }
+
+  // Mobile Sticky Bar Action Dispatcher
+  function handleStickyAction() {
+    var notifyBtn = document.getElementById('notifyMeTriggerBtn');
+    var mainBtn = document.getElementById('mainAddToCartBtn');
+    if (notifyBtn && notifyBtn.style.display !== 'none') {
+      if (typeof openRestockModal === 'function') {
+        openRestockModal();
+      }
+    } else if (mainBtn) {
+      mainBtn.click();
     }
   }
 
